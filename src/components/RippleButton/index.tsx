@@ -43,8 +43,6 @@ const RippleButton: React.FC<IProps> = ({
     btn.appendChild(circle);
   }
 
-  console.log(active);
-
   return (
     <button
       onClick={(e) => {
