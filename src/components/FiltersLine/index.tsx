@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useRef } from "react";
 import { X, Scan, Plus } from "lucide-react";
+
 interface IProps {
   possibleFilters: {
     type: string;
