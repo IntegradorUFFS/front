@@ -1,6 +1,6 @@
 import React, { useState, forwardRef } from "react";
 import Input from "../Text";
-import { EyeIcon, EyeOffIcon } from "lucide-react";
+import { Eye16Filled, EyeOff16Filled } from "@fluentui/react-icons";
 
 interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -35,11 +35,7 @@ const InputPassword: React.ForwardRefRenderFunction<
           setInputType((prev) => (prev === "password" ? "text" : "password"))
         }
       >
-        {inputType === "password" ? (
-          <EyeOffIcon size={15} />
-        ) : (
-          <EyeIcon size={15} />
-        )}
+        {inputType === "password" ? <EyeOff16Filled /> : <Eye16Filled />}
       </button>
     </div>
   );
