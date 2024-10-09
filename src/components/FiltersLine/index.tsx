@@ -66,8 +66,8 @@ const FiltersLine: React.FC<IProps> = () => {
 
       <button className="py-2 font-base flex overflow-hidden gap-2 items-center w-fit max-w-full bg-zinc-100 rounded-lg px-3">
         <div className="relative items-center justify-center flex">
-          <Scan size={20} />
-          <Plus size={14} className="absolute" />
+          <Scan size={20} strokeWidth={1.5} />
+          <Plus size={12} className="absolute" strokeWidth={2.5} />
         </div>
         Filtros
       </button>

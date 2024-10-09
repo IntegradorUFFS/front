@@ -1,4 +1,5 @@
 import React, { ReactNode } from "react";
+import { twMerge } from "tailwind-merge";
 
 interface IProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
@@ -51,13 +52,15 @@ const RippleButton: React.FC<IProps> = ({
       }}
       {...props}
       type="button"
-      className={`rounded-xl my-2 px-3 py-3 w-full overflow-hidden relative bg-opacity-20 flex gap-2 h-14 items-center
-        ${active ? "text-orange-600" : "text-zinc-900"} ${
-        active ? "bg-orange-300" : "bg-transparent"
-      }`}
+      className={twMerge(
+        `rounded-xl my-2 px-3 h-12 w-full overflow-hidden relative bg-opacity-20 flex gap-2 items-center`,
+        active
+          ? "text-orange-600 bg-orange-300 font-normal"
+          : "text-zinc-900 bg-transparent font-light"
+      )}
     >
-      <div className="absolute flex flex-1 gap-2 z-[2]">
-        {icon && icon}
+      <div className="absolute flex flex-1 gap-2 z-[2] items-center">
+        {icon}
         {text}
       </div>
     </button>
