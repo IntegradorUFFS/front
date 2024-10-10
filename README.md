@@ -1,25 +1,35 @@
-## Tecnologias Utilizadas
+# Web em React
 
-### React
+Toda a parte do client side foi desenvolvida utilizando React juntamente com Tailwind. Neste projeto também utilizaremos o yarn como gerenciador de pacotes
 
-[React](https://reactjs.org/) é uma biblioteca JavaScript para construir interfaces de usuário. Ela permite a criação de componentes reutilizáveis e facilita a construção de aplicações web interativas. Os principais benefícios do React incluem:
+## Requisitos
 
-- **Componentização**: Permite criar componentes independentes que podem ser reutilizados em diferentes partes da aplicação.
-- **Virtual DOM**: Melhora a performance ao atualizar apenas as partes da interface que mudaram, em vez de recarregar a página inteira.
-- **Ecossistema Rico**: Uma vasta gama de bibliotecas e ferramentas que complementam o desenvolvimento com React.
+- NodeJS 20.10 ou superior
+- Git
 
-### Tailwind CSS
+## Instalação
 
-[Tailwind CSS](https://tailwindcss.com/) é um framework CSS utilitário que permite estilizar rapidamente aplicações web. Em vez de escrever classes CSS personalizadas, você pode aplicar estilos diretamente em seus componentes usando classes predefinidas. Os principais benefícios do Tailwind incluem:
+1. **Clone o repositório:**
 
-- **Estilos Rápidos**: Acelera o processo de desenvolvimento ao permitir que você escreva menos CSS e estilize diretamente no HTML.
-- **Customização**: Oferece um sistema de personalização robusto, permitindo que você adapte o design às necessidades específicas do projeto.
-- **Responsividade**: Facilita a criação de layouts responsivos com classes utilitárias para diferentes tamanhos de tela.
+   ```bash
+   git clone https://github.com/IntegradorUFFS/front
+   cd front
+   ```
 
-### Vite
+2. **Instale as dependências:**
 
-[Vite](https://vitejs.dev/) é uma ferramenta de build moderna que oferece uma experiência de desenvolvimento rápida e leve. Ele utiliza ES modules nativos do navegador, proporcionando um carregamento quase instantâneo e um ambiente de desenvolvimento ágil. Os principais benefícios do Vite incluem:
+   Certifique-se de ter o Node e o yarn instalados e configure seu ambiente de desenvolvimento. Em seguida, instale as dependências do projeto usando o comando:
 
-- **Desempenho Rápido**: Tempo de inicialização e recarregamento ultrarrápido durante o desenvolvimento.
-- **Hot Module Replacement (HMR)**: Permite a atualização instantânea das alterações no código sem recarregar a página, melhorando a produtividade.
-- **Configuração Simples**: Uma configuração mínima é necessária, permitindo que você comece a codificar rapidamente.
+   ```bash
+   yarn
+   ```
+
+3. **Inciando a aplicação:**
+
+Para iniciar a aplicação, execute o comando:
+
+```bash
+  yarn dev
+```
+
+Isso irá executar a aplicação localmente utilizando a porta 3000
