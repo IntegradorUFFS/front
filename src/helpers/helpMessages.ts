@@ -6,7 +6,7 @@ const helpMessages: Record<string, string | undefined> = {
 };
 
 export const getHelpMessage = (message: string | undefined): string => {
-  if (!message) return "";
+  if (!message || typeof message !== "string") return "";
   return helpMessages[message] || message;
 };
 

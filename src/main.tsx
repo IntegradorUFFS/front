@@ -23,7 +23,7 @@ const queryClient = new QueryClient({
       retryDelay(failureCount) {
         return (failureCount + 1) * 500;
       },
-      refetchOnWindowFocus: false,
+      refetchOnWindowFocus: true,
       staleTime: 1000 * 60,
     },
   },

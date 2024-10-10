@@ -47,13 +47,9 @@ const Auth: React.FC = () => {
       const { field, error } = extractErrors(err);
       if (field) return;
 
-      let message = "Algo deu errado";
-      if (error) {
-        message = helpMessages(error) ?? error;
-      }
       toast({
         title: "Erro",
-        description: message,
+        description: helpMessages(error) || "Algo deu errado",
         variant: "destructive",
       });
     },
