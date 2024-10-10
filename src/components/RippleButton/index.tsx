@@ -61,7 +61,7 @@ const RippleButton: React.FC<IProps> = ({
     >
       <div className="absolute flex flex-1 gap-2 z-[2] items-center">
         {icon}
-        {text}
+        <div className="font-bold">{text}</div>
       </div>
     </button>
   );

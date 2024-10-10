@@ -13,15 +13,6 @@ const FiltersLine: React.FC<IProps> = () => {
   const [activeFilters, setActiveFilters] = useState<string[]>([
     "teste",
     "alvenaria",
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "g",
-    "i",
-    "h",
   ]);
   const activeList = useRef<HTMLUListElement>(null);
 
@@ -43,7 +34,10 @@ const FiltersLine: React.FC<IProps> = () => {
   );
 
   return (
-    <ul className="flex gap-2 items-center flex-1 flex-wrap" ref={activeList}>
+    <ul
+      className="flex gap-2 items-center flex-1 flex-wrap py-6"
+      ref={activeList}
+    >
       {activeFilters?.length > 0 &&
         activeFilters?.map((appliedFilter, i) => (
           <li

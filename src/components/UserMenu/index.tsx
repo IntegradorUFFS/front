@@ -49,10 +49,10 @@ const UserMenu: React.FC<IProps> = ({ email, first_name, last_name }) => {
             {last_name?.[0]?.toUpperCase()}
           </div>
           <div className="flex flex-col">
-            <h2 className="text-base">
+            <h2 className="text-base font-bold">
               {first_name} {last_name}
             </h2>
-            <p className="text-xs opacity-60">{email}</p>
+            <p className="text-xs opacity-60 font-bold">{email}</p>
           </div>
           <div className="flex-1 flex justify-end items-center">
             <ChevronDown

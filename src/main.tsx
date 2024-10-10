@@ -4,8 +4,9 @@ import { Provider } from "react-redux";
 import { Toaster } from "@/components/ui/toaster";
 import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "./store";
-import App from "@/Pages/Auth";
+import App from "./commom/Layout";
 import "./index.css";
+import MaterialPage from "./Pages/Material";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -33,7 +34,9 @@ createRoot(document.getElementById("root")!).render(
   <Provider store={store}>
     <QueryClientProvider client={queryClient}>
       <PersistGate loading={null} persistor={persistor}>
-        <App />
+        <App>
+          <MaterialPage />
+        </App>
         <Toaster />
       </PersistGate>
     </QueryClientProvider>

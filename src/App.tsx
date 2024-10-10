@@ -1,16 +1,7 @@
 import React, { useCallback, useEffect } from "react";
-import {
-  Archive,
-  BrickWall,
-  ClipboardList,
-  MapPinHouse,
-  Ruler,
-  Users,
-} from "lucide-react";
+import { Ruler } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
-import UserMenu from "@/components/UserMenu";
 import FiltersLine from "@/components/FiltersLine";
-import RippleButton from "@/components/RippleButton";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -20,6 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import Input from "@/components/Input";
 import Button from "./components/Button";
 import { IApiError } from "./helpers/interfaces";
+import Sidebar from "@/commom/Sidebar";
 
 const schema = z.object({
   email: z.string(),
@@ -75,40 +67,7 @@ const App: React.FC = () => {
   }, [data.isError, toast]);
   return (
     <div className="flex flex-1 flex-row ">
-      <aside className="bg-zinc-200 min-w-60 max-w-72 w-full h-screen py-4 px-2">
-        <UserMenu
-          first_name="Conta"
-          last_name="Teste"
-          email="tetse@gmail.com"
-        />
-        <RippleButton
-          onClick={console.log}
-          text="Material"
-          icon={<BrickWall size={20} />}
-          active
-        />
-        <RippleButton
-          onClick={console.log}
-          text="Locais"
-          icon={<MapPinHouse size={20} />}
-        />
-        <RippleButton
-          onClick={console.log}
-          text="Estoques"
-          icon={<Archive size={20} />}
-        />
-        <RippleButton onClick={console.log} text="Usuários" icon={<Users />} />
-        <RippleButton
-          onClick={console.log}
-          text="Transações"
-          icon={<ClipboardList size={20} />}
-        />
-        <RippleButton
-          onClick={console.log}
-          text="Unidades métricas"
-          icon={<Ruler size={20} />}
-        />
-      </aside>
+      <Sidebar />
       <main className="flex-1 p-6">
         <FiltersLine possibleFilters={[]} />
 
@@ -122,8 +81,7 @@ const App: React.FC = () => {
           placeholder="Digite o seu e-mail"
           {...register("email")}
         />
-        {/* <Input placeholder="Digite sua senha" value={2} onChange={}/> */}
-        <div className="w-full flex p-4 gap-4">
+        <div className="w-full flex p-4 gap-4 my-4">
           <Button onClick={handleSubmit(onSubmit)} text="Entrar" />
           <Button
             onClick={handleSubmit(onSubmit)}
