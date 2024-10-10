@@ -3,9 +3,8 @@ import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { Provider } from "react-redux";
 import { Toaster } from "@/components/ui/toaster";
 import { PersistGate } from "redux-persist/integration/react";
-
 import { store, persistor } from "./store";
-import App from "./Pages/Auth";
+import App from "@/Pages/Auth";
 import "./index.css";
 
 const queryClient = new QueryClient({
@@ -25,6 +24,7 @@ const queryClient = new QueryClient({
         return (failureCount + 1) * 500;
       },
       refetchOnWindowFocus: false,
+      staleTime: 1000 * 60,
     },
   },
 });

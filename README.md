@@ -1,6 +1,6 @@
-# Web em React
+# Aplicação Web usando React
 
-Toda a parte do client side foi desenvolvida utilizando React juntamente com Tailwind. Neste projeto também utilizaremos o yarn como gerenciador de pacotes
+Toda a parte do client-side foi desenvolvida utilizando React juntamente com Tailwind. Neste projeto também utilizaremos o yarn como gerenciador de pacotes
 
 ## Requisitos
 

@@ -16,14 +16,15 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement | null, IProps> = (
   ref
 ) => {
   return (
-    <div className="flex flex-col gap-2 text-sm font-sans font-semibold">
-      {label}
+    <div className="flex flex-col gap-2 text-sm font-sans">
+      {label && <span className="font-semibold">{label}</span>}
       {type === "password" ? (
         <Password
           placeholder={placeholder}
           disabled={disabled}
           {...props}
           ref={ref}
+          invalid={!!error}
         />
       ) : (
         <Text
@@ -32,6 +33,7 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement | null, IProps> = (
           disabled={disabled}
           {...props}
           ref={ref}
+          invalid={!!error}
         />
       )}
       {error && <span className="text-sm text-red-600 ml-2">{error}</span>}

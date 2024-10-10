@@ -30,9 +30,9 @@ const Button: React.FC<IProps> = ({
   return (
     <button
       className={twMerge(
-        "transition rounded-md gap-2 flex items-center justify-center font-semibold",
+        "transition rounded-md gap-2 flex items-center justify-center text-sm font-semibold",
         classes[variant],
-        icon && !text ? "p-2" : " w-full py-2 px-4",
+        icon && !text ? "p-3" : " w-full py-3 px-4",
         className
       )}
       type={type}

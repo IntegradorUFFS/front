@@ -4,6 +4,14 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['"Lato"', "sans-serif"],
+        roboto: ['"Roboto"', "sans-serif"],
+        montserrat: ['"Montserrat"', "sans-serif"],
+      },
+      backgroundImage: {
+        artemis: "url('/images/artemis.jpg')",
+      },
       animation: {
         "spin-slow": "spin 3s linear infinite",
         "menu-in": "menu-in 0.85s ease-in-out",
