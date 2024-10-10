@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { Toaster } from "@/components/ui/toaster";
 import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "./store";
-import App from "./Pages/Auth";
+import App from "@/Pages/Auth";
 import "./index.css";
 
 const queryClient = new QueryClient({
