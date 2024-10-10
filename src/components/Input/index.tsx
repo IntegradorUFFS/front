@@ -4,6 +4,7 @@ import Password from "./Password";
 
 interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
+  error?: string;
   placeholder?: string;
   type?: string;
   disabled?: boolean;
@@ -11,11 +12,11 @@ interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
 }
 
 const Input: React.ForwardRefRenderFunction<HTMLInputElement | null, IProps> = (
-  { label, placeholder, type = "text", disabled, ...props },
+  { error, label, placeholder, type = "text", disabled, ...props },
   ref
 ) => {
   return (
-    <div className="flex flex-col gap-1 text-sm font-sans ">
+    <div className="flex flex-col gap-2 text-sm font-sans font-semibold">
       {label}
       {type === "password" ? (
         <Password
@@ -33,6 +34,7 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement | null, IProps> = (
           ref={ref}
         />
       )}
+      {error && <span className="text-sm text-red-600 ml-2">{error}</span>}
     </div>
   );
 };

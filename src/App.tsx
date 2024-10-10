@@ -29,11 +29,7 @@ const App: React.FC = () => {
   const { toast } = useToast();
   const dispatch = useAppDispatch();
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-  } = useForm({
+  const { register, handleSubmit, reset } = useForm({
     resolver: zodResolver(schema),
     defaultValues: {
       email: "",
@@ -70,7 +66,8 @@ const App: React.FC = () => {
       toast({
         title: "Error",
         description:
-          (data.error as unknown as IApiError)?.response?.data?.error ?? "Algo deu errado",
+          (data.error as unknown as IApiError)?.response?.data?.error ??
+          "Algo deu errado",
         variant: "destructive",
       });
     }

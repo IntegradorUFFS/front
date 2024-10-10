@@ -14,7 +14,7 @@ const classes = {
   outline:
     "bg-transparent border-2 border-zinc-200 hover:border-zinc-300 disabled:opacity-60 disabled:border-zinc-300",
   filled:
-    "bg-orange-600 text-white hover:opacity-90 disabled:bg-zinc-400 disabled:opacity-80 text-sm",
+    "bg-orange-600 text-white hover:opacity-90 disabled:bg-zinc-400 disabled:opacity-80",
 };
 
 const Button: React.FC<IProps> = ({
@@ -30,7 +30,7 @@ const Button: React.FC<IProps> = ({
   return (
     <button
       className={twMerge(
-        "text-sm transition rounded-md gap-2 flex items-center justify-center",
+        "transition rounded-md gap-2 flex items-center justify-center font-semibold",
         classes[variant],
         icon && !text ? "p-2" : " w-full py-2 px-4",
         className
