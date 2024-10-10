@@ -25,6 +25,7 @@ const queryClient = new QueryClient({
         return (failureCount + 1) * 500;
       },
       refetchOnWindowFocus: false,
+      staleTime: 1000 * 60,
     },
   },
 });
