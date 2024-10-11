@@ -52,7 +52,7 @@ const UserMenu: React.FC<IProps> = ({ email, first_name, last_name }) => {
             <h2 className="text-base font-bold">
               {first_name} {last_name}
             </h2>
-            <p className="text-xs opacity-60 font-bold">{email}</p>
+            <p className="text-xs opacity-60 font-semibold">{email}</p>
           </div>
           <div className="flex-1 flex justify-end items-center">
             <ChevronDown

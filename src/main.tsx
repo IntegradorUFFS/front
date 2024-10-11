@@ -3,10 +3,11 @@ import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { Provider } from "react-redux";
 import { Toaster } from "@/components/ui/toaster";
 import { PersistGate } from "redux-persist/integration/react";
-import { store, persistor } from "./store";
-import App from "./commom/Layout";
-import "./index.css";
-import MaterialPage from "./Pages/Material";
+import { store, persistor } from "@/store";
+import App from "./layout";
+import "@/index.css";
+import MaterialPage from "@/pages/Admin/Material";
+import Radio from "@/components/Radio";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -36,6 +37,14 @@ createRoot(document.getElementById("root")!).render(
       <PersistGate loading={null} persistor={persistor}>
         <App>
           <MaterialPage />
+          <Radio
+            items={[
+              { label: "op1", value: "op1" },
+              { label: "op2", value: "op2" },
+            ]}
+            name="cauana"
+            label="teste"
+          />
         </App>
         <Toaster />
       </PersistGate>

@@ -35,7 +35,7 @@ const FiltersLine: React.FC<IProps> = () => {
 
   return (
     <ul
-      className="flex gap-2 items-center flex-1 flex-wrap py-6"
+      className="flex gap-2 items-center flex-1 flex-wrap pt-3 pb-2"
       ref={activeList}
     >
       {activeFilters?.length > 0 &&

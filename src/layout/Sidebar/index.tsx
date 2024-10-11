@@ -15,13 +15,14 @@ const Sidebar: React.FC = () => {
         />
         {routes.map((route) => (
           <RippleButton
+            key={route.name}
             onClick={console.log}
             text={route.name}
             icon={route.icon}
           />
         ))}
       </div>
-      <div className=" ml-12 h-full w-6 bg-white rounded-l-xl border-solid border-l-2 border-zinc-200 drop-shadow-md" />
+      <div className="ml-4 h-full w-6 bg-white rounded-l-xl border-solid border-l-2 border-zinc-200 drop-shadow-md" />
     </aside>
   );
 };

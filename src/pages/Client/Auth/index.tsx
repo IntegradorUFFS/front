@@ -71,7 +71,7 @@ const Auth: React.FC = () => {
         <div className="absolute h-full w-6 bg-white rounded-l-xl top-0 right-0 border-solid border-l-2 border-zinc-200 drop-shadow-md" />
       </div>
       <main className="flex-1 w-6/12">
-        <div className="flex flex-col items-center mt-9 mr-11 ml-5">
+        <div className="flex flex-col items-center mt-9 mr-11 ml-11 md:ml-5">
           <img className="h-12" src="/images/logo_text.svg" alt="" />
           <div className="w-full mt-24 mb-12">
             <h2 className="text-xl font-montserrat font-light tracking-wide text-zinc-600">

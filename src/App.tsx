@@ -11,7 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import Input from "@/components/Input";
 import Button from "./components/Button";
 import { IApiError } from "./helpers/interfaces";
-import Sidebar from "@/commom/Sidebar";
+import Sidebar from "@/layout/Sidebar";
 
 const schema = z.object({
   email: z.string(),

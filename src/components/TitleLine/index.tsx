@@ -1,14 +1,15 @@
 import React from "react";
+import toTitleCase from "@/helpers/toTitleCase";
 
 interface TitleProps {
-  children: React.ReactNode;
+  title: string;
 }
 
-const TitleLine: React.FC<TitleProps> = ({ children }) => {
+const TitleLine: React.FC<TitleProps> = ({ title }) => {
   return (
-    <p className="text-4xl">
-      <strong>{children}</strong>
-    </p>
+    <h2 className="text-3xl font-medium font-roboto tracking-wide">
+      {toTitleCase(title)}
+    </h2>
   );
 };
 export default TitleLine;
