@@ -4,6 +4,33 @@ import TitleLine from "@/components/TitleLine";
 import Table from "@/components/Table";
 import Button from "@/components/Button";
 import { Tags, CirclePlus } from "lucide-react";
+import { title } from "process";
+
+const fields = [
+  {
+    title: "Material",
+    keys: ["nome"],
+  },
+  {
+    title: "Categoria",
+    keys: ["category", "name"],
+  },
+];
+
+const data = [
+  {
+    nome: "teste",
+    category: {
+      name: "teste",
+    },
+  },
+  {
+    nome: "teste2",
+    category: {
+      name: "teste2",
+    },
+  },
+];
 
 const MaterialPage: React.FC = () => {
   return (
@@ -22,8 +49,8 @@ const MaterialPage: React.FC = () => {
       />
       <FiltersLine possibleFilters={[]} />
       <Table
-        items={["teste", "teste", "teste", "teste", "teste"]}
-        dataLine={[]}
+        data={data}
+        fields={fields}
       />
     </div>
   );
