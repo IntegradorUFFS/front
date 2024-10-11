@@ -7,7 +7,6 @@ import { store, persistor } from "@/store";
 import App from "./layout";
 import "@/index.css";
 import MaterialPage from "@/pages/Admin/Material";
-import Radio from "@/components/Radio";
 
 const queryClient = new QueryClient({
   defaultOptions: {

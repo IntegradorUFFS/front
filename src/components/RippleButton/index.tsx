@@ -55,8 +55,8 @@ const RippleButton: React.FC<IProps> = ({
       className={twMerge(
         `rounded-xl my-2 px-3 h-12 w-full overflow-hidden relative bg-opacity-20 flex gap-2 items-center`,
         active
-          ? "text-orange-600 bg-orange-300 font-normal"
-          : "text-zinc-900 bg-transparent font-light"
+          ? "text-orange-600 bg-orange-300 font-semibold "
+          : "text-zinc-600 bg-transparent font-semibold  "
       )}
     >
       <div className="absolute flex flex-1 gap-2 z-[2] items-center">
