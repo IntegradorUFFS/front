@@ -37,14 +37,6 @@ createRoot(document.getElementById("root")!).render(
       <PersistGate loading={null} persistor={persistor}>
         <App>
           <MaterialPage />
-          <Radio
-            items={[
-              { label: "op1", value: "op1" },
-              { label: "op2", value: "op2" },
-            ]}
-            name="cauana"
-            label="teste"
-          />
         </App>
         <Toaster />
       </PersistGate>
