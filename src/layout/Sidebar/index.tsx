@@ -9,7 +9,10 @@ const Sidebar: React.FC = () => {
   return (
     <aside className=" bg-zinc-200 py-2 flex overflow-hidden">
       <div className=" py-2 bg-zinc-200 min-w-72 max-w-86 w-full h-screen px-2 flex flex-col">
-        <img className="h-10 mb-6" src="/images/logo_text.svg" alt="" />
+        <div className="w-full flex justify-center">
+          <img className="h-10 mb-6" src="/images/logo_text.png" alt="" />
+        </div>
+
         <UserMenu user={user} />
         {routes
           .filter(({ scope }) => permissions && permissions.includes(scope))

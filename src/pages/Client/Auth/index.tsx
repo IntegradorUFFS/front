@@ -72,7 +72,7 @@ const Auth: React.FC = () => {
       </div>
       <main className="flex-1 w-6/12">
         <div className="flex flex-col items-center mt-9 mr-11 ml-11 md:ml-5">
-          <img className="h-12" src="/images/logo_text.svg" alt="" />
+          <img className="h-12" src="/images/logo_text.png" alt="" />
           <div className="w-full mt-24 mb-12">
             <h2 className="text-xl font-montserrat font-light tracking-wide text-zinc-600">
               Bem-vindo de volta!
