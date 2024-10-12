@@ -15,6 +15,7 @@ export default [
     path: "/admin/material",
     icon: <BrickWall />,
     element: <MaterialPage />,
+    scope: "material.view",
     children: [{ path: "", element: "" }],
   },
 ];
