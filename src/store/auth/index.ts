@@ -15,15 +15,49 @@ interface IStore {
         email: string;
       }
     | undefined;
-  role: string | undefined;
-  permissions: string[];
+  role: "admin" | "manager" | "viewer" | undefined;
+  permissions: string[] | undefined;
 }
 
 const initialState: IStore = {
   oauth: undefined,
   user: undefined,
   role: undefined,
-  permissions: [],
+  permissions: undefined,
+};
+
+const permissionsByRoles = {
+  viewer: ["material.view", "locationMaterial.view"],
+  manager: [
+    "material.view",
+    "material.management",
+    "locationMaterial.view",
+    "locationMaterial.management",
+    "transaction.view",
+    "category.view",
+    "category.management",
+    "unit.view",
+    "unit.management",
+    "user.view",
+    "user.management",
+    "location.view",
+    "location.management",
+  ],
+  admin: [
+    "material.view",
+    "material.management",
+    "locationMaterial.view",
+    "locationMaterial.management",
+    "transaction.view",
+    "category.view",
+    "category.management",
+    "unit.view",
+    "unit.management",
+    "user.view",
+    "user.management",
+    "location.view",
+    "location.management",
+  ],
 };
 
 export const authSlice = createSlice({
@@ -31,9 +65,8 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     signIn: (state, action) => {
-      const { role } = action.payload.data;
-      state.role = role;
-      state.permissions = [];
+      const role = action.payload.data.role as "admin" | "manager" | "viewer";
+      state.permissions = permissionsByRoles[role];
       delete action.payload.data.role;
       state.oauth = {
         type: "bearer",
@@ -43,10 +76,10 @@ export const authSlice = createSlice({
       state.user = action.payload.data;
     },
     signOut: (state) => {
-      state.oauth = undefined;
-      state.user = undefined;
-      state.role = undefined;
-      state.permissions = [];
+      state.oauth = initialState.oauth;
+      state.user = initialState.user;
+      state.role = initialState.role;
+      state.permissions = initialState.permissions;
       localStorage.clear();
     },
   },

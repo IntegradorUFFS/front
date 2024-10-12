@@ -1,12 +1,22 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { ChevronDown, DoorOpen, DoorClosed, Bolt } from "lucide-react";
-import { useAppDispatch, useAppSelector } from "@/hooks";
+import { useAppDispatch } from "@/hooks";
 
-const UserMenu: React.FC = () => {
+interface IProps {
+  user:
+    | {
+        id: number;
+        first_name: string;
+        last_name: string;
+        email: string;
+      }
+    | undefined;
+}
+
+const UserMenu: React.FC<IProps> = ({ user }) => {
   const dispatch = useAppDispatch();
   const [active, setActive] = useState<boolean>(false);
   const popupRef = useRef<HTMLMenuElement>(null);
-  const { user } = useAppSelector(({ auth }) => auth);
 
   const handleClose = useCallback((e: MouseEvent) => {
     if (popupRef.current && !popupRef?.current?.contains(e?.target as Node)) {

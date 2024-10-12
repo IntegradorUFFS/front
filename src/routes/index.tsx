@@ -4,8 +4,12 @@ import clientRoutes from "./Client";
 import { useAppSelector } from "@/hooks";
 
 const Routes = () => {
-  const oauth = useAppSelector(({ auth }) => auth.oauth);
-  return <RouterProvider router={oauth ? adminRoutes : clientRoutes} />;
+  const { oauth, permissions } = useAppSelector(({ auth }) => auth);
+  return (
+    <RouterProvider
+      router={oauth ? adminRoutes({ permissions }) : clientRoutes}
+    />
+  );
 };
 
 export default Routes;
