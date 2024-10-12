@@ -4,7 +4,6 @@ import TitleLine from "@/components/TitleLine";
 import Table from "@/components/Table";
 import Button from "@/components/Button";
 import { Tags, CirclePlus } from "lucide-react";
-import { title } from "process";
 
 const fields = [
   {
@@ -38,12 +37,12 @@ const MaterialPage: React.FC = () => {
       <TitleLine
         title="material"
         buttons={[
-          <Button onClick={console.log} icon={<Tags />} />,
+          <Button onClick={console.log} icon={<Tags />} className="p-2" />,
           <Button
             onClick={console.log}
             icon={<CirclePlus />}
             text="Cadastrar"
-            className="w-fit"
+            className="w-fit py-2 px-3"
           />,
         ]}
       />
@@ -51,6 +50,8 @@ const MaterialPage: React.FC = () => {
       <Table
         data={data}
         fields={fields}
+        onEdit={console.log}
+        onDelete={console.log}
       />
     </div>
   );

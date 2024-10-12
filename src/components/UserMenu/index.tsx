@@ -1,15 +1,12 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { ChevronDown, DoorOpen, DoorClosed, Bolt } from "lucide-react";
+import { useAppDispatch, useAppSelector } from "@/hooks";
 
-interface IProps {
-  first_name: string;
-  last_name: string;
-  email: string;
-}
-
-const UserMenu: React.FC<IProps> = ({ email, first_name, last_name }) => {
+const UserMenu: React.FC = () => {
+  const dispatch = useAppDispatch();
   const [active, setActive] = useState<boolean>(false);
   const popupRef = useRef<HTMLMenuElement>(null);
+  const { user } = useAppSelector(({ auth }) => auth);
 
   const handleClose = useCallback((e: MouseEvent) => {
     if (popupRef.current && !popupRef?.current?.contains(e?.target as Node)) {
@@ -37,6 +34,8 @@ const UserMenu: React.FC<IProps> = ({ email, first_name, last_name }) => {
     };
   }, [handleClose]);
 
+  if (!user) return null;
+
   return (
     <>
       <li className="list-none relative flex justify-center">
@@ -45,14 +44,14 @@ const UserMenu: React.FC<IProps> = ({ email, first_name, last_name }) => {
           className="z-10 w-full bg-zinc-50 p-3 rounded-xl list-none border border-zinc-300 flex gap-2 select-none text-left items-center"
         >
           <div className="h-10 w-10 font-semibold border border-zinc-200 bg-indigo-400 rounded-full text-center text-zinc-50 items-center justify-center flex text-base">
-            {first_name?.[0]?.toUpperCase()}
-            {last_name?.[0]?.toUpperCase()}
+            {user.first_name?.[0]?.toUpperCase()}
+            {user.last_name?.[0]?.toUpperCase()}
           </div>
           <div className="flex flex-col">
             <h2 className="text-base font-bold">
-              {first_name} {last_name}
+              {user.first_name} {user.last_name}
             </h2>
-            <p className="text-xs opacity-60 font-semibold">{email}</p>
+            <p className="text-xs opacity-60 font-semibold">{user.email}</p>
           </div>
           <div className="flex-1 flex justify-end items-center">
             <ChevronDown
@@ -69,7 +68,10 @@ const UserMenu: React.FC<IProps> = ({ email, first_name, last_name }) => {
             ref={popupRef}
           >
             <div className="animate-menu-in-content">
-              <button className="py-2 flex items-center w-full group">
+              <button
+                type="button"
+                className="py-2 flex items-center w-full group"
+              >
                 <Bolt
                   className="opacity-65 mr-2 group-hover:animate-spin-slow"
                   size={18}
@@ -81,6 +83,8 @@ const UserMenu: React.FC<IProps> = ({ email, first_name, last_name }) => {
                 className="py-2 flex items-center w-full"
                 onMouseEnter={handleToggleDoor}
                 onMouseLeave={handleToggleDoor}
+                type="button"
+                onClick={() => dispatch({ type: "auth/signOut" })}
               >
                 <DoorOpen className="opacity-65 mr-2 hidden" size={18} />
                 <DoorClosed className="opacity-65 mr-2" size={18} />

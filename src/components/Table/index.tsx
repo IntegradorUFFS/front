@@ -7,9 +7,11 @@ interface IProps {
     keys: string | string[];
   }[];
   data: Record<string, any>[];
+  onEdit?: (params?: any) => void;
+  onDelete?: (params?: any) => void;
 }
 
-const Table: React.FC<IProps> = ({ fields, data }) => {
+const Table: React.FC<IProps> = ({ fields, data, onDelete, onEdit }) => {
   return (
     <div className="flex-1">
       <DynamicGrid
@@ -21,8 +23,14 @@ const Table: React.FC<IProps> = ({ fields, data }) => {
         ))}
       </DynamicGrid>
 
-      {data?.map((item) => (
-        <TableRow fields={fields} item={item} />
+      {data?.map((item, i) => (
+        <TableRow
+          key={`row-${i}`}
+          fields={fields}
+          data={item}
+          onDelete={onDelete}
+          onEdit={onEdit}
+        />
       ))}
     </div>
   );

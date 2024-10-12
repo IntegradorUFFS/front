@@ -1,22 +1,17 @@
 import React, { ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
+import { NavLink } from "react-router-dom";
+import { useMatch } from "react-router-dom";
 
-interface IProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+interface IProps {
+  path: string;
   text: string;
   icon: ReactNode;
-  active?: boolean;
 }
 
-const RippleButton: React.FC<IProps> = ({
-  onClick,
-  text,
-  icon,
-  active,
-  ...props
-}) => {
+const RippleButton: React.FC<IProps> = ({ path, text, icon, ...props }) => {
   function rippleEffect(
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) {
     const btn = event.currentTarget;
 
@@ -45,16 +40,15 @@ const RippleButton: React.FC<IProps> = ({
   }
 
   return (
-    <button
+    <NavLink
+      to={path}
       onClick={(e) => {
         rippleEffect(e);
-        onClick(e);
       }}
       {...props}
-      type="button"
       className={twMerge(
         `rounded-xl my-2 px-3 h-12 w-full overflow-hidden relative bg-opacity-20 flex gap-2 items-center`,
-        active
+        useMatch(path)
           ? "text-orange-600 bg-orange-300 font-semibold "
           : "text-zinc-600 bg-transparent font-semibold  "
       )}
@@ -63,7 +57,7 @@ const RippleButton: React.FC<IProps> = ({
         {icon}
         {text}
       </div>
-    </button>
+    </NavLink>
   );
 };
 

@@ -1,28 +1,40 @@
-import { BoltIcon, Trash, Trash2 } from "lucide-react";
+import React from "react";
+import { BoltIcon, Trash2 } from "lucide-react";
 import { DynamicGrid } from "../styles";
+import dig from "@/helpers/dig";
 
 interface IProps {
-  items: string[];
+  fields: {
+    title: string;
+    keys: string | string[];
+  }[];
+  data: Record<string, any>;
+  onEdit?: (params?: any) => void;
+  onDelete?: (params?: any) => void;
 }
 
-const TableRow: React.FC<IProps> = ({ items }) => {
+const TableRow: React.FC<IProps> = ({ fields, data, onEdit, onDelete }) => {
   return (
     <div className="flex-1">
       <DynamicGrid
         className="rounded-xl grid py-2 px-3 text-base font-montserrat"
-        length={items.length}
+        length={fields.length}
       >
-        {items?.map((key) => (
-          <div key={key}>{key}</div>
+        {fields?.map(({ title, keys }) => (
+          <div key={title}>{dig(data, keys) ?? ""}</div>
         ))}
 
-        <div className="flex gap-3">
-          <button>
-            <BoltIcon />
-          </button>
-          <button>
-            <Trash2 />
-          </button>
+        <div className="flex gap-3 justify-end">
+          {onEdit && (
+            <button onClick={() => onEdit(data)} type="button">
+              <BoltIcon size={18} />
+            </button>
+          )}
+          {onDelete && (
+            <button onClick={() => onDelete(data)} type="button">
+              <Trash2 size={18} />
+            </button>
+          )}
         </div>
       </DynamicGrid>
     </div>

@@ -13,8 +13,8 @@ const TitleLine: React.FC<TitleProps> = ({ title, buttons }) => {
         {toTitleCase(title)}
       </h2>
       <div className="flex flex-row justify-end items-center flex-1 gap-2">
-        {buttons?.map((button) => (
-          <>{button}</>
+        {buttons?.map((button, i) => (
+          <div key={`button-${i}`}>{button}</div>
         ))}
       </div>
     </div>

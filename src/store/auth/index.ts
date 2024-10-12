@@ -42,6 +42,13 @@ export const authSlice = createSlice({
       delete action.payload.data.token;
       state.user = action.payload.data;
     },
+    signOut: (state) => {
+      state.oauth = undefined;
+      state.user = undefined;
+      state.role = undefined;
+      state.permissions = [];
+      localStorage.clear();
+    },
   },
 });
 
