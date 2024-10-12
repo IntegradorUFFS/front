@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import UserMenu from "@/components/UserMenu";
 import RippleButton from "@/components/RippleNav";
 import routes from "@/routes/Admin/routes";
@@ -22,4 +22,4 @@ const Sidebar: React.FC = () => {
     </aside>
   );
 };
-export default Sidebar;
+export default memo(Sidebar);
