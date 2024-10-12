@@ -40,9 +40,12 @@ const Table: React.FC<IProps> = ({ fields, data, onDelete, onEdit }) => {
       <div dir="rtl">
         <div
           dir="ltr"
-          className="bg-zinc-200 rounded-xl py-2 px-4 text-base font-montserrat w-40 flex justify-between mt-2 font-semibold"
+          className="bg-zinc-200 rounded-xl py-2 px-4 text-base font-montserrat w-40 flex justify-between mt-2 items-center leading-none"
         >
-          <p>10 de 30</p>
+          <p>
+            <strong className="font-medium">1-10</strong> de{" "}
+            <strong className="font-medium">30</strong>
+          </p>
           <div className="flex gap-1 h-full my-auto">
             <button>
               <ChevronLeft20Filled />
