@@ -1,3 +1,7 @@
+import {
+  ChevronLeft20Filled,
+  ChevronRight20Filled,
+} from "@fluentui/react-icons";
 import TableRow from "./Row";
 import { DynamicGrid } from "./styles";
 
@@ -32,6 +36,23 @@ const Table: React.FC<IProps> = ({ fields, data, onDelete, onEdit }) => {
           onEdit={onEdit}
         />
       ))}
+
+      <div dir="rtl">
+        <div
+          dir="ltr"
+          className="bg-zinc-200 rounded-xl py-2 px-4 text-base font-montserrat w-40 flex justify-between mt-2 font-semibold"
+        >
+          <p>10 de 30</p>
+          <div className="flex gap-1 h-full my-auto">
+            <button>
+              <ChevronLeft20Filled />
+            </button>
+            <button>
+              <ChevronRight20Filled />
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
