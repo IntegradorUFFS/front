@@ -3,7 +3,7 @@ import queryString from "./queryString";
 
 interface IFetchProps {
   page?: number;
-  perPage?: number;
+  per_page?: number;
   order?: string;
   orderBy?: string;
   filters?: Record<string, any>;
@@ -28,7 +28,7 @@ class Actions {
   }
 
   async fetch(
-    { page, perPage, order, orderBy, filters }: IFetchProps = {},
+    { page, per_page, order, orderBy, filters }: IFetchProps = {},
     payload = {}
   ) {
     const params: Record<string, string | string[]> = {};
@@ -47,7 +47,7 @@ class Actions {
     const query = queryString.stringify({
       ...params,
       page,
-      items: perPage,
+      per_page: per_page,
       sort_column: orderBy,
       sort_direction: order,
     });
