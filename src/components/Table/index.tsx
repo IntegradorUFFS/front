@@ -29,7 +29,7 @@ const Table: React.FC<IProps> = ({
   queryKey,
   endpoint,
 }) => {
-  const [queryState, setQueryState] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const queryClient = useQueryClient();
 
@@ -47,16 +47,17 @@ const Table: React.FC<IProps> = ({
         per_page: undefined,
       };
 
-      if (queryState.get("page")) {
-        params.page = Number(queryState.get("page"));
+      if (searchParams.get("page")) {
+        params.page = Number(searchParams.get("page"));
       }
 
-      if (queryState.get("per_page")) {
-        params.per_page = Number(queryState.get("per_page"));
+      if (searchParams.get("per_page")) {
+        params.per_page = Number(searchParams.get("per_page"));
       }
 
       const res = await new Actions(endpoint, oauth).fetch(params);
-      setQueryState({
+      setSearchParams({
+        ...Object.fromEntries(searchParams),
         page: res.meta.page,
         per_page: res.meta.per_page,
       });
@@ -67,33 +68,33 @@ const Table: React.FC<IProps> = ({
   const meta = useMemo(() => data?.meta, [data]);
 
   const handlePrevPage = useCallback(() => {
-    queryState.set("page", String(meta?.page - 1));
-    setQueryState(queryState);
+    searchParams.set("page", String(meta?.page - 1));
+    setSearchParams(searchParams);
     queryClient.invalidateQueries({ queryKey });
-  }, [meta, setQueryState, queryState, queryKey, queryClient]);
+  }, [meta, setSearchParams, searchParams, queryKey, queryClient]);
 
   const handleNextPage = useCallback(() => {
-    queryState.set("page", meta?.page + 1);
-    setQueryState(queryState);
+    searchParams.set("page", meta?.page + 1);
+    setSearchParams(searchParams);
     queryClient.invalidateQueries({ queryKey });
-  }, [meta, setQueryState, queryState, queryKey, queryClient]);
+  }, [meta, setSearchParams, searchParams, queryKey, queryClient]);
 
   const calculateTotalOfPage = () => {
     if (!meta) return 10;
     if (meta?.total === 0) return 0;
     const calculated =
-      Number(queryState.get("page")) * Number(queryState.get("per_page")) +
-      Number(queryState.get("per_page"));
+      Number(searchParams.get("page")) * Number(searchParams.get("per_page")) +
+      Number(searchParams.get("per_page"));
 
     if (calculated > meta?.total) return meta?.total;
     return calculated;
   };
 
   const getLoadingSize = () => {
-    if (!queryState.get("per_page")) return 10;
+    if (!searchParams.get("per_page")) return 10;
 
-    let page: number | string = queryState.get("page") || "0";
-    let per_page: number | string = queryState.get("per_page") || "0";
+    let page: number | string = searchParams.get("page") || "0";
+    let per_page: number | string = searchParams.get("per_page") || "0";
     page = Number(page);
     per_page = Number(per_page);
 
@@ -139,8 +140,8 @@ const Table: React.FC<IProps> = ({
               <strong className="font-medium">0-0</strong>
             ) : (
               <strong className="font-medium">
-                {Number(queryState.get("page")) *
-                  Number(queryState.get("per_page")) +
+                {Number(searchParams.get("page")) *
+                  Number(searchParams.get("per_page")) +
                   1}
                 -{calculateTotalOfPage()}
               </strong>
@@ -149,7 +150,7 @@ const Table: React.FC<IProps> = ({
           </p>
           <div className="flex gap-1 h-full my-auto">
             <button
-              disabled={queryState.get("page") === "0" || !meta?.total_pages}
+              disabled={searchParams.get("page") === "0" || !meta?.total_pages}
               type="button"
               className="disabled:opacity-30"
               onClick={handlePrevPage}
@@ -158,7 +159,7 @@ const Table: React.FC<IProps> = ({
             </button>
             <button
               disabled={
-                Number(queryState.get("page")) === meta?.total_pages - 1 ||
+                Number(searchParams.get("page")) === meta?.total_pages - 1 ||
                 !meta?.total_pages
               }
               type="button"

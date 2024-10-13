@@ -1,5 +1,6 @@
-import React, { useState, useCallback, useRef } from "react";
+import React, { useCallback, useRef, useMemo } from "react";
 import { X, Scan, Plus } from "lucide-react";
+import { useSearchParams } from "react-router-dom";
 
 interface IProps {
   possibleFilters: {
@@ -10,10 +11,7 @@ interface IProps {
 }
 
 const FiltersLine: React.FC<IProps> = () => {
-  const [activeFilters, setActiveFilters] = useState<string[]>([
-    "teste",
-    "alvenaria",
-  ]);
+  const [searchParams, setSearchParams] = useSearchParams();
   const activeList = useRef<HTMLUListElement>(null);
 
   const removeFilter = useCallback(
@@ -24,14 +22,24 @@ const FiltersLine: React.FC<IProps> = () => {
           "animate-width-0"
         );
         setTimeout(() => {
-          setActiveFilters((prevFilters) =>
-            prevFilters.filter((f) => f !== filter)
-          );
+          // remove
         }, 300);
       }
     },
     [activeList]
   );
+
+  const activeFilters = useMemo(() => {
+    const res: (string | null)[] = [];
+    searchParams.keys().forEach((filter) => {
+      console.log(filter);
+      if (filter.startsWith("filter")) {
+        res.push(searchParams.get(filter));
+      }
+    });
+
+    return res;
+  }, [searchParams]);
 
   return (
     <ul
