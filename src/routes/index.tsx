@@ -1,32 +1,44 @@
+import React, { useEffect } from "react";
 import { RouterProvider } from "react-router-dom";
 import adminRoutes from "./Admin";
 import clientRoutes from "./Client";
 import { useAppSelector, useAppDispatch } from "@/hooks";
 import { useQuery } from "@tanstack/react-query";
 import adminApi from "@/api/admin";
+import { useToast } from "@/hooks/use-toast";
 
-const Routes = () => {
+const Routes: React.FC = () => {
+  const { toast } = useToast();
   const permissions = useAppSelector(({ auth }) => auth.permissions);
+  const logged = useAppSelector(({ auth }) => auth.logged);
   const oauth = useAppSelector(({ auth }) => auth.oauth);
   const dispatch = useAppDispatch();
-  useQuery({
+  const { isError } = useQuery({
     queryKey: ["auth"],
     queryFn: async () => {
       const { data } = await adminApi.oauth(oauth).get("/refresh");
       dispatch({ type: "auth/refresh", payload: data });
       return data;
     },
-    enabled: !!oauth,
+    enabled: !!logged,
     staleTime: 600000,
-    throwOnError() {
-      dispatch({ type: "auth/signOut" });
-      return true;
-    },
   });
+
+  useEffect(() => {
+    if (isError) {
+      dispatch({ type: "auth/signOut" });
+      toast({
+        title: "Erro",
+        description:
+          "Algo deu errado com a sua sessão, por favor entre novamente.",
+        variant: "destructive",
+      });
+    }
+  }, [isError, dispatch, toast]);
 
   return (
     <RouterProvider
-      router={oauth ? adminRoutes({ permissions }) : clientRoutes}
+      router={logged ? adminRoutes({ permissions }) : clientRoutes}
     />
   );
 };

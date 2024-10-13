@@ -17,6 +17,7 @@ interface IStore {
     | undefined;
   role: "admin" | "manager" | "viewer" | undefined;
   permissions: string[] | undefined;
+  logged: boolean;
 }
 
 const initialState: IStore = {
@@ -24,6 +25,7 @@ const initialState: IStore = {
   user: undefined,
   role: undefined,
   permissions: undefined,
+  logged: false,
 };
 
 const permissionsByRoles = {
@@ -75,6 +77,7 @@ export const authSlice = createSlice({
       };
       delete action.payload.data.token;
       state.user = action.payload.data;
+      state.logged = true;
     },
     refresh: (state, action) => {
       const role = action.payload.data.role as "admin" | "manager" | "viewer";
@@ -94,11 +97,10 @@ export const authSlice = createSlice({
       state.user = initialState.user;
       state.role = initialState.role;
       state.permissions = initialState.permissions;
+      state.logged = initialState.logged;
       localStorage.clear();
     },
   },
 });
-
-export const { signIn } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -9,26 +9,19 @@ import { Tags, CirclePlus } from "lucide-react";
 const fields = [
   {
     title: "Material",
-    keys: ["nome"],
+    keys: ["name"],
   },
   {
     title: "Categoria",
     keys: ["category", "name"],
   },
-];
-
-const data = [
   {
-    nome: "teste",
-    category: {
-      name: "teste",
-    },
+    title: "Quantidade",
+    keys: ["quantity"],
   },
   {
-    nome: "teste2",
-    category: {
-      name: "teste2",
-    },
+    title: "Unidade",
+    keys: ["unit", "short_name"],
   },
 ];
 
@@ -53,11 +46,13 @@ const MaterialPage: React.FC = () => {
         }
       />
       <FiltersLine possibleFilters={[]} />
+
       <Table
-        data={data}
         fields={fields}
         onEdit={console.log}
         onDelete={console.log}
+        queryKey={["material"]}
+        endpoint="/material/list"
       />
     </div>
   );
