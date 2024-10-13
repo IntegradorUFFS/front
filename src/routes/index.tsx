@@ -6,13 +6,14 @@ import { useQuery } from "@tanstack/react-query";
 import adminApi from "@/api/admin";
 
 const Routes = () => {
-  const { oauth, permissions } = useAppSelector(({ auth }) => auth);
+  const permissions = useAppSelector(({ auth }) => auth.permissions);
+  const oauth = useAppSelector(({ auth }) => auth.oauth);
   const dispatch = useAppDispatch();
   useQuery({
     queryKey: ["auth"],
     queryFn: async () => {
       const { data } = await adminApi.oauth(oauth).get("/refresh");
-      dispatch({ type: "auth/signIn", payload: data });
+      dispatch({ type: "auth/refresh", payload: data });
       return data;
     },
     enabled: !!oauth,

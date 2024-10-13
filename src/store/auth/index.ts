@@ -67,11 +67,25 @@ export const authSlice = createSlice({
     signIn: (state, action) => {
       const role = action.payload.data.role as "admin" | "manager" | "viewer";
       state.permissions = permissionsByRoles[role];
+      state.role = role;
       delete action.payload.data.role;
       state.oauth = {
         type: "bearer",
         token: action.payload.data.token,
       };
+      delete action.payload.data.token;
+      state.user = action.payload.data;
+    },
+    refresh: (state, action) => {
+      const role = action.payload.data.role as "admin" | "manager" | "viewer";
+      if (role !== state.role) {
+        state.permissions = permissionsByRoles[role];
+        state.role = role;
+        state.oauth = {
+          type: "bearer",
+          token: action.payload.data.token,
+        };
+      }
       delete action.payload.data.token;
       state.user = action.payload.data;
     },

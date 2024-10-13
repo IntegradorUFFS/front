@@ -5,7 +5,8 @@ import routes from "@/routes/Admin/routes";
 import { useAppSelector } from "@/hooks";
 
 const Sidebar: React.FC = () => {
-  const { user, permissions } = useAppSelector(({ auth }) => auth);
+  const user = useAppSelector(({ auth }) => auth.user);
+  const permissions = useAppSelector(({ auth }) => auth.permissions);
   return (
     <aside className=" bg-zinc-200 py-2 flex overflow-hidden">
       <div className=" py-2 bg-zinc-200 min-w-72 max-w-86 w-full h-screen px-2 flex flex-col">
