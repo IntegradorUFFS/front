@@ -35,13 +35,8 @@ class Actions {
 
     if (filters)
       Object.keys(filters).forEach((key) => {
-        if (filters[key]) {
-          if (Array.isArray(filters[key]))
-            params[`filters[${key}][]`] = filters[key].map((value) =>
-              String(value)
-            );
-          else params[`filters[${key}]`] = encodeURIComponent(filters[key]);
-        }
+        if (filters[key])
+          params[`filter[${key}]`] = encodeURIComponent(filters[key]);
       });
 
     const query = queryString.stringify({

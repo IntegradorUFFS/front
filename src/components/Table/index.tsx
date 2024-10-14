@@ -55,7 +55,26 @@ const Table: React.FC<IProps> = ({
         params.per_page = Number(searchParams.get("per_page"));
       }
 
-      const res = await new Actions(endpoint, oauth).fetch(params);
+      const filters: Record<string, any> = {};
+
+      for (const key of searchParams.keys()) {
+        if (key.startsWith("filter")) {
+          const name = key.replace("]", "").split("[")[1];
+
+          let value = decodeURI(searchParams.get(key) ?? "");
+          try {
+            value = JSON.parse(value);
+          } catch {
+            /* empty */
+          }
+          filters[name] = value;
+        }
+      }
+
+      const res = await new Actions(endpoint, oauth).fetch({
+        ...params,
+        filters,
+      });
       setSearchParams({
         ...Object.fromEntries(searchParams),
         page: res.meta.page,
