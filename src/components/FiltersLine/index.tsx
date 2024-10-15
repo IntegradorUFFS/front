@@ -1,6 +1,7 @@
 import React, { useCallback, useRef, useMemo } from "react";
 import { X, Scan, Plus } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface IProps {
   possibleFilters: {
@@ -8,11 +9,14 @@ interface IProps {
     description: string;
     autocomplete_endpoint?: string;
   }[];
+  queryKey: string[];
 }
 
-const FiltersLine: React.FC<IProps> = () => {
+const FiltersLine: React.FC<IProps> = ({ queryKey }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const activeList = useRef<HTMLUListElement>(null);
+
+  const queryClient = useQueryClient();
 
   const removeFilter = useCallback(
     (filter: string, index: number) => {
@@ -25,10 +29,11 @@ const FiltersLine: React.FC<IProps> = () => {
           const prev = { ...Object.fromEntries(searchParams) };
           delete prev[filter];
           setSearchParams(prev);
+          queryClient.invalidateQueries({ queryKey });
         }, 300);
       }
     },
-    [activeList, searchParams, setSearchParams]
+    [activeList, searchParams, setSearchParams, queryClient, queryKey]
   );
 
   const activeFilters = useMemo(() => {

@@ -10,11 +10,13 @@ import { useAppSelector } from "@/hooks";
 import { useQuery } from "@tanstack/react-query";
 import Actions from "@/helpers/Actions";
 import { useQueryClient } from "@tanstack/react-query";
+import { twMerge } from "tailwind-merge";
 
 interface IProps {
   fields: {
     title: string;
     keys: string | string[];
+    isSortable?: boolean;
   }[];
   onEdit?: (params?: any) => void;
   onDelete?: (params?: any) => void;
@@ -42,10 +44,20 @@ const Table: React.FC<IProps> = ({
       const params: {
         page?: number;
         per_page?: number;
+        sort_column?: string;
+        sort_direction?: string;
       } = {
         page: undefined,
         per_page: undefined,
       };
+
+      if (searchParams.get("sort_column") !== null) {
+        params.sort_column = searchParams.get("sort_column")!;
+      }
+
+      if (searchParams.get("sort_direction") !== null) {
+        params.sort_direction = searchParams.get("sort_direction")!;
+      }
 
       if (searchParams.get("page")) {
         const page = Number(searchParams.get("page"));
@@ -86,7 +98,16 @@ const Table: React.FC<IProps> = ({
     },
   });
 
-  const meta = useMemo(() => data?.meta, [data]);
+  const meta = data?.meta;
+
+  const sortState = useMemo(() => {
+    const column = searchParams.get("sort_column");
+    const direction = searchParams.get("sort_direction");
+    return {
+      column,
+      direction,
+    };
+  }, [searchParams]);
 
   const handlePrevPage = useCallback(() => {
     searchParams.set("page", String(meta?.page - 1));
@@ -115,15 +136,60 @@ const Table: React.FC<IProps> = ({
     return per_page;
   };
 
+  const isActive = (keys: string | string[]) => {
+    if (typeof keys === "string") {
+      return keys === sortState.column;
+    }
+
+    return keys.join(".") === sortState.column;
+  };
+
+  const handleSort = (keys: string | string[]) => {
+    if (isActive(keys)) {
+      searchParams.set(
+        "sort_direction",
+        sortState.direction === "asc" ? "desc" : "asc"
+      );
+    } else {
+      if (typeof keys === "string") searchParams.set("sort_column", keys);
+      else searchParams.set("sort_column", keys.join("."));
+
+      searchParams.set("sort_direction", "asc");
+    }
+    setSearchParams(searchParams);
+    queryClient.invalidateQueries({ queryKey });
+  };
+
   return (
     <div className="flex-1">
       <DynamicGrid
         className="bg-zinc-200 rounded-xl grid py-2 px-3 text-base font-montserrat"
         length={fields.length}
       >
-        {fields?.map(({ title }) => (
-          <div key={title}>{title}</div>
-        ))}
+        {fields?.map(({ title, keys, isSortable }) =>
+          isSortable ? (
+            <button
+              onClick={() => handleSort(keys)}
+              type="button"
+              key={title}
+              className="flex items-center justify-start gap-2"
+              disabled={isFetching}
+            >
+              {title}{" "}
+              <span
+                className={twMerge(
+                  "opacity-0 rotate-90 transition-transform",
+                  isActive(keys) && "opacity-50",
+                  sortState.direction === "asc" && "-rotate-90"
+                )}
+              >
+                <ChevronRight20Filled />
+              </span>
+            </button>
+          ) : (
+            <div key={title}>{title}</div>
+          )
+        )}
       </DynamicGrid>
 
       {isFetching

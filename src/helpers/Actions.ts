@@ -4,8 +4,8 @@ import queryString from "./queryString";
 interface IFetchProps {
   page?: number;
   per_page?: number;
-  order?: string;
-  orderBy?: string;
+  sort_direction?: string;
+  sort_column?: string;
   filters?: Record<string, any>;
 }
 
@@ -28,7 +28,7 @@ class Actions {
   }
 
   async fetch(
-    { page, per_page, order, orderBy, filters }: IFetchProps = {},
+    { page, per_page, sort_direction, sort_column, filters }: IFetchProps = {},
     payload = {}
   ) {
     const params: Record<string, string | string[]> = {};
@@ -43,8 +43,8 @@ class Actions {
       ...params,
       page,
       per_page: per_page,
-      sort_column: orderBy,
-      sort_direction: order,
+      sort_column,
+      sort_direction,
     });
 
     const { data } = await api
@@ -55,8 +55,8 @@ class Actions {
       data: Array.isArray(data) ? data : data.data,
       meta: data.meta,
       possibleFilters: data.possible_filters,
-      order,
-      orderBy,
+      sort_direction,
+      sort_column,
       filters,
       payload,
     };

@@ -10,14 +10,17 @@ const fields = [
   {
     title: "Material",
     keys: ["name"],
+    isSortable: true,
   },
   {
     title: "Categoria",
     keys: ["category", "name"],
+    isSortable: true,
   },
   {
     title: "Quantidade",
     keys: ["quantity"],
+    isSortable: true,
   },
   {
     title: "Unidade",
@@ -45,7 +48,7 @@ const MaterialPage: React.FC = () => {
           ]
         }
       />
-      <FiltersLine possibleFilters={[]} />
+      <FiltersLine possibleFilters={[]} queryKey={["material"]} />
 
       <Table
         fields={fields}
