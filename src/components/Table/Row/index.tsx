@@ -15,7 +15,7 @@ interface IProps {
 
 const TableRow: React.FC<IProps> = ({ fields, data, onEdit, onDelete }) => {
   return (
-    <div className="flex-1">
+    <div className="w-full">
       <DynamicGrid
         className="rounded-xl grid py-2 px-3 text-base font-montserrat"
         length={fields.length}
@@ -24,7 +24,7 @@ const TableRow: React.FC<IProps> = ({ fields, data, onEdit, onDelete }) => {
           <div key={title}>{dig(data, keys) ?? ""}</div>
         ))}
 
-        <div className="flex gap-3 justify-end">
+        <div className="flex gap-3 justify-end opacity-70">
           {onEdit && (
             <button onClick={() => onEdit(data)} type="button">
               <BoltIcon size={18} />
