@@ -48,7 +48,9 @@ const Table: React.FC<IProps> = ({
       };
 
       if (searchParams.get("page")) {
-        params.page = Number(searchParams.get("page"));
+        const page = Number(searchParams.get("page"));
+        if (meta?.total_pages && page < meta?.total_pages)
+          params.page = Number(searchParams.get("page"));
       }
 
       if (searchParams.get("per_page")) {
@@ -98,17 +100,6 @@ const Table: React.FC<IProps> = ({
     queryClient.invalidateQueries({ queryKey });
   }, [meta, setSearchParams, searchParams, queryKey, queryClient]);
 
-  const calculateTotalOfPage = () => {
-    if (!meta) return 10;
-    if (meta?.total === 0) return 0;
-    const calculated =
-      Number(searchParams.get("page")) * Number(searchParams.get("per_page")) +
-      Number(searchParams.get("per_page"));
-
-    if (calculated > meta?.total) return meta?.total;
-    return calculated;
-  };
-
   const getLoadingSize = () => {
     if (!searchParams.get("per_page")) return 10;
 
@@ -117,8 +108,10 @@ const Table: React.FC<IProps> = ({
     page = Number(page);
     per_page = Number(per_page);
 
-    const calculated = page * per_page + per_page;
-    if (calculated > meta?.total) return meta?.total - per_page;
+    const inPage = (page + 1) * per_page;
+    const prevPage = page * per_page;
+
+    if (inPage > meta?.total) return meta?.total - prevPage;
     return per_page;
   };
 
@@ -155,17 +148,15 @@ const Table: React.FC<IProps> = ({
           className="bg-zinc-200 rounded-xl py-2 px-4 text-base font-montserrat w-40 flex justify-between mt-2 items-center leading-none"
         >
           <p>
-            {meta?.total_pages === 0 ? (
-              <strong className="font-medium">0-0</strong>
+            {!meta?.total_pages ? (
+              <strong className="font-medium">~</strong>
             ) : (
               <strong className="font-medium">
-                {Number(searchParams.get("page")) *
-                  Number(searchParams.get("per_page")) +
-                  1}
-                -{calculateTotalOfPage()}
+                {Number(searchParams.get("page")) + 1}
               </strong>
             )}{" "}
-            de <strong className="font-medium">{meta?.total ?? "~"}</strong>
+            de{" "}
+            <strong className="font-medium">{meta?.total_pages ?? "~"}</strong>
           </p>
           <div className="flex gap-1 h-full my-auto">
             <button
@@ -178,7 +169,7 @@ const Table: React.FC<IProps> = ({
             </button>
             <button
               disabled={
-                Number(searchParams.get("page")) === meta?.total_pages - 1 ||
+                Number(searchParams.get("page")) >= meta?.total_pages - 1 ||
                 !meta?.total_pages
               }
               type="button"
