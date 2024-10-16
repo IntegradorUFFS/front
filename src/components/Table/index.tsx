@@ -17,6 +17,7 @@ interface IProps {
     title: string;
     keys: string | string[];
     isSortable?: boolean;
+    transform?: (item: any, row: Record<string, any>) => any;
   }[];
   onEdit?: (params?: any) => void;
   onDelete?: (params?: any) => void;

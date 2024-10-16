@@ -11,6 +11,15 @@ const fields = [
     title: "Data",
     keys: ["created_at"],
     isSortable: true,
+    transform: (item: any) => {
+      const date = new Date(item);
+      if (isNaN(date.getTime())) return "";
+      return date.toLocaleDateString("pt-BR", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      });
+    },
   },
   {
     title: "Tipo",

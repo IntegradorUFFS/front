@@ -7,6 +7,7 @@ interface IProps {
   fields: {
     title: string;
     keys: string | string[];
+    transform?: (item: any, row: Record<string, any>) => any;
   }[];
   data: Record<string, any>;
   onEdit?: (params?: any) => void;
@@ -20,8 +21,12 @@ const TableRow: React.FC<IProps> = ({ fields, data, onEdit, onDelete }) => {
         className="rounded-xl grid py-2 px-3 text-base font-montserrat"
         length={fields.length}
       >
-        {fields?.map(({ title, keys }) => (
-          <div key={title}>{dig(data, keys) ?? ""}</div>
+        {fields?.map(({ title, transform, keys }) => (
+          <div key={title}>
+            {transform
+              ? transform(dig(data, keys), data)
+              : dig(data, keys) ?? ""}
+          </div>
         ))}
 
         <div className="flex gap-3 justify-end opacity-70">

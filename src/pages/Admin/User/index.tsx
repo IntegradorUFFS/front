@@ -11,6 +11,8 @@ const fields = [
     title: "Nome",
     keys: ["first_name"],
     isSortable: true,
+    transform: (first_name: string, item: any) =>
+      `${first_name} ${item.last_name}`,
   },
   {
     title: "Email",
