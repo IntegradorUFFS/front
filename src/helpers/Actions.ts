@@ -62,11 +62,11 @@ class Actions {
     };
   }
 
-  async delete(id: number) {
+  async delete(id: string) {
     await api.oauth(this.oauth).del(`${this.endpoint}/${id}`);
   }
 
-  async find(id: number, payload: object = {}) {
+  async find(id: string, payload: object = {}) {
     const { data } = await api.oauth(this.oauth).get(`${this.endpoint}/${id}`);
 
     return {
@@ -76,7 +76,7 @@ class Actions {
     };
   }
 
-  async save(data: object, id: number | null = null, payload: object = {}) {
+  async save(data: object, id: string | null = null, payload: object = {}) {
     let response;
 
     if (id) {
@@ -92,7 +92,7 @@ class Actions {
 
   async autocomplete(
     search: string,
-    id: number,
+    id: string,
     shouldIncludeAutocomplete = true,
     params = {}
   ) {

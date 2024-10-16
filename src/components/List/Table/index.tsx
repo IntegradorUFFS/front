@@ -20,7 +20,7 @@ interface IProps {
     transform?: (item: any, row: Record<string, any>) => any;
   }[];
   onEdit?: (params?: any) => void;
-  onDelete?: (params?: any) => void;
+  onDelete?: false | ((data: any, callback: () => void) => void);
   queryKey: string[];
   endpoint: string;
 }

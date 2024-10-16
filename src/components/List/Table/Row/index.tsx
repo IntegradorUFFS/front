@@ -2,6 +2,7 @@ import React from "react";
 import { BoltIcon, Trash2 } from "lucide-react";
 import { DynamicGrid } from "../styles";
 import dig from "@/helpers/dig";
+import DeleteDialog from "@/components/common/Dialog/Delete";
 
 interface IProps {
   fields: {
@@ -11,7 +12,7 @@ interface IProps {
   }[];
   data: Record<string, any>;
   onEdit?: (params?: any) => void;
-  onDelete?: (params?: any) => void;
+  onDelete?: false | ((data: any, callback: () => void) => void);
   buttons?: number;
 }
 
@@ -44,9 +45,14 @@ const TableRow: React.FC<IProps> = ({
             </button>
           )}
           {onDelete && (
-            <button onClick={() => onDelete(data)} type="button">
-              <Trash2 size={18} />
-            </button>
+            <DeleteDialog
+              triggerElement={
+                <button type="button">
+                  <Trash2 size={18} />
+                </button>
+              }
+              submitAction={(callback) => onDelete(data, callback)}
+            />
           )}
         </div>
       </DynamicGrid>
