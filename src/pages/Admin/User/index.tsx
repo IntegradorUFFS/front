@@ -1,9 +1,9 @@
 import React from "react";
 import { useAppSelector } from "@/hooks";
-import FiltersLine from "@/components/FiltersLine";
-import TitleLine from "@/components/TitleLine";
-import Table from "@/components/Table";
-import Button from "@/components/Button";
+import FiltersLine from "@/components/topSide/FiltersLine";
+import TitleLine from "@/components/topSide/TitleLine";
+import Table from "@/components/botSide/Table";
+import Button from "@/components/common/Button";
 import { CirclePlus } from "lucide-react";
 
 const fields = [
@@ -61,7 +61,9 @@ const UserPage: React.FC = () => {
 
       <Table
         fields={fields}
-        onEdit={console.log}
+        onEdit={() => {
+          console.log();
+        }}
         onDelete={console.log}
         queryKey={["user"]}
         endpoint="/user/list"

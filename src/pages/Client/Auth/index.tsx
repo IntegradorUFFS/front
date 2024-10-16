@@ -6,8 +6,8 @@ import { z } from "zod";
 import clientApi from "@/api/client";
 import { useAppDispatch } from "@/hooks";
 import { useToast } from "@/hooks/use-toast";
-import Input from "@/components/Input";
-import Button from "@/components/Button";
+import Input from "@/components/common/Input";
+import Button from "@/components/common/Button";
 import helpMessages from "@/helpers/helpMessages";
 import extractErrors from "@/helpers/extractErrors";
 

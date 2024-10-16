@@ -1,15 +1,15 @@
 import React, { useCallback, useEffect } from "react";
 import { Ruler } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
-import FiltersLine from "@/components/FiltersLine";
+import FiltersLine from "@/components/topSide/FiltersLine";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import clientApi from "@/api/client";
 import { useAppDispatch } from "@/hooks";
 import { useToast } from "@/hooks/use-toast";
-import Input from "@/components/Input";
-import Button from "./components/Button";
+import Input from "@/components/common/Input";
+import Button from "./components/common/Button";
 import { IApiError } from "./helpers/interfaces";
 import Sidebar from "@/layout/Sidebar";
 

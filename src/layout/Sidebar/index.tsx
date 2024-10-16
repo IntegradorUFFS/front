@@ -1,6 +1,6 @@
 import React, { memo } from "react";
-import UserMenu from "@/components/UserMenu";
-import RippleButton from "@/components/RippleNav";
+import UserMenu from "@/components/bar/UserMenu";
+import RippleButton from "@/components/bar/RippleNav";
 import routes from "@/routes/Admin/routes";
 import { useAppSelector } from "@/hooks";
 
