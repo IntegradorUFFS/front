@@ -12,14 +12,22 @@ interface IProps {
   data: Record<string, any>;
   onEdit?: (params?: any) => void;
   onDelete?: (params?: any) => void;
+  buttons?: number;
 }
 
-const TableRow: React.FC<IProps> = ({ fields, data, onEdit, onDelete }) => {
+const TableRow: React.FC<IProps> = ({
+  fields,
+  data,
+  onEdit,
+  onDelete,
+  buttons,
+}) => {
   return (
     <div className="w-full">
       <DynamicGrid
         className="rounded-xl grid py-2 px-3 text-base font-montserrat"
         length={fields.length}
+        buttons={buttons}
       >
         {fields?.map(({ title, transform, keys }) => (
           <div key={title}>

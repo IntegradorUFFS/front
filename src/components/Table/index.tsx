@@ -34,11 +34,22 @@ const Table: React.FC<IProps> = ({
 }) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const buttons = useMemo(() => {
+    const buttons = [];
+    if (onEdit) buttons.push("edit");
+    if (onDelete) buttons.push("delete");
+    let sum = buttons.length * 18;
+    buttons.forEach((_, i, arr) => {
+      if (arr[i + 1]) sum += 12;
+    });
+    return sum;
+  }, [onDelete, onEdit]);
+
   const queryClient = useQueryClient();
 
   useEffect(() => {
     queryClient.invalidateQueries({ queryKey });
-  }, [queryClient]);
+  }, [queryClient, queryKey]);
 
   const oauth = useAppSelector((state) => state.auth.oauth);
   const { data, isFetching } = useQuery({
@@ -168,6 +179,7 @@ const Table: React.FC<IProps> = ({
   return (
     <div className="flex-1">
       <DynamicGrid
+        buttons={buttons}
         className="bg-zinc-200 rounded-xl grid py-2 px-3 text-base font-montserrat"
         length={fields.length}
       >
@@ -210,6 +222,7 @@ const Table: React.FC<IProps> = ({
               data={item}
               onDelete={onDelete}
               onEdit={onEdit}
+              buttons={buttons}
             />
           ))}
 
