@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from "react";
 import { Ruler } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
-import FiltersLine from "@/components/topSide/FiltersLine";
+import FiltersLine from "@/components/List/FiltersLine";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";

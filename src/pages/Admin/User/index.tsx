@@ -1,8 +1,8 @@
 import React from "react";
 import { useAppSelector } from "@/hooks";
-import FiltersLine from "@/components/topSide/FiltersLine";
-import TitleLine from "@/components/topSide/TitleLine";
-import Table from "@/components/botSide/Table";
+import FiltersLine from "@/components/List/FiltersLine";
+import TitleLine from "@/components/TitleLine";
+import Table from "@/components/List/Table";
 import Button from "@/components/common/Button";
 import { CirclePlus } from "lucide-react";
 
