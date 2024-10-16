@@ -4,41 +4,41 @@ import FiltersLine from "@/components/FiltersLine";
 import TitleLine from "@/components/TitleLine";
 import Table from "@/components/Table";
 import Button from "@/components/Button";
-import { Tags, CirclePlus } from "lucide-react";
+import { CirclePlus } from "lucide-react";
 
 const fields = [
   {
-    title: "Material",
-    keys: ["name"],
+    title: "Data",
+    keys: ["created_at"],
     isSortable: true,
   },
   {
-    title: "Categoria",
-    keys: ["category", "name"],
+    title: "Tipo",
+    keys: ["type"],
     isSortable: true,
   },
   {
-    title: "Quantidade",
-    keys: ["quantity"],
+    title: "Local Origem",
+    keys: ["origin", "name"],
     isSortable: true,
   },
   {
-    title: "Unidade",
-    keys: ["unit", "short_name"],
+    title: "Local Destino",
+    keys: ["destiny", "name"],
+    isSortable: true,
   },
 ];
 
-const MaterialPage: React.FC = () => {
+const TransactionPage: React.FC = () => {
   const permissions = useAppSelector((state) => state.auth.permissions);
-  const canManage = permissions?.includes("material.management");
+  const canManage = permissions?.includes("transaction.management");
 
   return (
     <div className="flex-1 p-6">
       <TitleLine
-        title="Material"
+        title="Transações"
         buttons={
           canManage && [
-            <Button onClick={console.log} icon={<Tags />} className="p-2" />,
             <Button
               onClick={console.log}
               icon={<CirclePlus />}
@@ -48,16 +48,13 @@ const MaterialPage: React.FC = () => {
           ]
         }
       />
-      <FiltersLine possibleFilters={[]} queryKey={["material"]} />
-
+      <FiltersLine possibleFilters={[]} queryKey={["transaction"]} />
       <Table
         fields={fields}
-        onEdit={console.log}
-        onDelete={console.log}
-        queryKey={["material"]}
-        endpoint="/material/list"
+        queryKey={["transaction"]}
+        endpoint="/transaction/list"
       />
     </div>
   );
 };
-export default MaterialPage;
+export default TransactionPage;

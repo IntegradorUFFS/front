@@ -4,41 +4,36 @@ import FiltersLine from "@/components/FiltersLine";
 import TitleLine from "@/components/TitleLine";
 import Table from "@/components/Table";
 import Button from "@/components/Button";
-import { Tags, CirclePlus } from "lucide-react";
+import { CirclePlus } from "lucide-react";
 
 const fields = [
   {
-    title: "Material",
-    keys: ["name"],
+    title: "Nome",
+    keys: ["first_name"],
     isSortable: true,
   },
   {
-    title: "Categoria",
-    keys: ["category", "name"],
-    isSortable: true,
+    title: "Email",
+    keys: ["email"],
+    isSortable: false,
   },
   {
-    title: "Quantidade",
-    keys: ["quantity"],
+    title: "Permissão",
+    keys: ["role"],
     isSortable: true,
-  },
-  {
-    title: "Unidade",
-    keys: ["unit", "short_name"],
   },
 ];
 
-const MaterialPage: React.FC = () => {
+const UserPage: React.FC = () => {
   const permissions = useAppSelector((state) => state.auth.permissions);
-  const canManage = permissions?.includes("material.management");
+  const canManage = permissions?.includes("user.management");
 
   return (
     <div className="flex-1 p-6">
       <TitleLine
-        title="Material"
+        title="Usuários"
         buttons={
           canManage && [
-            <Button onClick={console.log} icon={<Tags />} className="p-2" />,
             <Button
               onClick={console.log}
               icon={<CirclePlus />}
@@ -48,16 +43,16 @@ const MaterialPage: React.FC = () => {
           ]
         }
       />
-      <FiltersLine possibleFilters={[]} queryKey={["material"]} />
+      <FiltersLine possibleFilters={[]} queryKey={["user"]} />
 
       <Table
         fields={fields}
         onEdit={console.log}
         onDelete={console.log}
-        queryKey={["material"]}
-        endpoint="/material/list"
+        queryKey={["user"]}
+        endpoint="/user/list"
       />
     </div>
   );
 };
-export default MaterialPage;
+export default UserPage;
