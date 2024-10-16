@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from "react";
+import React, { useMemo, useCallback, useEffect } from "react";
 import {
   ChevronLeft20Filled,
   ChevronRight20Filled,
@@ -36,6 +36,10 @@ const Table: React.FC<IProps> = ({
 
   const queryClient = useQueryClient();
 
+  useEffect(() => {
+    queryClient.invalidateQueries({ queryKey });
+  }, [queryClient]);
+
   const oauth = useAppSelector((state) => state.auth.oauth);
   const { data, isFetching } = useQuery({
     queryKey,
@@ -48,7 +52,7 @@ const Table: React.FC<IProps> = ({
         sort_column?: string;
         sort_direction?: string;
       } = {
-        page: undefined,
+        page: 0,
         per_page: undefined,
       };
 
@@ -227,7 +231,9 @@ const Table: React.FC<IProps> = ({
           </p>
           <div className="flex gap-1 h-full my-auto">
             <button
-              disabled={searchParams.get("page") === "0" || !meta?.total_pages}
+              disabled={
+                Number(searchParams.get("page")) <= 0 || !meta?.total_pages
+              }
               type="button"
               className="disabled:opacity-30"
               onClick={handlePrevPage}
