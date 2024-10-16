@@ -15,6 +15,7 @@ const Sidebar: React.FC = () => {
         </div>
 
         <UserMenu user={user} />
+        <div className="py-2" />
         {routes
           .filter(({ scope }) => permissions && permissions.includes(scope))
           .map((route) => (

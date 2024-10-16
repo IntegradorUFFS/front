@@ -10,7 +10,6 @@ const fields = [
   {
     title: "Data",
     keys: ["created_at"],
-    isSortable: true,
     transform: (item: any) => {
       const date = new Date(item);
       if (isNaN(date.getTime())) return "";
@@ -18,13 +17,35 @@ const fields = [
         day: "2-digit",
         month: "2-digit",
         year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
       });
     },
   },
   {
     title: "Tipo",
     keys: ["type"],
+    transform: (item: any) => {
+      switch (item) {
+        case "in":
+          return "Entrada";
+        case "transfer":
+          return "Transferência";
+        case "out":
+          return "Saida";
+        default:
+          return "Algo deu errado";
+      }
+    },
+  },
+  {
+    title: "Material",
+    keys: ["material", "name"],
     isSortable: true,
+  },
+  {
+    title: "Quantidade",
+    keys: ["quantity"],
   },
   {
     title: "Local Origem",

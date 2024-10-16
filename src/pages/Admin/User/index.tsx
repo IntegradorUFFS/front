@@ -23,6 +23,18 @@ const fields = [
     title: "Permissão",
     keys: ["role"],
     isSortable: true,
+    transform: (item: any) => {
+      switch (item) {
+        case "viewer":
+          return "Visualizador";
+        case "admin":
+          return "Administrador";
+        case "manager":
+          return "Gerente";
+        default:
+          return "Algo deu errado";
+      }
+    },
   },
 ];
 
