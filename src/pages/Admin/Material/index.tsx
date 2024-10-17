@@ -55,10 +55,9 @@ const MaterialPage: React.FC = () => {
       callback: () => void;
     }) => {
       if (!oauth) throw new Error("OAuth not found");
-      const res = await new Actions("/material", oauth).delete(id);
+      await new Actions("/material", oauth).delete(id);
       queryClient.invalidateQueries({ queryKey });
-      callback();
-      return res;
+      return callback;
     },
     onSuccess(_, variables) {
       variables.callback();
