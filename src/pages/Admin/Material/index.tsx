@@ -10,6 +10,9 @@ import extractErrors from "@/helpers/extractErrors";
 import helpMessages from "@/helpers/helpMessages";
 import Actions from "@/helpers/Actions";
 import { useToast } from "@/hooks/use-toast";
+import Register from "@/components/common/Dialog/Register";
+import Input from "@/components/common/Input";
+import Dataset from "@/components/common/Dataset";
 
 const fields = [
   {
@@ -37,6 +40,7 @@ const queryKey = ["material"];
 
 const MaterialPage: React.FC = () => {
   const permissions = useAppSelector((state) => state.auth.permissions);
+
   const oauth = useAppSelector((state) => state.auth.oauth);
   const canManage = permissions?.includes("material.management");
   const { toast } = useToast();
@@ -78,6 +82,10 @@ const MaterialPage: React.FC = () => {
     [mutateAsync]
   );
 
+  const handleRegister = useCallback(() => {
+    console.log("register");
+  }, []);
+
   return (
     <div className="flex-1 p-6">
       <TitleLine
@@ -85,11 +93,41 @@ const MaterialPage: React.FC = () => {
         buttons={
           canManage && [
             <Button onClick={console.log} icon={<Tags />} className="p-2" />,
-            <Button
-              onClick={console.log}
-              icon={<CirclePlus />}
-              text="Cadastrar"
-              className="w-fit py-2 px-3"
+            <Register
+              triggerElement={
+                <Button
+                  icon={<CirclePlus />}
+                  className="p-2"
+                  text="Cadastrar"
+                />
+              }
+              submitAction={handleRegister}
+              title="Cadastrar Material"
+              children={
+                <div className="flex flex-col gap-4 mb-2">
+                  <Input
+                    label="Nome"
+                    placeholder="Nome do material"
+                    type="text"
+                  />
+                  <Dataset />
+                  <div className="grid grid-cols-3 gap-4 ">
+                    <div className="col-span-2">
+                      <Input
+                        label="Quantidade"
+                        placeholder="Quantidade"
+                        type="number"
+                      />
+                    </div>
+                    <Input label="Unidade" placeholder="Unidade" type="text" />
+                  </div>
+                  <Input
+                    label="Descrição"
+                    placeholder="Descrição"
+                    type="text"
+                  />
+                </div>
+              }
             />,
           ]
         }

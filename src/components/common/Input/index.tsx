@@ -9,6 +9,7 @@ interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
   type?: string;
   disabled?: boolean;
   toggleOpacity?: boolean;
+  onclick?: () => void;
 }
 
 const Input: React.ForwardRefRenderFunction<HTMLInputElement | null, IProps> = (

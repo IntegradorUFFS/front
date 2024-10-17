@@ -49,9 +49,12 @@ const Dialog: React.FC<IProps> = ({
       <DialogContent className="sm:max-w-[425px]">
         {(title || description) && (
           <DialogHeader>
-            {title && <DialogTitle>{title}</DialogTitle>}
+            {title && <DialogTitle className="py-2">{title}</DialogTitle>}
+            <div className="w-full h-0.5 bg-zinc-900 opacity-20"></div>
             {description && (
-              <DialogDescription>{description}</DialogDescription>
+              <DialogDescription className="py-2">
+                {description}
+              </DialogDescription>
             )}
           </DialogHeader>
         )}
