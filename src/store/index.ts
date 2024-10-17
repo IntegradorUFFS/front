@@ -2,6 +2,7 @@ import { configureStore, Tuple } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { logger } from "redux-logger";
+import { encryptTransform } from "redux-persist-transform-encrypt";
 import reducers from "./reducers";
 
 const middlewares = [];
@@ -14,9 +15,14 @@ const persistConfig = {
   key: "@habitafort-root",
   storage,
   whitelist: ["auth"],
+  transforms: [
+    encryptTransform({
+      secretKey: "my-super-secret-key",
+    }),
+  ],
 };
 
-const persistedReducer = persistReducer(persistConfig, reducers);
+const persistedReducer = persistReducer(persistConfig, reducers as any);
 
 export const store = configureStore({
   reducer: persistedReducer,
