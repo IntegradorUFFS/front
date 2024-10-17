@@ -17,7 +17,7 @@ const persistConfig = {
   whitelist: ["auth"],
   transforms: [
     encryptTransform({
-      secretKey: process.env.REACT_APP_REDUX_SECRET_KEY,
+      secretKey: process.env.REACT_APP_REDUX_SECRET_KEY ?? "",
     }),
   ],
 };
