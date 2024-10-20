@@ -91,8 +91,8 @@ class Actions {
   }
 
   async autocomplete(
-    search: string,
-    id: string,
+    search?: string,
+    id?: string,
     shouldIncludeAutocomplete = true,
     params = {}
   ) {

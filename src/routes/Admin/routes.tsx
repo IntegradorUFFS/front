@@ -2,14 +2,12 @@ import LocationPage from "@/pages/Admin/Location";
 import LocationMaterialPage from "@/pages/Admin/LocationMaterial";
 import MaterialPage from "@/pages/Admin/Material";
 import TransactionPage from "@/pages/Admin/Transaction";
-import UnitPage from "@/pages/Admin/Unit";
 import UserPage from "@/pages/Admin/User";
 import {
   Archive,
   BrickWall,
   ClipboardList,
   MapPinHouse,
-  Ruler,
   Users,
 } from "lucide-react";
 
@@ -52,14 +50,6 @@ export default [
     icon: <ClipboardList />,
     element: <TransactionPage />,
     scope: "transaction.view",
-    children: [{ path: "", element: "" }],
-  },
-  {
-    name: "Unidades métricas",
-    path: "/admin/unit",
-    icon: <Ruler />,
-    element: <UnitPage />,
-    scope: "unit.view",
     children: [{ path: "", element: "" }],
   },
 ];

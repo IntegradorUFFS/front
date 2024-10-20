@@ -9,15 +9,15 @@ interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
   type?: string;
   disabled?: boolean;
   toggleOpacity?: boolean;
-  onclick?: () => void;
+  onChange?: React.ChangeEventHandler<HTMLInputElement> | undefined;
 }
 
 const Input: React.ForwardRefRenderFunction<HTMLInputElement | null, IProps> = (
-  { error, label, placeholder, type = "text", disabled, ...props },
+  { error, label, placeholder, type = "text", disabled, onChange, ...props },
   ref
 ) => {
   return (
-    <div className="flex flex-col gap-2 text-sm font-sans">
+    <div className="flex flex-col gap-2 text-sm font-sans w-full">
       {label && <span className="font-semibold">{label}</span>}
       {type === "password" ? (
         <Password
@@ -26,6 +26,7 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement | null, IProps> = (
           {...props}
           ref={ref}
           invalid={!!error}
+          onChange={onChange}
         />
       ) : (
         <Text
@@ -35,6 +36,7 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement | null, IProps> = (
           {...props}
           ref={ref}
           invalid={!!error}
+          onChange={onChange}
         />
       )}
       {error && <span className="text-sm text-red-600 ml-2">{error}</span>}

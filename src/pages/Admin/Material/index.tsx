@@ -4,15 +4,14 @@ import FiltersLine from "@/components/List/FiltersLine";
 import TitleLine from "@/components/TitleLine";
 import Table from "@/components/List/Table";
 import Button from "@/components/common/Button";
-import { Tags, CirclePlus } from "lucide-react";
+import { Tags, Ruler, CirclePlus } from "lucide-react";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import extractErrors from "@/helpers/extractErrors";
 import helpMessages from "@/helpers/helpMessages";
 import Actions from "@/helpers/Actions";
 import { useToast } from "@/hooks/use-toast";
-import Register from "@/components/common/Dialog/Register";
-import Input from "@/components/common/Input";
-import Dataset from "@/components/common/Dataset";
+import Dialog from "@/components/common/Dialog";
+import Form from "./components/Form";
 
 const fields = [
   {
@@ -91,8 +90,9 @@ const MaterialPage: React.FC = () => {
         title="Material"
         buttons={
           canManage && [
+            <Button onClick={console.log} icon={<Ruler />} className="p-2" />,
             <Button onClick={console.log} icon={<Tags />} className="p-2" />,
-            <Register
+            <Dialog
               triggerElement={
                 <Button
                   icon={<CirclePlus />}
@@ -102,32 +102,11 @@ const MaterialPage: React.FC = () => {
               }
               submitAction={handleRegister}
               title="Cadastrar Material"
-              children={
-                <div className="flex flex-col gap-4 mb-2">
-                  <Input
-                    label="Nome"
-                    placeholder="Nome do material"
-                    type="text"
-                  />
-                  <Dataset />
-                  <div className="grid grid-cols-3 gap-4 ">
-                    <div className="col-span-2">
-                      <Input
-                        label="Quantidade"
-                        placeholder="Quantidade"
-                        type="number"
-                      />
-                    </div>
-                    <Input label="Unidade" placeholder="Unidade" type="text" />
-                  </div>
-                  <Input
-                    label="Descrição"
-                    placeholder="Descrição"
-                    type="text"
-                  />
-                </div>
-              }
-            />,
+              cancelText="Cancelar"
+              submitText="Salvar"
+            >
+              <Form />
+            </Dialog>,
           ]
         }
       />
