@@ -1,10 +1,4 @@
-import React, {
-  forwardRef,
-  useState,
-  useCallback,
-  useEffect,
-  useRef,
-} from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import Input from "../Input";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Actions from "@/helpers/Actions";
@@ -30,10 +24,7 @@ interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
   disabled?: boolean;
 }
 
-const Autocomplete: React.ForwardRefRenderFunction<
-  HTMLInputElement | null,
-  IProps
-> = ({
+const Autocomplete: React.FC<IProps> = ({
   label,
   placeholder,
   queryKey,
@@ -229,4 +220,4 @@ const Autocomplete: React.ForwardRefRenderFunction<
   );
 };
 
-export default forwardRef(Autocomplete);
+export default Autocomplete;
