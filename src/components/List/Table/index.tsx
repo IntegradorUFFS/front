@@ -110,6 +110,12 @@ const Table: React.FC<IProps> = ({
         page: res.meta.page,
         per_page: res.meta.per_page,
       });
+
+      if (params.page && params.page >= res?.meta?.total_pages) {
+        searchParams.set("page", String(res?.meta?.total_pages - 1));
+        setSearchParams(searchParams);
+        queryClient.invalidateQueries({ queryKey });
+      }
       return res;
     },
   });
