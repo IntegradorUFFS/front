@@ -3,6 +3,8 @@ import { BoltIcon, Trash2 } from "lucide-react";
 import { DynamicGrid } from "../styles";
 import dig from "@/helpers/dig";
 import DeleteDialog from "@/components/common/Dialog/Delete";
+import Dialog from "@/components/common/Dialog";
+import Form from "@/pages/Admin/Material/components/Form";
 
 interface IProps {
   fields: {
@@ -11,9 +13,11 @@ interface IProps {
     transform?: (item: any, row: Record<string, any>) => any;
   }[];
   data: Record<string, any>;
-  onEdit?: (params?: any) => void;
+  onEdit?: false | ((params: any, callback: () => void) => void);
   onDelete?: false | ((data: any, callback: () => void) => void);
   buttons?: number;
+  title?: string;
+  form?: React.ReactNode;
 }
 
 const TableRow: React.FC<IProps> = ({
@@ -22,6 +26,8 @@ const TableRow: React.FC<IProps> = ({
   onEdit,
   onDelete,
   buttons,
+  title,
+  form,
 }) => {
   return (
     <div className="w-full">
@@ -40,9 +46,19 @@ const TableRow: React.FC<IProps> = ({
 
         <div className="flex gap-3 justify-end opacity-70">
           {onEdit && (
-            <button onClick={() => onEdit(data)} type="button">
-              <BoltIcon size={18} />
-            </button>
+            <Dialog
+              triggerElement={
+                <button type="button">
+                  <BoltIcon size={18} />
+                </button>
+              }
+              submitAction={(callback) => onEdit(data, callback)}
+              title={title}
+              cancelText="Cancelar"
+              submitText="Salvar"
+            >
+              {form}
+            </Dialog>
           )}
           {onDelete && (
             <DeleteDialog

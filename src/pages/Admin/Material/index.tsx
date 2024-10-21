@@ -117,6 +117,8 @@ const MaterialPage: React.FC = () => {
         onDelete={canManage && handleDelete}
         queryKey={queryKey}
         endpoint="/material/list"
+        titleEdit="Editar Material"
+        formEdit={<Form edit={true} />}
       />
     </div>
   );

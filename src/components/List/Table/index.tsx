@@ -23,6 +23,8 @@ interface IProps {
   onDelete?: false | ((data: any, callback: () => void) => void);
   queryKey: string[];
   endpoint: string;
+  titleEdit?: string;
+  formEdit?: React.ReactNode;
 }
 
 const Table: React.FC<IProps> = ({
@@ -31,6 +33,8 @@ const Table: React.FC<IProps> = ({
   onEdit,
   queryKey,
   endpoint,
+  titleEdit,
+  formEdit,
 }) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -229,6 +233,8 @@ const Table: React.FC<IProps> = ({
               onDelete={onDelete}
               onEdit={onEdit}
               buttons={buttons}
+              title={titleEdit}
+              form={formEdit}
             />
           ))}
 

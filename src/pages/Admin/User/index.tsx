@@ -10,6 +10,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Actions from "@/helpers/Actions";
 import extractErrors from "@/helpers/extractErrors";
 import helpMessages from "@/helpers/helpMessages";
+import Form from "./components/Form";
 
 const fields = [
   {
@@ -113,6 +114,8 @@ const UserPage: React.FC = () => {
         onDelete={canManage && handleDelete}
         queryKey={["user"]}
         endpoint="/user/list"
+        titleEdit="Editar Usuário"
+        formEdit={<Form edit={true} />}
       />
     </div>
   );

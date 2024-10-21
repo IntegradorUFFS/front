@@ -10,6 +10,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Actions from "@/helpers/Actions";
 import extractErrors from "@/helpers/extractErrors";
 import helpMessages from "@/helpers/helpMessages";
+import Form from "./components/Form";
 
 const fields = [
   {
@@ -86,6 +87,8 @@ const LocationPage: React.FC = () => {
         onDelete={canManage && handleDelete}
         queryKey={["location"]}
         endpoint="/location/list"
+        titleEdit="Editar Local"
+        formEdit={<Form edit={true} />}
       />
     </div>
   );
