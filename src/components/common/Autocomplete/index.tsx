@@ -9,9 +9,10 @@ import Input from "../Input";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Actions from "@/helpers/Actions";
 import { useAppSelector } from "@/hooks";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, Control } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { X } from "lucide-react";
 
 const schema = z.object({
   query: z.string(),
@@ -23,11 +24,13 @@ interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
   endpoint: string;
   queryKey: string[];
   getOptionLabel: (option: any) => string;
-  getOptionValue?: (option: any) => any;
-  control: typeof Controller;
+  valueKey?: string;
+  control: Control<any>;
+  name: string;
+  disabled?: boolean;
 }
 
-const Dataset: React.ForwardRefRenderFunction<
+const Autocomplete: React.ForwardRefRenderFunction<
   HTMLInputElement | null,
   IProps
 > = ({
@@ -36,14 +39,17 @@ const Dataset: React.ForwardRefRenderFunction<
   queryKey,
   endpoint,
   getOptionLabel,
-  getOptionValue,
+  valueKey,
+  name,
+  control,
+  disabled,
 }) => {
   const [active, setActive] = useState<boolean>(false);
   const popupRef = useRef<HTMLMenuElement>(null);
 
   const queryClient = useQueryClient();
 
-  const { register, getValues, watch } = useForm({
+  const { register, getValues, watch, setValue } = useForm({
     resolver: zodResolver(schema),
     defaultValues: {
       search: "",
@@ -62,8 +68,6 @@ const Dataset: React.ForwardRefRenderFunction<
       return res.data;
     },
   });
-
-  console.log(data);
 
   const handleClose = useCallback((e: MouseEvent) => {
     if (popupRef.current && !popupRef?.current?.contains(e?.target as Node)) {
@@ -86,52 +90,143 @@ const Dataset: React.ForwardRefRenderFunction<
   const search = watch("search");
 
   useEffect(() => {
-    queryClient.invalidateQueries({ queryKey });
-  }, [search, queryClient]);
+    const timeout = setTimeout(() => {
+      queryClient.invalidateQueries({ queryKey });
+    }, 300);
+    return () => clearTimeout(timeout);
+  }, [search, queryClient, queryKey]);
+
+  const [selected, setSelected] = useState("");
+
+  const getRecord = async (
+    value: string | number,
+    onChange: (value: any) => void
+  ) => {
+    let record = data?.find(
+      (item: Record<string, any>) =>
+        (valueKey ? item?.[valueKey] : item?.id) === value
+    );
+
+    if (!record) {
+      const res = await new Actions(endpoint, oauth).autocomplete(
+        "",
+        String(value)
+      );
+
+      if (res.data?.length > 0) {
+        record = res.data[0];
+      }
+    }
+
+    if (!record) {
+      setSelected("");
+      onChange(undefined);
+    }
+
+    setSelected(getOptionLabel(record));
+  };
 
   return (
-    <div className="flex flex-col gap-2 text-sm font-sans relative items-center w-full">
-      <div className="w-full flex flex-1 justify-start z-10">
-        <Input
-          label={label}
-          placeholder={placeholder}
-          onClick={() => {
-            !active ? setActive(true) : handleClose;
-          }}
-          {...register("search")}
-        />
-      </div>
-
-      {active && (
-        <menu
-          className="w-full p-3 bg-zinc-50 top-[5rem] absolute rounded-xl shadow-md animate-menu-in z-[5]"
-          ref={popupRef}
-        >
-          <div className="flex flex-col gap-1 animate-menu-in-content overflow-y-auto max-h-32">
-            {data?.map(
-              (
-                item: Record<string, any>,
-                index: number,
-                arr: Record<string, any>[]
-              ) => (
-                <div key={item?.id}>
-                  <button
-                    className="py-2 flex justify-center w-full flex-col "
-                    onClick={() =>
-                      getOptionValue ? getOptionValue(item) : item?.id
-                    }
-                  >
-                    <span className="text-sm">{getOptionLabel(item)}</span>
-                  </button>
-                  {arr[index + 1] && <hr className="border-zinc-300 w-full" />}
+    <Controller
+      name={name}
+      control={control}
+      disabled={disabled}
+      render={({ field: { onChange, value }, fieldState: { error } }) => {
+        return (
+          <div className="flex flex-col gap-2 text-sm font-sans relative items-center w-full">
+            <div className="w-full flex flex-1 justify-start z-10">
+              {!value ? (
+                <Input
+                  label={label}
+                  placeholder={placeholder}
+                  onClick={() => setActive(true)}
+                  {...register("search")}
+                  autoComplete="off"
+                  error={error?.message}
+                />
+              ) : (
+                <div
+                  className="flex flex-col gap-2 text-sm font-sans w-full"
+                  {...getRecord(value, onChange)}
+                >
+                  {label && <span className="font-semibold">{label}</span>}
+                  <div className="w-full bg-zinc-200 rounded-md text-sm py-3 px-5 placeholder:text-zinc-500 bg-transparent aria-invalid:border-red-600 font-normal flex justify-between">
+                    {selected}
+                    <button
+                      type="button"
+                      className="h-full flex items-center justify-center"
+                      onClick={() => {
+                        setValue("search", "");
+                        onChange(undefined);
+                        setSelected("");
+                      }}
+                    >
+                      <X size={16} />
+                    </button>
+                  </div>
+                  {error?.message && (
+                    <span className="text-sm text-red-600 ml-2">
+                      {error?.message}
+                    </span>
+                  )}
                 </div>
-              )
+              )}
+            </div>
+
+            {active && (
+              <menu
+                className="w-full p-3 bg-zinc-50 top-[5rem] absolute rounded-xl shadow-md animate-menu-in z-[5]"
+                ref={popupRef}
+              >
+                <div className="flex flex-col gap-1 animate-menu-in-content overflow-y-auto max-h-32">
+                  {data && data?.length > 0 ? (
+                    data?.map(
+                      (
+                        item: Record<string, any>,
+                        index: number,
+                        arr: Record<string, any>[]
+                      ) => (
+                        <div key={item?.id}>
+                          <button
+                            className="py-2 flex justify-center w-full flex-col "
+                            onClick={() => {
+                              onChange(valueKey ? item?.[valueKey] : item?.id);
+                              if (popupRef.current) {
+                                popupRef.current.classList.replace(
+                                  "animate-menu-in",
+                                  "animate-menu-out"
+                                );
+                                popupRef.current.children[0].classList.replace(
+                                  "animate-menu-in-content",
+                                  "animate-menu-out-content"
+                                );
+                              }
+                              setTimeout(() => setActive(false), 580);
+                            }}
+                          >
+                            <span className="text-sm">
+                              {getOptionLabel(item)}
+                            </span>
+                          </button>
+                          {arr[index + 1] && (
+                            <hr className="border-zinc-300 w-full" />
+                          )}
+                        </div>
+                      )
+                    )
+                  ) : (
+                    <span className="text-zinc-500">
+                      Nenhum item encontrado
+                    </span>
+                  )}
+                </div>
+              </menu>
             )}
           </div>
-        </menu>
-      )}
-    </div>
+        );
+      }}
+    />
   );
 };
 
-export default forwardRef(Dataset);
+export default forwardRef(Autocomplete);
