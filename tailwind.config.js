@@ -30,14 +30,17 @@ export default {
             padding: "0",
             overflow: "hidden",
             top: "3rem",
+            zindex: "0",
           },
           "40%": {
             padding: "0.5rem",
             top: "4.5rem",
+            zindex: "0",
           },
           "50%": {
             padding: "0.75rem",
             width: "0",
+            zindex: "0",
           },
           "60%": {
             width: "100%",
@@ -46,6 +49,7 @@ export default {
           "100%": {
             "max-height": "6rem",
             overflow: "hidden",
+            zindex: "10",
           },
         },
         "menu-in-content": {
@@ -74,14 +78,17 @@ export default {
           "0%": {
             overflow: "hidden",
             maxHeight: "6rem",
+            zIndex: "10",
           },
           "40%": {
             padding: "0.75rem",
             width: "0",
             maxHeight: "0",
+            zIndex: "10",
           },
           "60%": {
             padding: "0.5rem",
+            zIndex: "0",
           },
           "100%": {
             width: "0",

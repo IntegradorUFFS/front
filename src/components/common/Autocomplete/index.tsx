@@ -7,6 +7,7 @@ import { useForm, Controller, Control } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { X } from "lucide-react";
+import { twMerge } from "tailwind-merge";
 
 const schema = z.object({
   query: z.string(),
@@ -49,7 +50,7 @@ const Autocomplete: React.FC<IProps> = ({
 
   const oauth = useAppSelector((state) => state.auth.oauth);
 
-  const { data } = useQuery({
+  const { data, isFetching } = useQuery({
     queryKey,
     queryFn: async () => {
       if (!oauth) throw new Error("OAuth not found");
@@ -125,7 +126,7 @@ const Autocomplete: React.FC<IProps> = ({
       render={({ field: { onChange, value }, fieldState: { error } }) => {
         return (
           <div className="flex flex-col gap-2 text-sm font-sans relative items-center w-full">
-            <div className="w-full flex flex-1 justify-start z-10">
+            <div className="w-full flex flex-1 justify-start z-[5]">
               {!value ? (
                 <Input
                   label={label}
@@ -166,7 +167,7 @@ const Autocomplete: React.FC<IProps> = ({
 
             {active && (
               <menu
-                className="w-full p-3 bg-zinc-50 top-[5rem] absolute rounded-xl shadow-md animate-menu-in z-[5]"
+                className="w-full p-3 bg-zinc-50 top-[5rem] absolute rounded-xl shadow-md animate-menu-in z-10"
                 ref={popupRef}
               >
                 <div className="flex flex-col gap-1 animate-menu-in-content overflow-y-auto max-h-32">
@@ -179,7 +180,10 @@ const Autocomplete: React.FC<IProps> = ({
                       ) => (
                         <div key={item?.id}>
                           <button
-                            className="py-2 flex justify-center w-full flex-col "
+                            className={twMerge(
+                              "py-2 flex justify-center w-full flex-col transition-opacity duration-300",
+                              isFetching && "opacity-30"
+                            )}
                             onClick={() => {
                               onChange(valueKey ? item?.[valueKey] : item?.id);
                               if (popupRef.current) {
