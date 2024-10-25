@@ -8,7 +8,6 @@ interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
   placeholder?: string;
   disabled?: boolean;
   invalid?: boolean;
-  value?: string;
 }
 
 const InputPassword: React.ForwardRefRenderFunction<
@@ -33,7 +32,6 @@ const InputPassword: React.ForwardRefRenderFunction<
         toggleOpacity={false}
         {...props}
         ref={ref}
-        value={value}
       />
 
       <button

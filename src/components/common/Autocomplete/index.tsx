@@ -50,6 +50,7 @@ const Autocomplete: React.FC<IProps> = ({
 
   const oauth = useAppSelector((state) => state.auth.oauth);
 
+  //autocomplete
   const { data, isFetching } = useQuery({
     queryKey,
     queryFn: async () => {
@@ -61,6 +62,8 @@ const Autocomplete: React.FC<IProps> = ({
     },
   });
 
+
+  //animação para fechar
   const handleClose = useCallback((e: MouseEvent) => {
     if (popupRef.current && !popupRef?.current?.contains(e?.target as Node)) {
       popupRef.current.classList.replace("animate-menu-in", "animate-menu-out");
@@ -72,6 +75,7 @@ const Autocomplete: React.FC<IProps> = ({
     }
   }, []);
 
+  //descer e subir no scroll
   useEffect(() => {
     document.addEventListener("mousedown", handleClose);
     return () => {
@@ -81,6 +85,7 @@ const Autocomplete: React.FC<IProps> = ({
 
   const search = watch("search");
 
+  //algo relacionado ao scroll
   useEffect(() => {
     const timeout = setTimeout(() => {
       queryClient.invalidateQueries({ queryKey });
@@ -90,6 +95,7 @@ const Autocomplete: React.FC<IProps> = ({
 
   const [selected, setSelected] = useState("");
 
+  //busca 
   const getRecord = async (
     value: string | number,
     onChange: (value: any) => void

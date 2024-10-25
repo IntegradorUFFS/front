@@ -1,6 +1,9 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { ChevronDown, DoorOpen, DoorClosed, Bolt } from "lucide-react";
 import { useAppDispatch } from "@/hooks";
+import Dialog from "@/components/common/Dialog";
+import Form from "./Form";
+import { startCase, toLower } from "lodash";
 
 interface IProps {
   user:
@@ -59,7 +62,8 @@ const UserMenu: React.FC<IProps> = ({ user }) => {
           </div>
           <div className="flex flex-col">
             <h2 className="text-base font-bold">
-              {user.first_name} {user.last_name}
+              {startCase(toLower(user.first_name.trim()))}{" "}
+              {startCase(toLower(user.last_name.trim()))}
             </h2>
             <p className="text-xs opacity-60 font-semibold">{user.email}</p>
           </div>
@@ -78,16 +82,27 @@ const UserMenu: React.FC<IProps> = ({ user }) => {
             ref={popupRef}
           >
             <div className="animate-menu-in-content">
-              <button
-                type="button"
-                className="py-2 flex items-center w-full group"
+              <Dialog
+                triggerElement={
+                  <button
+                    type="button"
+                    className="py-2 flex items-center w-full group"
+                  >
+                    <Bolt
+                      className="opacity-65 mr-2 group-hover:animate-spin-slow"
+                      size={18}
+                    />
+                    <span className="text-sm">Atualizar perfil</span>
+                  </button>
+                }
+                submitAction={() => {}}
+                title="Atualizar Perfil"
+                cancelText="Cancelar"
+                submitText="Salvar"
               >
-                <Bolt
-                  className="opacity-65 mr-2 group-hover:animate-spin-slow"
-                  size={18}
-                />
-                <span className="text-sm">Atualizar perfil</span>
-              </button>
+                <Form user={user} />
+              </Dialog>
+
               <hr className="border-zinc-300" />
               <button
                 className="py-2 flex items-center w-full"

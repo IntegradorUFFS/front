@@ -6,72 +6,58 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
 interface IProps {
-  edit?: boolean;
+  edit?: {
+    name: string;
+    category: {
+      id: string;
+    };
+    unit: {
+      id: string;
+    };
+  };
 }
 
 const schema = z.object({
   name: z.string(),
   category_id: z.number(),
-  quantity: z.number(),
-  unit: z.string(),
+  unit_id: z.string(),
 });
 
 const Form: React.FC<IProps> = ({ edit }) => {
-  const { control } = useForm({
+  const { control, register } = useForm({
     resolver: zodResolver(schema),
-    defaultValues: edit
-      ? {
-          name: "m_teste",
-          category_id: "",
-          quantity: 0,
-          unit: "metros",
-        }
-      : {
-          name: "",
-          category_id: "",
-          quantity: 0,
-          unit: "",
-        },
+    defaultValues: {
+      name: edit?.name,
+      category_id: edit?.category?.id,
+      unit_id: edit?.unit?.id,
+    },
   });
+
   return (
     <div className="flex flex-col gap-4 mb-2">
       <Input
+        {...register("name")}
         label="Nome"
         placeholder="Nome do material"
         type="text"
-        value={edit ? "nome do item selecionado" : ""}
       />
       <Autocomplete
         name="category_id"
         control={control}
         label="Categoria"
         placeholder="Digite para pesquisar a catregoria"
-        queryKey={["material-autopcomplete"]}
-        endpoint="/material"
+        queryKey={["category-autocomplete"]}
+        endpoint="/category"
         getOptionLabel={(option) => option.name}
       />
-      <div className="grid grid-cols-2 gap-4 ">
-        <Input
-          label="Quantidade"
-          placeholder="Quantidade"
-          type="number"
-          value={edit ? "123" : ""}
-        />
-        <Autocomplete
-          name="unit_id"
-          control={control}
-          label="Unidade"
-          placeholder="Digite para pesquisar"
-          queryKey={["unit-autopcomplete"]}
-          endpoint="/unit"
-          getOptionLabel={(option) => option.name}
-        />
-      </div>
-      <Input
-        label="Descrição"
-        placeholder="Descrição"
-        type="text"
-        value={edit ? "descrição completa do item selecionado" : ""}
+      <Autocomplete
+        name="unit_id"
+        control={control}
+        label="Unidade"
+        placeholder="Digite para pesquisar"
+        queryKey={["unit-autocomplete"]}
+        endpoint="/unit"
+        getOptionLabel={(option) => option.name}
       />
     </div>
   );

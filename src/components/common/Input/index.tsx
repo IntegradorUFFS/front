@@ -9,21 +9,11 @@ interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
   type?: string;
   disabled?: boolean;
   toggleOpacity?: boolean;
-  value?: string;
   onChange?: React.ChangeEventHandler<HTMLInputElement> | undefined;
 }
 
 const Input: React.ForwardRefRenderFunction<HTMLInputElement | null, IProps> = (
-  {
-    error,
-    label,
-    placeholder,
-    value = "",
-    type = "text",
-    disabled,
-    onChange,
-    ...props
-  },
+  { error, label, placeholder, type = "text", disabled, onChange, ...props },
   ref
 ) => {
   return (
@@ -32,7 +22,6 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement | null, IProps> = (
       {type === "password" ? (
         <Password
           placeholder={placeholder}
-          value={value}
           disabled={disabled}
           {...props}
           ref={ref}
@@ -43,7 +32,6 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement | null, IProps> = (
         <Text
           placeholder={placeholder}
           type={type}
-          value={value}
           disabled={disabled}
           {...props}
           ref={ref}

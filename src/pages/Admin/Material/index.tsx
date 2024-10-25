@@ -4,7 +4,7 @@ import FiltersLine from "@/components/List/FiltersLine";
 import TitleLine from "@/components/TitleLine";
 import Table from "@/components/List/Table";
 import Button from "@/components/common/Button";
-import { Tags, Ruler, CirclePlus } from "lucide-react";
+import { Tags, Ruler, CirclePlus, Hand } from "lucide-react";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import extractErrors from "@/helpers/extractErrors";
 import helpMessages from "@/helpers/helpMessages";
@@ -12,6 +12,7 @@ import Actions from "@/helpers/Actions";
 import { useToast } from "@/hooks/use-toast";
 import Dialog from "@/components/common/Dialog";
 import Form from "./components/Form";
+import Api from "@/api/admin";
 
 const fields = [
   {
@@ -81,7 +82,11 @@ const MaterialPage: React.FC = () => {
   );
 
   const handleRegister = useCallback(() => {
-    console.log("register");
+    Api.post("/api/admin/material", {
+      name: "Material de teste",
+      category_id: "",
+      unit_id: "",
+    });
   }, []);
 
   return (
@@ -100,7 +105,7 @@ const MaterialPage: React.FC = () => {
                   text="Cadastrar"
                 />
               }
-              submitAction={handleRegister}
+              submitAction={canManage && handleRegister}
               title="Cadastrar Material"
               cancelText="Cancelar"
               submitText="Salvar"
@@ -113,12 +118,12 @@ const MaterialPage: React.FC = () => {
       <FiltersLine possibleFilters={[]} queryKey={queryKey} />
       <Table
         fields={fields}
-        onEdit={console.log}
+        onEdit={canManage} // &&HandleEdit
         onDelete={canManage && handleDelete}
         queryKey={queryKey}
         endpoint="/material/list"
         titleEdit="Editar Material"
-        formEdit={<Form edit={true} />}
+        formEdit={<Form />}
       />
     </div>
   );

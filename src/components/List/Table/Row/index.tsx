@@ -4,7 +4,6 @@ import { DynamicGrid } from "../styles";
 import dig from "@/helpers/dig";
 import DeleteDialog from "@/components/common/Dialog/Delete";
 import Dialog from "@/components/common/Dialog";
-import Form from "@/pages/Admin/Material/components/Form";
 
 interface IProps {
   fields: {
@@ -29,6 +28,10 @@ const TableRow: React.FC<IProps> = ({
   title,
   form,
 }) => {
+  const editForm = () =>
+    React.cloneElement(form as React.ReactElement, {
+      edit: data,
+    });
   return (
     <div className="w-full">
       <DynamicGrid
@@ -57,7 +60,7 @@ const TableRow: React.FC<IProps> = ({
               cancelText="Cancelar"
               submitText="Salvar"
             >
-              {form}
+              {editForm()}
             </Dialog>
           )}
           {onDelete && (
