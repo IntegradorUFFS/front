@@ -14,6 +14,12 @@ import Dialog from "@/components/common/Dialog";
 import Form from "./components/Form";
 import Api from "@/api/admin";
 
+interface PostMaterialParams {
+  name: string;
+  category_id: string;
+  unit_id: string;
+}
+
 const fields = [
   {
     title: "Material",
@@ -46,7 +52,35 @@ const MaterialPage: React.FC = () => {
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
-  const { mutateAsync } = useMutation({
+  const { mutateAsync: postMaterial } = useMutation<
+    void,
+    unknown,
+    PostMaterialParams
+  >({
+    mutationFn: async ({ name, category_id, unit_id }) => {
+      if (!oauth) throw new Error("OAuth not found");
+      await Api.oauth(oauth).post("/material", {
+        name,
+        category_id,
+        unit_id,
+      });
+    },
+    onSuccess: () => {
+      console.log("Material posted");
+      queryClient.invalidateQueries({ queryKey });
+    },
+    onError: (err) => {
+      const { field, error } = extractErrors(err);
+      if (field) return;
+      toast({
+        title: "Erro",
+        description: helpMessages(error) || "Algo deu errado",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const { mutateAsync: deleteMaterial } = useMutation({
     mutationFn: async ({
       id,
       callback,
@@ -76,18 +110,22 @@ const MaterialPage: React.FC = () => {
 
   const handleDelete = useCallback(
     async (item: Record<string, any>, callback: () => void) => {
-      await mutateAsync({ id: item.id, callback });
+      await deleteMaterial({ id: item.id, callback });
     },
-    [mutateAsync]
+    [deleteMaterial]
   );
 
-  const handleRegister = useCallback(() => {
-    Api.post("/api/admin/material", {
-      name: "Material de teste",
-      category_id: "",
-      unit_id: "",
-    });
-  }, []);
+  const handleRegister = useCallback(async () => {
+    try {
+      await postMaterial({
+        name: "teste cadastro",
+        category_id: "9b17eb1e-f8a0-4ead-a791-41e4070d6c45",
+        unit_id: "ba7a2d7b-000b-48ac-8a79-b47708abab2a",
+      });
+    } catch (error) {
+      console.error("Error posting material:", error);
+    }
+  }, [postMaterial]);
 
   return (
     <div className="flex-1 p-6">
