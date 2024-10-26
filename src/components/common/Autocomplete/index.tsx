@@ -56,12 +56,10 @@ const Autocomplete: React.FC<IProps> = ({
     queryFn: async () => {
       if (!oauth) throw new Error("OAuth not found");
       const search = getValues("search");
-      console.log({ search });
       const res = await new Actions(endpoint, oauth).autocomplete(search);
       return res.data;
     },
   });
-
 
   //animação para fechar
   const handleClose = useCallback((e: MouseEvent) => {
@@ -95,7 +93,7 @@ const Autocomplete: React.FC<IProps> = ({
 
   const [selected, setSelected] = useState("");
 
-  //busca 
+  //busca
   const getRecord = async (
     value: string | number,
     onChange: (value: any) => void
@@ -155,7 +153,7 @@ const Autocomplete: React.FC<IProps> = ({
                       className="h-full flex items-center justify-center"
                       onClick={() => {
                         setValue("search", "");
-                        onChange(undefined);
+                        onChange("");
                         setSelected("");
                       }}
                     >

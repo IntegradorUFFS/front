@@ -11,6 +11,7 @@ import Actions from "@/helpers/Actions";
 import extractErrors from "@/helpers/extractErrors";
 import helpMessages from "@/helpers/helpMessages";
 import Form from "./components/Form";
+import Dialog from "@/components/common/Dialog";
 
 const fields = [
   {
@@ -95,12 +96,21 @@ const UserPage: React.FC = () => {
         title="Usuários"
         buttons={
           canManage && [
-            <Button
-              onClick={console.log}
-              icon={<CirclePlus />}
-              text="Cadastrar"
-              className="w-fit py-2 px-3"
-            />,
+            <Dialog
+              triggerElement={
+                <Button
+                  icon={<CirclePlus />}
+                  className="p-2"
+                  text="Cadastrar"
+                />
+              }
+              submitAction={() => {}}
+              title="Cadastrar Usuário"
+              cancelText="Cancelar"
+              submitText="Salvar"
+            >
+              <Form />
+            </Dialog>,
           ]
         }
       />
@@ -115,7 +125,7 @@ const UserPage: React.FC = () => {
         queryKey={["user"]}
         endpoint="/user/list"
         titleEdit="Editar Usuário"
-        formEdit={<Form edit={true} />}
+        formEdit={<Form />}
       />
     </div>
   );

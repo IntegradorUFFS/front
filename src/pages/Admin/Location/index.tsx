@@ -11,6 +11,7 @@ import Actions from "@/helpers/Actions";
 import extractErrors from "@/helpers/extractErrors";
 import helpMessages from "@/helpers/helpMessages";
 import Form from "./components/Form";
+import Dialog from "@/components/common/Dialog";
 
 const fields = [
   {
@@ -71,12 +72,21 @@ const LocationPage: React.FC = () => {
         title="Locais"
         buttons={
           canManage && [
-            <Button
-              onClick={console.log}
-              icon={<CirclePlus />}
-              text="Cadastrar"
-              className="w-fit py-2 px-3"
-            />,
+            <Dialog
+              triggerElement={
+                <Button
+                  icon={<CirclePlus />}
+                  className="p-2"
+                  text="Cadastrar"
+                />
+              }
+              submitAction={() => {}}
+              title="Cadastrar Local"
+              cancelText="Cancelar"
+              submitText="Salvar"
+            >
+              <Form />
+            </Dialog>,
           ]
         }
       />
@@ -88,7 +98,7 @@ const LocationPage: React.FC = () => {
         queryKey={["location"]}
         endpoint="/location/list"
         titleEdit="Editar Local"
-        formEdit={<Form edit={true} />}
+        formEdit={<Form />}
       />
     </div>
   );

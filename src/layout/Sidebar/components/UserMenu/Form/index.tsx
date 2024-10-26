@@ -3,7 +3,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { startCase, toLower } from "lodash";
+import toTitleCase from "@/helpers/toTitleCase";
 
 interface IProps {
   user: {
@@ -39,10 +39,10 @@ const Form: React.FC<IProps> = ({ user }) => {
           {user.last_name?.[0]?.toUpperCase()}
         </div>
         <h2 className="text-base font-bold text-center flex items-center">
-          {startCase(toLower(user.first_name.trim()))} {startCase(toLower(user.last_name.trim()))}
+          {toTitleCase(user.first_name + " " + user.last_name)}
         </h2>
       </div>
-      <div className="w-full h-0.5 bg-zinc-900 opacity-20" />
+
       <Input
         {...register("first_name")}
         label="Nome"

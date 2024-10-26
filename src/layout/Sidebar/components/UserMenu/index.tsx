@@ -3,7 +3,7 @@ import { ChevronDown, DoorOpen, DoorClosed, Bolt } from "lucide-react";
 import { useAppDispatch } from "@/hooks";
 import Dialog from "@/components/common/Dialog";
 import Form from "./Form";
-import { startCase, toLower } from "lodash";
+import toTitleCase from "@/helpers/toTitleCase";
 
 interface IProps {
   user:
@@ -62,8 +62,7 @@ const UserMenu: React.FC<IProps> = ({ user }) => {
           </div>
           <div className="flex flex-col">
             <h2 className="text-base font-bold">
-              {startCase(toLower(user.first_name.trim()))}{" "}
-              {startCase(toLower(user.last_name.trim()))}
+              {toTitleCase(user.first_name + " " + user.last_name)}
             </h2>
             <p className="text-xs opacity-60 font-semibold">{user.email}</p>
           </div>
@@ -92,7 +91,7 @@ const UserMenu: React.FC<IProps> = ({ user }) => {
                       className="opacity-65 mr-2 group-hover:animate-spin-slow"
                       size={18}
                     />
-                    <span className="text-sm">Atualizar perfil</span>
+                    <span className="text-sm">Editar perfil</span>
                   </button>
                 }
                 submitAction={() => {}}

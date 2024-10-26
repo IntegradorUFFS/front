@@ -4,7 +4,7 @@ import FiltersLine from "@/components/List/FiltersLine";
 import TitleLine from "@/components/TitleLine";
 import Table from "@/components/List/Table";
 import Button from "@/components/common/Button";
-import { Tags, Ruler, CirclePlus, Hand } from "lucide-react";
+import { Tags, Ruler, CirclePlus } from "lucide-react";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import extractErrors from "@/helpers/extractErrors";
 import helpMessages from "@/helpers/helpMessages";
@@ -115,17 +115,20 @@ const MaterialPage: React.FC = () => {
     [deleteMaterial]
   );
 
-  const handleRegister = useCallback(async () => {
-    try {
-      await postMaterial({
-        name: "teste cadastro",
-        category_id: "9b17eb1e-f8a0-4ead-a791-41e4070d6c45",
-        unit_id: "ba7a2d7b-000b-48ac-8a79-b47708abab2a",
-      });
-    } catch (error) {
-      console.error("Error posting material:", error);
-    }
-  }, [postMaterial]);
+  const handleRegister = useCallback(
+    async (data: Record<string, any>) => {
+      try {
+        await postMaterial({
+          name: data?.name,
+          category_id: data?.category_id,
+          unit_id: data?.unit_id,
+        });
+      } catch (error) {
+        console.error("Error posting material:", error);
+      }
+    },
+    [postMaterial]
+  );
 
   return (
     <div className="flex-1 p-6">
@@ -143,7 +146,7 @@ const MaterialPage: React.FC = () => {
                   text="Cadastrar"
                 />
               }
-              submitAction={canManage && handleRegister}
+              submitAction={handleRegister}
               title="Cadastrar Material"
               cancelText="Cancelar"
               submitText="Salvar"
