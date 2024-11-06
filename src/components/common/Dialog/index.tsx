@@ -20,6 +20,8 @@ interface IProps {
   cancelText?: string;
   submitText?: string;
   children?: React.ReactNode;
+  fit?: boolean;
+  titleOff?: boolean;
 }
 
 const Dialog: React.FC<IProps> = ({
@@ -30,6 +32,8 @@ const Dialog: React.FC<IProps> = ({
   submitAction,
   submitText,
   children,
+  fit,
+  titleOff,
 }) => {
   const closeBtn = useRef<HTMLButtonElement | null>(null);
 
@@ -46,11 +50,13 @@ const Dialog: React.FC<IProps> = ({
   return (
     <DialogUI>
       <DialogTrigger asChild>{triggerElement}</DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent
+        className={twMerge("sm:max-w-[425px]", fit && "max-w-fit sm:max-w-fit min-w-fit")}
+      >
         {(title || description) && (
           <DialogHeader>
-            {title && <DialogTitle className="py-2">{title}</DialogTitle>}
-            <div className="w-full h-0.5 bg-zinc-900 opacity-20"></div>
+            {(title && !(titleOff)) && <DialogTitle className="py-2">{title}</DialogTitle>}
+        {titleOff && <div className="w-full h-0.5 bg-zinc-900 opacity-20"></div>}
             {description && (
               <DialogDescription className="py-2">
                 {description}

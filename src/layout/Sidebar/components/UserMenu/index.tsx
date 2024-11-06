@@ -20,9 +20,14 @@ const UserMenu: React.FC<IProps> = ({ user }) => {
   const dispatch = useAppDispatch();
   const [active, setActive] = useState<boolean>(false);
   const popupRef = useRef<HTMLMenuElement>(null);
+  const formRef = useRef<HTMLDivElement>(null);
 
   const handleClose = useCallback((e: MouseEvent) => {
-    if (popupRef.current && !popupRef?.current?.contains(e?.target as Node)) {
+    if (
+      popupRef.current &&
+      !popupRef?.current?.contains(e?.target as Node) &&
+      !formRef?.current?.contains(e?.target as Node)
+    ) {
       popupRef.current.classList.replace("animate-menu-in", "animate-menu-out");
       popupRef.current.children[0].classList.replace(
         "animate-menu-in-content",
@@ -82,6 +87,8 @@ const UserMenu: React.FC<IProps> = ({ user }) => {
           >
             <div className="animate-menu-in-content">
               <Dialog
+                fit
+                titleOff
                 triggerElement={
                   <button
                     type="button"
@@ -95,11 +102,10 @@ const UserMenu: React.FC<IProps> = ({ user }) => {
                   </button>
                 }
                 submitAction={() => {}}
-                title="Atualizar Perfil"
                 cancelText="Cancelar"
                 submitText="Salvar"
               >
-                <Form user={user} />
+                <Form user={user} ref={formRef} />
               </Dialog>
 
               <hr className="border-zinc-300" />
