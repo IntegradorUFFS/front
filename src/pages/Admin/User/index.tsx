@@ -50,6 +50,7 @@ const queryKey = ["user"];
 const UserPage: React.FC = () => {
   const permissions = useAppSelector((state) => state.auth.permissions);
   const oauth = useAppSelector((state) => state.auth.oauth);
+  const role = useAppSelector((state) => state.auth.role);
   const canManage = permissions?.includes("user.management");
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -126,6 +127,7 @@ const UserPage: React.FC = () => {
         endpoint="/user/list"
         titleEdit="Editar Usuário"
         formEdit={<Form />}
+        rowValidation={(item) => item?.role !== role}
       />
     </div>
   );

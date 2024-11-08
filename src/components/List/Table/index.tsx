@@ -25,6 +25,7 @@ interface IProps {
   endpoint: string;
   titleEdit?: string;
   formEdit?: React.ReactNode;
+  rowValidation?: (params?: any) => boolean;
 }
 
 const Table: React.FC<IProps> = ({
@@ -35,6 +36,7 @@ const Table: React.FC<IProps> = ({
   endpoint,
   titleEdit,
   formEdit,
+  rowValidation,
 }) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -235,6 +237,7 @@ const Table: React.FC<IProps> = ({
               buttons={buttons}
               title={titleEdit}
               form={formEdit}
+              rowValidation={rowValidation}
             />
           ))}
 

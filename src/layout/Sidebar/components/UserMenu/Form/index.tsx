@@ -15,7 +15,6 @@ interface IProps {
 }
 
 const schema = z.object({
-  name: z.string(),
   email: z.string(),
   first_name: z.string(),
   last_name: z.string(),
@@ -28,7 +27,6 @@ const Form: React.ForwardRefRenderFunction<HTMLDivElement | null, IProps> = (
   const { register } = useForm({
     resolver: zodResolver(schema),
     defaultValues: {
-      name: user?.first_name + " " + user?.last_name,
       email: user?.email,
       first_name: user?.first_name,
       last_name: user?.last_name,

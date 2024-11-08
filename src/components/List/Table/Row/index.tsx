@@ -17,6 +17,7 @@ interface IProps {
   buttons?: number;
   title?: string;
   form?: React.ReactNode;
+  rowValidation?: (params?: any) => boolean;
 }
 
 const TableRow: React.FC<IProps> = ({
@@ -27,6 +28,7 @@ const TableRow: React.FC<IProps> = ({
   buttons,
   title,
   form,
+  rowValidation,
 }) => {
   const editForm = () =>
     React.cloneElement(form as React.ReactElement, {
@@ -47,33 +49,35 @@ const TableRow: React.FC<IProps> = ({
           </div>
         ))}
 
-        <div className="flex gap-3 justify-end opacity-70">
-          {onEdit && (
-            <Dialog
-              triggerElement={
-                <button type="button">
-                  <BoltIcon size={18} />
-                </button>
-              }
-              submitAction={(callback) => onEdit(data, callback)}
-              title={title}
-              cancelText="Cancelar"
-              submitText="Salvar"
-            >
-              {editForm()}
-            </Dialog>
-          )}
-          {onDelete && (
-            <DeleteDialog
-              triggerElement={
-                <button type="button">
-                  <Trash2 size={18} />
-                </button>
-              }
-              submitAction={(callback) => onDelete(data, callback)}
-            />
-          )}
-        </div>
+        {(!rowValidation || rowValidation(data)) && (
+          <div className="flex gap-3 justify-end opacity-70">
+            {onEdit && (
+              <Dialog
+                triggerElement={
+                  <button type="button">
+                    <BoltIcon size={18} />
+                  </button>
+                }
+                submitAction={(callback) => onEdit(data, callback)}
+                title={title}
+                cancelText="Cancelar"
+                submitText="Salvar"
+              >
+                {editForm()}
+              </Dialog>
+            )}
+            {onDelete && (
+              <DeleteDialog
+                triggerElement={
+                  <button type="button">
+                    <Trash2 size={18} />
+                  </button>
+                }
+                submitAction={(callback) => onDelete(data, callback)}
+              />
+            )}
+          </div>
+        )}
       </DynamicGrid>
     </div>
   );
