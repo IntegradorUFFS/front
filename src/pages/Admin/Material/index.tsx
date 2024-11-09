@@ -13,6 +13,8 @@ import { useToast } from "@/hooks/use-toast";
 import Dialog from "@/components/common/Dialog";
 import Form from "./components/Form";
 import Api from "@/api/admin";
+import CategoryForm from "./components/Category";
+import UnitForm from "./components/Unit";
 
 interface PostMaterialParams {
   name: string;
@@ -136,8 +138,25 @@ const MaterialPage: React.FC = () => {
         title="Material"
         buttons={
           canManage && [
-            <Button onClick={console.log} icon={<Ruler />} className="p-2" />,
-            <Button onClick={console.log} icon={<Tags />} className="p-2" />,
+            <Dialog
+              triggerElement={<Button icon={<Ruler />} className="p-2" />}
+              submitAction={() => {}}
+              title="Cadastrar unidade de medida"
+              cancelText="Cancelar"
+              submitText="Salvar"
+            >
+              <UnitForm />
+            </Dialog>,
+            <Dialog
+              triggerElement={<Button icon={<Tags />} className="p-2" />}
+              submitAction={() => {}}
+              title="Cadastrar categoria"
+              cancelText="Cancelar"
+              submitText="Salvar"
+            >
+              <CategoryForm />
+            </Dialog>,
+
             <Dialog
               triggerElement={
                 <Button
@@ -147,7 +166,7 @@ const MaterialPage: React.FC = () => {
                 />
               }
               submitAction={handleRegister}
-              title="Cadastrar Material"
+              title="Cadastrar material"
               cancelText="Cancelar"
               submitText="Salvar"
             >

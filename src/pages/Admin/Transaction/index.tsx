@@ -5,6 +5,8 @@ import TitleLine from "@/components/TitleLine";
 import Table from "@/components/List/Table";
 import Button from "@/components/common/Button";
 import { CirclePlus } from "lucide-react";
+import Dialog from "@/components/common/Dialog";
+import Accordion from "./components/Accordion";
 
 const fields = [
   {
@@ -69,12 +71,18 @@ const TransactionPage: React.FC = () => {
         title="Transações"
         buttons={
           canManage && [
-            <Button
-              onClick={console.log}
-              icon={<CirclePlus />}
-              text="Cadastrar"
-              className="w-fit py-2 px-3"
-            />,
+            <Dialog
+              triggerElement={
+                <Button
+                  icon={<CirclePlus />}
+                  className="p-2"
+                  text="Cadastrar"
+                />
+              }
+              title="Transações"
+            >
+              <Accordion />
+            </Dialog>,
           ]
         }
       />

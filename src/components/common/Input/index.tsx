@@ -10,15 +10,30 @@ interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
   disabled?: boolean;
   toggleOpacity?: boolean;
   onChange?: React.ChangeEventHandler<HTMLInputElement> | undefined;
+  qtd?: number;
 }
 
 const Input: React.ForwardRefRenderFunction<HTMLInputElement | null, IProps> = (
-  { error, label, placeholder, type = "text", disabled, onChange, ...props },
+  {
+    error,
+    label,
+    placeholder,
+    type = "text",
+    disabled,
+    qtd,
+    onChange,
+    ...props
+  },
   ref
 ) => {
   return (
     <div className="flex flex-col gap-2 text-sm font-sans w-full">
-      {label && <span className="font-semibold">{label}</span>}
+      <div className="grid grid-cols-3 justify-between">
+        {label && <span className="font-semibold col-span-2">{label}</span>}
+        {type == "quantity" && (
+          <span className="font-semibold text-center">Disponível</span>
+        )}
+      </div>
       {type === "password" ? (
         <Password
           placeholder={placeholder}
@@ -28,6 +43,19 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement | null, IProps> = (
           invalid={!!error}
           onChange={onChange}
         />
+      ) : type === "quantity" ? (
+        <div className="w-full bg-zinc-200 rounded-md grid grid-cols-3">
+          <input
+            type="number"
+            className="w-full bg-zinc-200 rounded-md text-sm py-3 px-5 placeholder:text-zinc-500 bg-transparent aria-invalid:border-red-600 font-normal col-span-2"
+            {...props}
+            ref={ref}
+          ></input>
+
+          <span className="bg-zinc-300 rounded-md py-3 w-full text-sm font-normal text-center ">
+            {qtd}
+          </span>
+        </div>
       ) : (
         <Text
           placeholder={placeholder}

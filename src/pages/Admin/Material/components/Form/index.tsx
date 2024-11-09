@@ -19,7 +19,7 @@ interface IProps {
 
 const schema = z.object({
   name: z.string(),
-  category_id: z.number(),
+  category_id: z.string(),
   unit_id: z.string(),
 });
 

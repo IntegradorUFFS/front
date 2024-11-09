@@ -48,7 +48,7 @@ const Form: React.ForwardRefRenderFunction<HTMLDivElement | null, IProps> = (
       </div>
       <div className="grid grid-cols-[120px_auto] grid-rows-[repeat(12,_auto)] gap-y-3 gap-x-4 items-center text-sm">
         <div className="h-0.5 bg-zinc-200 col-span-2"></div>
-        <span className=" ">Nome</span>
+        <span>Nome</span>
         <Input
           {...register("first_name")}
           placeholder="Digite o seu nome"

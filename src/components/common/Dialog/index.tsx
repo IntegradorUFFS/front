@@ -51,12 +51,23 @@ const Dialog: React.FC<IProps> = ({
     <DialogUI>
       <DialogTrigger asChild>{triggerElement}</DialogTrigger>
       <DialogContent
-        className={twMerge("sm:max-w-[425px]", fit && "max-w-fit sm:max-w-fit min-w-fit")}
+        className={twMerge(
+          "sm:max-w-[425px]",
+          fit && "max-w-fit sm:max-w-fit min-w-fit"
+        )}
       >
         {(title || description) && (
           <DialogHeader>
-            {(title && !(titleOff)) && <DialogTitle className="py-2">{title}</DialogTitle>}
-        {titleOff && <div className="w-full h-0.5 bg-zinc-900 opacity-20"></div>}
+            {title && !titleOff && (
+              <>
+                {" "}
+                <DialogTitle className="py-2">{title}</DialogTitle>{" "}
+                <div className="h-0.5 bg-zinc-200 col-span-2"></div>
+              </>
+            )}
+            {titleOff && (
+              <div className="w-full h-0.5 bg-zinc-900 opacity-20"></div>
+            )}
             {description && (
               <DialogDescription className="py-2">
                 {description}
