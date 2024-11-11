@@ -5,9 +5,10 @@ import React, {
   useState,
   useEffect,
 } from "react";
-import { X, Scan, Plus } from "lucide-react";
+import { X, Scan, Plus, SearchIcon } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
+import Button from "@/components/common/Button";
 
 interface IProps {
   possibleFilters: {
@@ -28,14 +29,18 @@ const FiltersLine: React.FC<IProps> = ({ queryKey, filters }) => {
   const popupRef = useRef<HTMLMenuElement>(null);
   const formRef = useRef<HTMLDivElement>(null);
 
-  const handleClose = useCallback((e: MouseEvent) => {
+  const handleClose = useCallback((e?: MouseEvent, exception?: boolean) => {
     if (
-      popupRef.current &&
-      !popupRef?.current?.contains(e?.target as Node) &&
-      !formRef?.current?.contains(e?.target as Node)
+      (popupRef.current &&
+        !popupRef?.current?.contains(e?.target as Node) &&
+        !formRef?.current?.contains(e?.target as Node)) ||
+      exception
     ) {
-      popupRef.current.classList.replace("animate-menu-in", "animate-menu-out");
-      popupRef.current.children[0].classList.replace(
+      popupRef.current!.classList.replace(
+        "animate-menu-in",
+        "animate-menu-out"
+      );
+      popupRef.current!.children[0].classList.replace(
         "animate-menu-in-content",
         "animate-menu-out-content"
       );
@@ -118,7 +123,7 @@ const FiltersLine: React.FC<IProps> = ({ queryKey, filters }) => {
       {activeFilters?.length > 0 && (
         <hr className="w-4 border-zinc-300 rotate-90" />
       )}
-      <div className="flex flex-col">
+      <div className="flex flex-col relative justify-center">
         <button
           className="py-2 font-base flex overflow-hidden gap-2 items-center w-fit max-w-full bg-zinc-200 rounded-lg px-3 justify-center"
           onClick={() => (!active ? setActive(true) : handleClose)}
@@ -132,10 +137,10 @@ const FiltersLine: React.FC<IProps> = ({ queryKey, filters }) => {
 
         {active && (
           <menu
-            className="w-[300px] p-3 bg-zinc-50 absolute rounded-xl shadow-md animate-menu-in z-[5] top-[132px] border border-zinc-200 translate-y-2"
+            className="w-[300px] p-3 bg-zinc-50 absolute rounded-xl top-12 shadow-md animate-menu-in border border-zinc-200"
             ref={popupRef}
           >
-            <div className="animate-menu-in-content flex flex-col gap-2 w-full ">
+            <div className="animate-menu-in-content flex flex-col gap-2 w-full">
               <div className=" font-base flex overflow-hidden gap-2 items-center w-full max-w-full ">
                 <div className="relative items-center justify-center flex">
                   <Scan size={20} strokeWidth={1.5} />
@@ -144,12 +149,25 @@ const FiltersLine: React.FC<IProps> = ({ queryKey, filters }) => {
 
                 <span className="text-center w-full text-m ">Filtros</span>
                 <button
-                  onClick={() => (!active ? setActive(true) : handleClose)}
+                  onClick={() =>
+                    !active ? setActive(true) : handleClose(undefined, true)
+                  }
                 >
                   <X size={20} />
                 </button>
               </div>
               <div className="h-0.5 bg-zinc-200" />
+              <div className="py-2 flex flex-row border border-zinc-300 rounded-md">
+                <SearchIcon
+                  size={18}
+                  className="m-2 text-zinc-400 justify-self-center"
+                />
+                <input
+                  type="text"
+                  className="flex items-center w-full text-m focus:outline-none"
+                  placeholder="Pesquise o nome do material"
+                ></input>
+              </div>
               <div>
                 {filters && filters.length > 0 ? (
                   filters.map((filter, index) => (
@@ -161,6 +179,14 @@ const FiltersLine: React.FC<IProps> = ({ queryKey, filters }) => {
                   </span>
                 )}
               </div>
+            </div>
+            <div className="pt-2 flex justify-center">
+              <Button
+                text="Limpar tudo"
+                className="w-fit py-2 px-4 text-sm"
+                type="button"
+                variant="outline"
+              />
             </div>
           </menu>
         )}

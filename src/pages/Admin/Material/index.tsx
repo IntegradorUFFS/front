@@ -4,14 +4,7 @@ import FiltersLine from "@/components/List/FiltersLine";
 import TitleLine from "@/components/TitleLine";
 import Table from "@/components/List/Table";
 import Button from "@/components/common/Button";
-import {
-  Tags,
-  Ruler,
-  CirclePlus,
-  ChevronRight,
-  Search,
-  SearchIcon,
-} from "lucide-react";
+import { Tags, Ruler, CirclePlus } from "lucide-react";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import extractErrors from "@/helpers/extractErrors";
 import helpMessages from "@/helpers/helpMessages";
@@ -22,7 +15,7 @@ import Form from "./components/Form";
 import Api from "@/api/admin";
 import CategoryForm from "./components/Category";
 import UnitForm from "./components/Unit";
-import Input from "@/components/common/Input";
+import FilterButton from "@/components/common/FilterButton";
 
 interface PostMaterialParams {
   name: string;
@@ -187,47 +180,32 @@ const MaterialPage: React.FC = () => {
         possibleFilters={[]}
         queryKey={queryKey}
         filters={[
-          <div className="py-2 flex flex-row border border-zinc-300 rounded-md">
-            <SearchIcon
-              size={18}
-              className="m-2 text-zinc-400 justify-self-center"
-            />
-            <input
-              type="text"
-              className="flex items-center w-full text-m focus:outline-none"
-              placeholder="Pesquise o nome do material"
-            ></input>
-          </div>,
-          // <div className="h-0.5 bg-zinc-200 my-2" />,
-          <button type="button" className="py-2 flex items-center w-full group">
-            <span className="text-m w-full text-left">Categoria</span>
-            <ChevronRight
-              size={18}
-              className={`${"-"}rotate-180 transition-transform ease-in-out duration-200`}
-            />
-          </button>,
-          <button type="button" className="py-2 flex items-center w-full group">
-            <span className="text-m w-full text-left">Local</span>
-            <ChevronRight
-              size={18}
-              className={`${"-"}rotate-180 transition-transform ease-in-out duration-200`}
-            />
-          </button>,
-          <button type="button" className="py-2 flex items-center w-full group">
-            <span className="text-m w-full text-left">Unidade de medida</span>
-            <ChevronRight
-              size={18}
-              className={`${"-"}rotate-180 transition-transform ease-in-out duration-200`}
-            />
-          </button>,
-          <div className="pt-2 flex justify-center">
-            <Button
-              text="Limpar tudo"
-              className="w-fit py-2 px-4 text-sm"
-              type="button"
-              variant="outline"
-            />
-          </div>,
+          <FilterButton
+            title="Categoria"
+            childrens={[
+              "tijolo",
+              "madeira",
+              "pvc",
+              "metal",
+              "plastico",
+              "outros",
+              "alvenaria",
+              "concreto",
+            ]}
+          />,
+          <FilterButton
+            title="Local"
+            childrens={[
+              "casa do carlos",
+              "casa do julio",
+              "casa do marco",
+              "casa do vitor",
+              "casa do lanches",
+              "casa do thiago",
+              "casa de mais pessoas que eu estou com preguiça de digitar",
+            ]}
+          />,
+          <FilterButton title="Unidade de Medida" childrens={[]} />,
         ]}
       />
       <Table
