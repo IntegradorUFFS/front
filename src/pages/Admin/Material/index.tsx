@@ -15,7 +15,6 @@ import Form from "./components/Form";
 import Api from "@/api/admin";
 import CategoryForm from "./components/Category";
 import UnitForm from "./components/Unit";
-import FilterButton from "@/components/common/FilterButton";
 
 interface PostMaterialParams {
   name: string;
@@ -180,9 +179,9 @@ const MaterialPage: React.FC = () => {
         possibleFilters={[]}
         queryKey={queryKey}
         filters={[
-          <FilterButton
-            title="Categoria"
-            childrens={[
+          {
+            title: "Categoria",
+            children: [
               "tijolo",
               "madeira",
               "pvc",
@@ -191,11 +190,11 @@ const MaterialPage: React.FC = () => {
               "outros",
               "alvenaria",
               "concreto",
-            ]}
-          />,
-          <FilterButton
-            title="Local"
-            childrens={[
+            ],
+          },
+          {
+            title: "Local",
+            children: [
               "casa do carlos",
               "casa do julio",
               "casa do marco",
@@ -203,9 +202,9 @@ const MaterialPage: React.FC = () => {
               "casa do lanches",
               "casa do thiago",
               "casa de mais pessoas que eu estou com preguiça de digitar",
-            ]}
-          />,
-          <FilterButton title="Unidade de Medida" childrens={[]} />,
+            ],
+          },
+          { title: "Unidade de Medida" },
         ]}
       />
       <Table

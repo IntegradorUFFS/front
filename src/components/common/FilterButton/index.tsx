@@ -4,12 +4,18 @@ import Button from "../Button";
 import { twMerge } from "tailwind-merge";
 
 interface IProps {
-  title?: string;
+  title: string;
   childrens?: string[];
+  toggle: (tab: string) => void;
+  active: boolean;
 }
 
-const FilterButton: React.FC<IProps> = ({ title, childrens }) => {
-  const [active, setActive] = useState<boolean>(false);
+const FilterButton: React.FC<IProps> = ({
+  title,
+  childrens,
+  toggle,
+  active,
+}) => {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const popupRef = useRef<HTMLMenuElement>(null);
 
@@ -28,7 +34,7 @@ const FilterButton: React.FC<IProps> = ({ title, childrens }) => {
       <button
         type="button"
         className="py-2 flex items-center w-full group"
-        onClick={() => setActive(!active)}
+        onClick={() => toggle(title)}
       >
         <span className="text-m w-full text-left">{title}</span>
         <ChevronRight
@@ -44,14 +50,14 @@ const FilterButton: React.FC<IProps> = ({ title, childrens }) => {
           ref={popupRef}
         >
           <div className="flex flex-row  items-center">
-            <button onClick={() => setActive(!active)}>
+            <button onClick={() => toggle(title)}>
               <ChevronLeft size={18} />
             </button>
             <span className="text-m w-full text-center">{title}</span>
           </div>
           <div className="h-0.5 bg-zinc-200 my-2" />
           <div className="max-h-40 overflow-y-auto flex flex-col gap-2">
-            {childrens && childrens.length > 0 ? (
+            {childrens && childrens?.length > 0 ? (
               childrens.map((child, index) => (
                 <button
                   key={index}
@@ -74,7 +80,7 @@ const FilterButton: React.FC<IProps> = ({ title, childrens }) => {
               </span>
             )}
           </div>
-          {childrens!.length > 0 && (
+          {childrens && childrens?.length > 0 && (
             <div className="pt-2 flex justify-center">
               <Button
                 text="Limpar"

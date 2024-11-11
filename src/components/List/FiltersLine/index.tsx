@@ -9,6 +9,8 @@ import { X, Scan, Plus, SearchIcon } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import Button from "@/components/common/Button";
+import FilterButton from "@/components/common/FilterButton";
+import Input from "@/components/common/Input";
 
 interface IProps {
   possibleFilters: {
@@ -17,13 +19,16 @@ interface IProps {
     autocomplete_endpoint?: string;
   }[];
   queryKey: string[];
-  filters?: React.ReactNode[];
+  filters?: {
+    title: string;
+    children?: string[];
+  }[];
 }
 
 const FiltersLine: React.FC<IProps> = ({ queryKey, filters }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const activeList = useRef<HTMLUListElement>(null);
-
+  const [activeCollapse, setActiveCollapse] = useState<string | null>(null);
   //teste
   const [active, setActive] = useState<boolean>(false);
   const popupRef = useRef<HTMLMenuElement>(null);
@@ -96,6 +101,23 @@ const FiltersLine: React.FC<IProps> = ({ queryKey, filters }) => {
     }
     return res;
   }, [searchParams]);
+
+  const titles = useMemo(
+    () => filters?.map((filter) => filter.title),
+    [filters]
+  );
+  const handleActiveCollapse = (tab: string) => {
+    if (!titles?.includes(tab)) {
+      setActiveCollapse(null);
+      return;
+    }
+    if (activeCollapse === tab) {
+      setActiveCollapse(null);
+    } else {
+      setActiveCollapse(tab);
+    }
+  };
+
   return (
     <ul
       className="flex gap-2 items-center flex-1 flex-wrap pt-1 pb-3"
@@ -162,16 +184,22 @@ const FiltersLine: React.FC<IProps> = ({ queryKey, filters }) => {
                   size={18}
                   className="m-2 text-zinc-400 justify-self-center"
                 />
-                <input
+                <Input
                   type="text"
-                  className="flex items-center w-full text-m focus:outline-none"
+                  className="flex items-center w-full text-m focus:outline-none bg-transparent"
                   placeholder="Pesquise o nome do material"
-                ></input>
+                />
               </div>
               <div>
                 {filters && filters.length > 0 ? (
                   filters.map((filter, index) => (
-                    <div key={index}>{filter}</div>
+                    <FilterButton
+                      key={index}
+                      childrens={filter?.children}
+                      title={filter.title}
+                      toggle={handleActiveCollapse}
+                      active={activeCollapse === filter.title}
+                    />
                   ))
                 ) : (
                   <span className="text-sm text-gray-500">
