@@ -29,7 +29,7 @@ const initialState: IStore = {
 };
 
 const permissionsByRoles = {
-  viewer: ["material.view", "locationMaterial.view"],
+  viewer: ["material.view", "locationMaterial.view", "dashboard.view"],
   manager: [
     "material.view",
     "material.management",
@@ -44,6 +44,7 @@ const permissionsByRoles = {
     "user.management",
     "location.view",
     "location.management",
+    "dashboard.view",
   ],
   admin: [
     "material.view",
@@ -59,6 +60,7 @@ const permissionsByRoles = {
     "user.management",
     "location.view",
     "location.management",
+    "dashboard.view",
   ],
 };
 

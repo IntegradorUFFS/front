@@ -115,7 +115,16 @@ const UserPage: React.FC = () => {
           ]
         }
       />
-      <FiltersLine possibleFilters={[]} queryKey={["user"]} />
+      <FiltersLine
+        txt="do usuário"
+        queryKey={["user"]}
+        filters={[
+          {
+            title: "Permissão",
+            children: ["Visualizador", "Gerente", "Administrador"],
+          },
+        ]}
+      />
 
       <Table
         fields={fields}

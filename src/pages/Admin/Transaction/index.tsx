@@ -86,7 +86,24 @@ const TransactionPage: React.FC = () => {
           ]
         }
       />
-      <FiltersLine possibleFilters={[]} queryKey={["transaction"]} />
+      <FiltersLine
+        searchBar={false}
+        queryKey={["transaction"]}
+        filters={[
+          {
+            title: "Material",
+            children: ["material", "name"],
+          },
+          {
+            title: "Categoria",
+            children: ["category", "name"],
+          },
+          { title: "Local Origem", children: ["origin", "name"] },
+          { title: "Local Destino", children: ["destiny", "name"] },
+          { title: "Tipo", children: ["type"] },
+          { title: "Data", children: ["created_at"] },
+        ]}
+      />
       <Table
         fields={fields}
         queryKey={["transaction"]}

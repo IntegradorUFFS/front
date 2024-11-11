@@ -1,3 +1,4 @@
+import DashboardPage from "@/pages/Admin/Dashboard";
 import LocationPage from "@/pages/Admin/Location";
 import LocationMaterialPage from "@/pages/Admin/LocationMaterial";
 import MaterialPage from "@/pages/Admin/Material";
@@ -7,6 +8,7 @@ import {
   Archive,
   BrickWall,
   ClipboardList,
+  LayoutDashboard,
   MapPinHouse,
   Users,
 } from "lucide-react";
@@ -50,6 +52,14 @@ export default [
     icon: <ClipboardList />,
     element: <TransactionPage />,
     scope: "transaction.view",
+    children: [{ path: "", element: "" }],
+  },
+  {
+    name: "Dashboard",
+    path: "/admin/dashboard",
+    icon: <LayoutDashboard />,
+    element: <DashboardPage />,
+    scope: "dashboard.view",
     children: [{ path: "", element: "" }],
   },
 ];

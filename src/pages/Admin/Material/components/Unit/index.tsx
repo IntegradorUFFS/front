@@ -24,7 +24,7 @@ const UnitForm: React.FC<IProps> = ({}) => {
             title: "Mostrar unidades de medida existentes",
             content: (
               <div className="max-h-40 overflow-y-auto flex flex-col gap-2">
-                <TableLine />
+                <TableLine type="unit" name="unidade" shortName="un" />
               </div>
             ),
           },

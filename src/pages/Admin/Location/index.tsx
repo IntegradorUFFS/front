@@ -90,7 +90,7 @@ const LocationPage: React.FC = () => {
           ]
         }
       />
-      <FiltersLine possibleFilters={[]} queryKey={["location"]} />
+      <FiltersLine txt="do local" filters={[]} queryKey={["location"]} />
       <Table
         fields={fields}
         onEdit={console.log}

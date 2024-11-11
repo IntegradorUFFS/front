@@ -13,6 +13,8 @@ import FilterButton from "@/components/common/FilterButton";
 import Input from "@/components/common/Input";
 
 interface IProps {
+  searchBar?: boolean;
+  txt?: string;
   queryKey: string[];
   filters?: {
     title: string;
@@ -20,7 +22,12 @@ interface IProps {
   }[];
 }
 
-const FiltersLine: React.FC<IProps> = ({ queryKey, filters }) => {
+const FiltersLine: React.FC<IProps> = ({
+  queryKey,
+  filters,
+  txt,
+  searchBar = true,
+}) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const activeList = useRef<HTMLUListElement>(null);
   const [activeCollapse, setActiveCollapse] = useState<string | null>(null);
@@ -150,7 +157,7 @@ const FiltersLine: React.FC<IProps> = ({ queryKey, filters }) => {
             <Scan size={20} strokeWidth={1.5} />
             <Plus size={12} className="absolute" strokeWidth={2.5} />
           </div>
-          Filtros
+          {filters?.length == 0 ? "Filtro" : "Filtros"}
         </button>
 
         {active && (
@@ -165,7 +172,9 @@ const FiltersLine: React.FC<IProps> = ({ queryKey, filters }) => {
                   <Plus size={12} className="absolute" strokeWidth={2.5} />
                 </div>
 
-                <span className="text-center w-full text-m ">Filtros</span>
+                <span className="text-center w-full text-m ">
+                  {filters?.length == 0 ? "Filtro" : "Filtros"}
+                </span>
                 <button
                   onClick={() =>
                     !active ? setActive(true) : handleClose(undefined, true)
@@ -175,17 +184,19 @@ const FiltersLine: React.FC<IProps> = ({ queryKey, filters }) => {
                 </button>
               </div>
               <div className="h-0.5 bg-zinc-200" />
-              <div className="py-2 flex flex-row border border-zinc-300 rounded-md">
-                <SearchIcon
-                  size={18}
-                  className="m-2 text-zinc-400 justify-self-center"
-                />
-                <Input
-                  type="text"
-                  className="flex items-center w-full text-m focus:outline-none bg-transparent"
-                  placeholder="Pesquise o nome do material"
-                />
-              </div>
+              {searchBar && (
+                <div className="py-2 flex flex-row border border-zinc-300 rounded-md">
+                  <SearchIcon
+                    size={18}
+                    className="m-2 text-zinc-400 justify-self-center"
+                  />
+                  <Input
+                    type="text"
+                    className="flex items-center w-full text-m focus:outline-none bg-transparent"
+                    placeholder={"Pesquise o nome " + txt}
+                  />
+                </div>
+              )}
               <div>
                 {filters && filters.length > 0 ? (
                   filters.map((filter, index) => (
@@ -198,17 +209,21 @@ const FiltersLine: React.FC<IProps> = ({ queryKey, filters }) => {
                     />
                   ))
                 ) : (
-                  <span className="text-sm text-gray-500">
-                    Nenhum filtro disponível.
-                  </span>
+                  <></>
                 )}
               </div>
-              <div className="pt-2 flex justify-center">
+              <div className="pt-2 flex justify-center flex-row gap-6">
                 <Button
-                  text="Limpar tudo"
+                  text={filters?.length == 0 ? "Limpar" : "Limpar tudo"}
                   className="w-fit py-2 px-4 text-sm"
                   type="button"
                   variant="outline"
+                />
+                <Button
+                  text="Pesquisar"
+                  type="submit"
+                  className="w-fit py-2 px-4 text-sm ring-2 ring-orange-600 disabled:ring-zinc-400"
+                  variant="filled"
                 />
               </div>
             </div>

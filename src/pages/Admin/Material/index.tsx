@@ -176,7 +176,7 @@ const MaterialPage: React.FC = () => {
         }
       />
       <FiltersLine
-        possibleFilters={[]}
+        txt="do material"
         queryKey={queryKey}
         filters={[
           {
