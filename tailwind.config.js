@@ -43,7 +43,7 @@ export default {
             zindex: "0",
           },
           "60%": {
-            width: "100%",
+            width: "width-fit",
             "max-height": "0",
           },
           "100%": {

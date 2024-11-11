@@ -1,16 +1,16 @@
-import React, { useState } from "react";
+// import React, { useState } from "react";
 
-import { BoltIcon, Trash2 } from "lucide-react";
-import Button from "@/components/common/Button";
+import { BoltIcon } from "lucide-react";
+//import Button from "@/components/common/Button";
 
 interface TitleProps {
   type?: string;
 }
 
-const TableLine: React.FC<TitleProps> = ({ type }) => {
-  //const [activeDelete, setActiveDelete] = useState<boolean>(false);
+const TableLine: React.FC<TitleProps> = ({}) => {
+  //const [active, setActive] = useState<boolean>(false);
 
-  //const handleDelete = setActiveDelete(false);
+  //const handle = setActive(false);
 
   return (
     <>
@@ -19,25 +19,11 @@ const TableLine: React.FC<TitleProps> = ({ type }) => {
 
         <button
           type="button"
-          //</div>onClick={() =>
-          //  !activeDelete ? setActiveDelete(true) : handleDelete
-          // }
+          //onClick={() => (!active ? setActive(true) : handle)}
         >
           <BoltIcon size={18} />
         </button>
-        <button type="button">
-          <Trash2 size={18} />
-        </button>
       </div>
-      {/* {activeDelete && (
-        <Button
-          text={
-            "Você deseja mesmo deletar" +
-            (type == "category" ? " essa categoria" : " essa unidade de medida")
-          }
-          className="col-span-7"
-        />
-      )} */}
     </>
   );
 };
