@@ -13,11 +13,6 @@ import FilterButton from "@/components/common/FilterButton";
 import Input from "@/components/common/Input";
 
 interface IProps {
-  possibleFilters: {
-    type: string;
-    description: string;
-    autocomplete_endpoint?: string;
-  }[];
   queryKey: string[];
   filters?: {
     title: string;
@@ -36,20 +31,21 @@ const FiltersLine: React.FC<IProps> = ({ queryKey, filters }) => {
 
   const handleClose = useCallback((e?: MouseEvent, exception?: boolean) => {
     if (
-      (popupRef.current &&
-        !popupRef?.current?.contains(e?.target as Node) &&
+      popupRef.current &&
+      ((!popupRef?.current?.contains(e?.target as Node) &&
         !formRef?.current?.contains(e?.target as Node)) ||
-      exception
+        exception)
     ) {
-      popupRef.current!.classList.replace(
-        "animate-menu-in",
-        "animate-menu-out"
+      console.log(popupRef.current.classList);
+      popupRef.current.classList.replace(
+        "animate-filter-in",
+        "animate-filter-out"
       );
-      popupRef.current!.children[0].classList.replace(
+      popupRef.current.children[0].classList.replace(
         "animate-menu-in-content",
         "animate-menu-out-content"
       );
-      setTimeout(() => setActive(false), 580);
+      setTimeout(() => setActive(false), 480);
     }
   }, []);
 
@@ -145,7 +141,7 @@ const FiltersLine: React.FC<IProps> = ({ queryKey, filters }) => {
       {activeFilters?.length > 0 && (
         <hr className="w-4 border-zinc-300 rotate-90" />
       )}
-      <div className="flex flex-col relative justify-center">
+      <div className="relative flex">
         <button
           className="py-2 font-base flex overflow-hidden gap-2 items-center w-fit max-w-full bg-zinc-200 rounded-lg px-3 justify-center"
           onClick={() => (!active ? setActive(true) : handleClose)}
@@ -159,7 +155,7 @@ const FiltersLine: React.FC<IProps> = ({ queryKey, filters }) => {
 
         {active && (
           <menu
-            className="w-[300px] p-3 bg-zinc-50 absolute rounded-xl top-12 shadow-md animate-menu-in border border-zinc-200"
+            className="w-[300px] p-3 bg-zinc-50 absolute rounded-xl top-12 shadow-md animate-filter-in border border-zinc-200"
             ref={popupRef}
           >
             <div className="animate-menu-in-content flex flex-col gap-2 w-full">
@@ -207,14 +203,14 @@ const FiltersLine: React.FC<IProps> = ({ queryKey, filters }) => {
                   </span>
                 )}
               </div>
-            </div>
-            <div className="pt-2 flex justify-center">
-              <Button
-                text="Limpar tudo"
-                className="w-fit py-2 px-4 text-sm"
-                type="button"
-                variant="outline"
-              />
+              <div className="pt-2 flex justify-center">
+                <Button
+                  text="Limpar tudo"
+                  className="w-fit py-2 px-4 text-sm"
+                  type="button"
+                  variant="outline"
+                />
+              </div>
             </div>
           </menu>
         )}

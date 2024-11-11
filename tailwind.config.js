@@ -15,6 +15,8 @@ export default {
       animation: {
         "spin-slow": "spin 3s linear infinite",
         "menu-in": "menu-in 0.85s ease-in-out",
+        "filter-in": "filter-in 0.85s ease-in-out",
+        "filter-out": "filter-out 0.5s ease-in-out",
         "menu-in-content": "menu-in-content 0.85s ease-in-out",
         "menu-out": "menu-out 0.7s ease-in-out",
         "menu-out-content": "menu-out-content 0.85s ease-in-out",
@@ -23,6 +25,62 @@ export default {
         ripple: "ripple 600ms linear",
       },
       keyframes: {
+        "filter-in": {
+          "0%": {
+            opacity: "0",
+            width: "0",
+            "max-height": "0",
+            padding: "0",
+            overflow: "hidden",
+            zindex: "0",
+          },
+          "40%": {
+            opacity: "0.5",
+            padding: "0.5rem",
+            zindex: "0",
+          },
+          "50%": {
+            padding: "0.75rem",
+            width: "0",
+            zindex: "0",
+          },
+          "60%": {
+            opacity: "1",
+            width: "width-fit",
+            "max-height": "0",
+          },
+          "100%": {
+            "max-height": "6rem",
+            overflow: "hidden",
+            zindex: "10",
+          },
+        },
+        "filter-out": {
+          "0%": {
+            overflow: "hidden",
+            maxHeight: "6rem",
+            zIndex: "10",
+          },
+          "40%": {
+            padding: "0.75rem",
+            width: "0",
+            maxHeight: "0",
+            zIndex: "10",
+            opacity: "1",
+          },
+          "60%": {
+            padding: "0.2rem",
+            zIndex: "0",
+          },
+          "100%": {
+            width: "0",
+            "max-height": "0",
+            padding: "0",
+            overflow: "hidden",
+            zIndex: "0",
+            opacity: "0",
+          },
+        },
         "menu-in": {
           "0%": {
             width: "0",
