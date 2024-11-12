@@ -11,6 +11,7 @@ import helpMessages from "@/helpers/helpMessages";
 import Actions from "@/helpers/Actions";
 import { useToast } from "@/hooks/use-toast";
 import Dialog from "@/components/common/Dialog";
+import Searchable from "@/components/common/Radio/Searchable";
 import Form from "./components/Form";
 import Api from "@/api/admin";
 import CategoryForm from "./components/Category";
@@ -134,6 +135,7 @@ const MaterialPage: React.FC = () => {
 
   return (
     <div className="flex-1 p-6">
+      <Searchable endpoint="/category/list" name="category_id" />
       <TitleLine
         title="Material"
         buttons={
