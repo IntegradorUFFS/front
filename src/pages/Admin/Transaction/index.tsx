@@ -87,21 +87,28 @@ const TransactionPage: React.FC = () => {
         }
       />
       <FiltersLine
-        searchBar={false}
         queryKey={["transaction"]}
         filters={[
           {
             title: "Material",
-            children: ["material", "name"],
+            endpoint: "/material/list",
+            name: "material_id",
           },
           {
-            title: "Categoria",
-            children: ["category", "name"],
+            title: "Local de origem",
+            endpoint: "/location/list",
+            name: "origin_id",
           },
-          { title: "Local Origem", children: ["origin", "name"] },
-          { title: "Local Destino", children: ["destiny", "name"] },
-          { title: "Tipo", children: ["type"] },
-          { title: "Data", children: ["created_at"] },
+          {
+            title: "Local de destino",
+            endpoint: "/location/list",
+            name: "destiny_id",
+          },
+          {
+            title: "Tipo",
+            endpoint: "",
+            name: "type",
+          },
         ]}
       />
       <Table

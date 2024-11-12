@@ -5,33 +5,31 @@ import React, {
   useState,
   useEffect,
 } from "react";
-import { X, Scan, Plus, SearchIcon } from "lucide-react";
+import { X, Scan, Plus } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import Button from "@/components/common/Button";
 import FilterButton from "@/components/common/FilterButton";
-import Input from "@/components/common/Input";
+import Searchable from "@/components/common/Radio/Searchable";
+import ItemList from "@/components/common/Radio/ItemList";
 
 interface IProps {
-  searchBar?: boolean;
-  txt?: string;
   queryKey: string[];
   filters?: {
     title: string;
     children?: string[];
+    endpoint: string;
+    name: string;
+    placeholder?: string;
+    searchBar?: boolean;
+    type?: string;
   }[];
 }
 
-const FiltersLine: React.FC<IProps> = ({
-  queryKey,
-  filters,
-  txt,
-  searchBar = true,
-}) => {
+const FiltersLine: React.FC<IProps> = ({ queryKey, filters }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const activeList = useRef<HTMLUListElement>(null);
   const [activeCollapse, setActiveCollapse] = useState<string | null>(null);
-  //teste
   const [active, setActive] = useState<boolean>(false);
   const popupRef = useRef<HTMLMenuElement>(null);
   const formRef = useRef<HTMLDivElement>(null);
@@ -43,7 +41,7 @@ const FiltersLine: React.FC<IProps> = ({
         !formRef?.current?.contains(e?.target as Node)) ||
         exception)
     ) {
-      console.log(popupRef.current.classList);
+      //console.log(popupRef.current.classList);
       popupRef.current.classList.replace(
         "animate-filter-in",
         "animate-filter-out"
@@ -62,8 +60,6 @@ const FiltersLine: React.FC<IProps> = ({
       document.removeEventListener("mousedown", handleClose);
     };
   }, [handleClose]);
-
-  //-----------------------------------------------------------------------------------------//
 
   const queryClient = useQueryClient();
 
@@ -184,28 +180,31 @@ const FiltersLine: React.FC<IProps> = ({
                 </button>
               </div>
               <div className="h-0.5 bg-zinc-200" />
-              {searchBar && (
-                <div className="py-2 flex flex-row border border-zinc-300 rounded-md">
-                  <SearchIcon
-                    size={18}
-                    className="m-2 text-zinc-400 justify-self-center"
-                  />
-                  <Input
-                    type="text"
-                    className="flex items-center w-full text-m focus:outline-none bg-transparent"
-                    placeholder={"Pesquise o nome " + txt}
-                  />
-                </div>
-              )}
+
               <div>
                 {filters && filters.length > 0 ? (
                   filters.map((filter, index) => (
                     <FilterButton
                       key={index}
-                      childrens={filter?.children}
+                      search={filter.searchBar ? true : false}
                       title={filter.title}
                       toggle={handleActiveCollapse}
                       active={activeCollapse === filter.title}
+                      content={
+                        filter.searchBar ? (
+                          <Searchable
+                            endpoint={filter.endpoint}
+                            name={filter.name}
+                            placeholder={filter.placeholder}
+                          />
+                        ) : (
+                          <ItemList
+                            endpoint={filter.endpoint}
+                            name={filter.name}
+                            type={filter.type}
+                          />
+                        )
+                      }
                     />
                   ))
                 ) : (

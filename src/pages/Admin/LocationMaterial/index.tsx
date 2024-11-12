@@ -26,14 +26,14 @@ const LocationMaterialPage: React.FC = () => {
     <div className="flex-1 p-6">
       <TitleLine title="Estoque" />
       <FiltersLine
-        searchBar={false}
         queryKey={["location-material"]}
         filters={[
           {
             title: "Material",
-            children: ["material", "name"],
+            endpoint: "/material/list",
+            name: "material_id",
           },
-          { title: "Local", children: ["origin", "name"] },
+          { title: "Local", endpoint: "/location/list", name: "location_id" },
         ]}
       />
       <Table

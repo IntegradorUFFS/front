@@ -90,7 +90,18 @@ const LocationPage: React.FC = () => {
           ]
         }
       />
-      <FiltersLine txt="do local" filters={[]} queryKey={["location"]} />
+      <FiltersLine
+        filters={[
+          {
+            title: "Local",
+            placeholder: "Pesquise o local",
+            searchBar: true,
+            endpoint: "/location/list",
+            name: "location_id",
+          },
+        ]}
+        queryKey={["location"]}
+      />
       <Table
         fields={fields}
         onEdit={console.log}

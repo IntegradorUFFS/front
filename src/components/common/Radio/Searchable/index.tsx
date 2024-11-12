@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient, useQuery } from "@tanstack/react-query";
 import { useAppSelector } from "@/hooks";
 import Actions from "@/helpers/Actions";
+import { SearchIcon } from "lucide-react";
 
 interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
   name: string;
@@ -55,19 +56,32 @@ const Radio: React.ForwardRefRenderFunction<HTMLInputElement | null, IProps> = (
     return () => clearTimeout(timeout);
   }, [search, queryClient, queryKey]);
 
-  console.log(data);
+  //console.log(data);
 
   return (
     <div className="flex flex-col gap-1">
-      <Input placeholder={placeholder} {...register("search")} />
-      <RadioBase
-        items={data?.map(({ name, id }: { name: string; id: string }) => ({
-          label: name,
-          value: id,
-        }))}
-        name={name}
-        ref={ref}
-      />
+      <div className="py-2 flex flex-row border border-zinc-300 rounded-md">
+        <SearchIcon
+          size={18}
+          className="m-2 text-zinc-400 justify-self-center"
+        />
+        <Input
+          type="text"
+          className="flex items-center w-full text-m focus:outline-none bg-transparent"
+          placeholder={placeholder}
+          {...register("search")}
+        />
+      </div>
+      <div className="max-h-40 overflow-y-auto flex flex-col gap-2">
+        <RadioBase
+          items={data?.map(({ name, id }: { name: string; id: string }) => ({
+            label: name,
+            value: id,
+          }))}
+          name={name}
+          ref={ref}
+        />
+      </div>
     </div>
   );
 };

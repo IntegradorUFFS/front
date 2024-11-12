@@ -11,7 +11,6 @@ import helpMessages from "@/helpers/helpMessages";
 import Actions from "@/helpers/Actions";
 import { useToast } from "@/hooks/use-toast";
 import Dialog from "@/components/common/Dialog";
-import Searchable from "@/components/common/Radio/Searchable";
 import Form from "./components/Form";
 import Api from "@/api/admin";
 import CategoryForm from "./components/Category";
@@ -135,7 +134,6 @@ const MaterialPage: React.FC = () => {
 
   return (
     <div className="flex-1 p-6">
-      <Searchable endpoint="/category/list" name="category_id" />
       <TitleLine
         title="Material"
         buttons={
@@ -178,35 +176,25 @@ const MaterialPage: React.FC = () => {
         }
       />
       <FiltersLine
-        txt="do material"
         queryKey={queryKey}
         filters={[
           {
-            title: "Categoria",
-            children: [
-              "tijolo",
-              "madeira",
-              "pvc",
-              "metal",
-              "plastico",
-              "outros",
-              "alvenaria",
-              "concreto",
-            ],
+            title: "Material",
+            endpoint: "/material/list",
+            name: "name",
+            placeholder: "Pesquise o nome da categoria",
+            searchBar: true,
           },
           {
-            title: "Local",
-            children: [
-              "casa do carlos",
-              "casa do julio",
-              "casa do marco",
-              "casa do vitor",
-              "casa do lanches",
-              "casa do thiago",
-              "casa de mais pessoas que eu estou com preguiça de digitar",
-            ],
+            title: "Categoria",
+            endpoint: "/material/list",
+            name: "category.name",
           },
-          { title: "Unidade de Medida" },
+          {
+            title: "Unidade de Medida",
+            endpoint: "/material/list",
+            name: "unit.name",
+          },
         ]}
       />
       <Table

@@ -116,12 +116,20 @@ const UserPage: React.FC = () => {
         }
       />
       <FiltersLine
-        txt="do usuário"
         queryKey={["user"]}
         filters={[
           {
+            title: "Nome de Usuário",
+            endpoint: "/user/list",
+            searchBar: true,
+            name: "user_id",
+            placeholder: "Pesquise o nome de Usuário",
+          },
+          {
             title: "Permissão",
-            children: ["Visualizador", "Gerente", "Administrador"],
+            endpoint: "/user/list",
+            searchBar: false,
+            name: "user_role",
           },
         ]}
       />
