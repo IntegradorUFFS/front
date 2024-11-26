@@ -1,10 +1,9 @@
-import React, { useRef, useCallback, useState } from "react";
+import React, { useRef, useCallback, ReactElement } from "react";
 import Button from "../Button";
 import {
   Dialog as DialogUI,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -21,6 +20,7 @@ interface IProps {
   children?: React.ReactNode;
   fit?: boolean;
   titleOff?: boolean;
+  submitable?: boolean;
 }
 
 const Dialog: React.FC<IProps> = ({
@@ -28,7 +28,7 @@ const Dialog: React.FC<IProps> = ({
   title,
   description,
   cancelText,
-  submitText,
+  submitable,
   children,
   fit,
   titleOff,
@@ -39,31 +39,19 @@ const Dialog: React.FC<IProps> = ({
     if (closeBtn.current) closeBtn.current.click();
   }, []);
 
-  const [submitAction, setSubmitAction] = useState<Function | null>(null);
-
-  const handleSubmit = () => {
-    console.log("submit");
-    if (!submitAction) return;
-    submitAction(handleClose);
-  };
-
-  const form = () =>
-    React.cloneElement(children ?? ((<></>) as any), {
-      setSubmitAction: (params: any) => {
-        if (!params) return;
-        setSubmitAction(params);
-        console.log(params);
-      },
+  const renderChildrenWithProps = () => {
+    if (!children) return <></>;
+    return React.cloneElement(children as ReactElement, {
+      handleClose,
     });
-
-  //console.log(submitAction);
+  };
 
   return (
     <DialogUI>
       <DialogTrigger asChild>{triggerElement}</DialogTrigger>
       <DialogContent
         className={twMerge(
-          "sm:max-w-[425px]",
+          "sm:max-w-[425px] ",
           fit && "max-w-fit sm:max-w-fit min-w-fit"
         )}
       >
@@ -86,34 +74,22 @@ const Dialog: React.FC<IProps> = ({
             )}
           </DialogHeader>
         )}
-        {form()}
-        {(cancelText || submitAction) && (
-          <DialogFooter>
-            <div className="w-full">
-              <DialogClose asChild>
-                <Button
-                  type="button"
-                  variant="outline"
-                  text={cancelText}
-                  ref={closeBtn}
-                  className={twMerge(
-                    "w-fit py-2 px-4 text-sm",
-                    !cancelText && "hidden"
-                  )}
-                />
-              </DialogClose>
-            </div>
-
-            {submitAction && (
+        {renderChildrenWithProps()}
+        {(cancelText || submitable) && (
+          <div className="absolute left-6 bottom-6">
+            <DialogClose asChild>
               <Button
-                type="submit"
-                onClick={handleSubmit}
-                text={submitText}
-                className="w-fit py-2 px-4 text-sm ring-2 ring-orange-600 disabled:ring-zinc-400"
-                variant="filled"
+                type="button"
+                variant="outline"
+                text={cancelText}
+                ref={closeBtn}
+                className={twMerge(
+                  "w-fit py-2 px-4 text-sm",
+                  !cancelText && "hidden"
+                )}
               />
-            )}
-          </DialogFooter>
+            </DialogClose>
+          </div>
         )}
       </DialogContent>
     </DialogUI>
