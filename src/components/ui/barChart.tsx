@@ -33,22 +33,26 @@ interface ChartDataProps {
 const BarLineChart: React.FC<ChartDataProps> = ({ data }) => {
   const [groupedData, setGroupedData] = useState<any>({});
 
-  // Função para agrupar os dados por dia
+  const formatDate = (date: string) => {
+    const [year, month, day] = date.split("-");
+    return `${day}-${month}-${year[2]}${year[3]}`;
+  };
+
   const groupByDay = (data: any) => {
     return data.reduce((acc: any, item: any) => {
-      const date = new Date(item.created_at).toISOString().split("T")[0]; // Extrai a data sem o tempo
+      const date = new Date(item.created_at).toISOString().split("T")[0];
+      const formattedDate = formatDate(date);
 
-      if (!acc[date]) {
-        acc[date] = { in: [], out: [], transfer: [] };
+      if (!acc[formattedDate]) {
+        acc[formattedDate] = { in: [], out: [], transfer: [] };
       }
 
-      // Adiciona a quantidade ao tipo correspondente
       if (item.type === "in") {
-        acc[date].in.push(item.quantity);
+        acc[formattedDate].in.push(item.quantity);
       } else if (item.type === "out") {
-        acc[date].out.push(item.quantity);
+        acc[formattedDate].out.push(item.quantity);
       } else if (item.type === "transfer") {
-        acc[date].transfer.push(item.quantity);
+        acc[formattedDate].transfer.push(item.quantity);
       }
 
       return acc;
@@ -62,32 +66,29 @@ const BarLineChart: React.FC<ChartDataProps> = ({ data }) => {
     }
   }, [data]);
 
-  // Geração das labels a partir das chaves do groupedData
-  const labels = Object.keys(groupedData);
+  const labels = Object.keys(groupedData).reverse();
 
-  // Calculando as quantidades para cada tipo por data
   const inData = labels.map((date) => {
     return groupedData[date].in.reduce(
       (acc: number, val: number) => acc + val,
       0
-    ); // Soma de todas as entradas para a data
+    );
   });
 
   const outData = labels.map((date) => {
     return groupedData[date].out.reduce(
       (acc: number, val: number) => acc + val,
       0
-    ); // Soma de todas as saídas para a data
+    );
   });
 
   const transferData = labels.map((date) => {
     return groupedData[date].transfer.reduce(
       (acc: number, val: number) => acc + val,
       0
-    ); // Soma de todas as transferências para a data
+    );
   });
 
-  // Configuração dos dados do gráfico
   const chartData = {
     labels,
     datasets: [
@@ -115,19 +116,18 @@ const BarLineChart: React.FC<ChartDataProps> = ({ data }) => {
     ],
   };
 
-  // Configuração das opções do gráfico
   const options = {
     responsive: true,
     scales: {
       x: {
         grid: {
-          display: false, // Remove a grade do eixo X
+          display: false,
         },
       },
       y: {
         beginAtZero: true,
         grid: {
-          display: false, // Remove a grade do eixo Y
+          display: false,
         },
         ticks: {
           font: {
@@ -139,7 +139,7 @@ const BarLineChart: React.FC<ChartDataProps> = ({ data }) => {
   };
 
   return (
-    <div className="w-full h-96">
+    <div className="w-full h-96 flex justify-center">
       <Chart type="bar" data={chartData} options={options} />{" "}
     </div>
   );

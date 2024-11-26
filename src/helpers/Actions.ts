@@ -76,7 +76,7 @@ class Actions {
     };
   }
 
-  async save(data: object, id: string | null = null, payload: object = {}) {
+  async save(data: object, id: string | null = null) {
     let response;
 
     if (id) {
@@ -87,7 +87,7 @@ class Actions {
       response = await api.oauth(this.oauth).post(`${this.endpoint}`, data);
     }
 
-    return { id, data: response.data, payload };
+    return { id, data: response.data};
   }
 
   async autocomplete(
