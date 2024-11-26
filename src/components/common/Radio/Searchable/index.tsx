@@ -56,10 +56,8 @@ const Radio: React.ForwardRefRenderFunction<HTMLInputElement | null, IProps> = (
     return () => clearTimeout(timeout);
   }, [search, queryClient, queryKey]);
 
-  //console.log(data);
-
   return (
-    <div className="flex flex-col gap-1">
+    <div className="flex flex-col gap-1 overflow-hidden">
       <div className="py-2 flex flex-row border border-zinc-300 rounded-md">
         <SearchIcon
           size={18}

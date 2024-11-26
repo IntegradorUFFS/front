@@ -11,18 +11,19 @@ import { useQueryClient } from "@tanstack/react-query";
 import Button from "@/components/common/Button";
 import FilterButton from "@/components/common/FilterButton";
 import Searchable from "@/components/common/Radio/Searchable";
-import ItemList from "@/components/common/Radio/ItemList";
+import ItemList from "@/components/common/Input/Search";
+import Radio from "@/components/common/Radio";
 
 interface IProps {
   queryKey: string[];
   filters?: {
     title: string;
     children?: string[];
-    endpoint: string;
+    endpoint?: string;
     name: string;
     placeholder?: string;
     searchBar?: boolean;
-    type?: string;
+    options?: { label: string; value: string | number | undefined }[];
   }[];
 }
 
@@ -100,6 +101,24 @@ const FiltersLine: React.FC<IProps> = ({ queryKey, filters }) => {
     }
     return res;
   }, [searchParams]);
+
+  const renderField = (filter: any) => {
+    if (filter.options) {
+      return <Radio items={filter.options} name={filter.name} />;
+    }
+
+    if (filter.searchBar) {
+      return <ItemList placeholder={filter.placeholder} name={filter.name} />;
+    }
+
+    return (
+      <Searchable
+        endpoint={filter.endpoint}
+        name={filter.name}
+        placeholder={filter.placeholder}
+      />
+    );
+  };
 
   const titles = useMemo(
     () => filters?.map((filter) => filter.title),
@@ -190,21 +209,7 @@ const FiltersLine: React.FC<IProps> = ({ queryKey, filters }) => {
                       title={filter.title}
                       toggle={handleActiveCollapse}
                       active={activeCollapse === filter.title}
-                      content={
-                        filter.searchBar ? (
-                          <Searchable
-                            endpoint={filter.endpoint}
-                            name={filter.name}
-                            placeholder={filter.placeholder}
-                          />
-                        ) : (
-                          <ItemList
-                            endpoint={filter.endpoint}
-                            name={filter.name}
-                            type={filter.type}
-                          />
-                        )
-                      }
+                      content={renderField(filter)}
                     />
                   ))
                 ) : (

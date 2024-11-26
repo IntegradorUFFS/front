@@ -105,7 +105,6 @@ const UserPage: React.FC = () => {
                   text="Cadastrar"
                 />
               }
-              submitAction={() => {}}
               title="Cadastrar Usuário"
               cancelText="Cancelar"
               submitText="Salvar"
@@ -127,8 +126,11 @@ const UserPage: React.FC = () => {
           },
           {
             title: "Permissão",
-            endpoint: "/user/list",
-            searchBar: false,
+            options: [
+              { label: "Visualizador", value: "viewer" },
+              { label: "Gerente", value: "manager" },
+              { label: "Adiministrador", value: "admin" },
+            ],
             name: "user_role",
           },
         ]}

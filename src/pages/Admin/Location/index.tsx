@@ -80,7 +80,6 @@ const LocationPage: React.FC = () => {
                   text="Cadastrar"
                 />
               }
-              submitAction={() => {}}
               title="Cadastrar Local"
               cancelText="Cancelar"
               submitText="Salvar"

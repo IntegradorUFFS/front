@@ -92,6 +92,7 @@ const TransactionPage: React.FC = () => {
           {
             title: "Material",
             endpoint: "/material/list",
+            searchBar: true,
             name: "material_id",
           },
           {
@@ -106,7 +107,11 @@ const TransactionPage: React.FC = () => {
           },
           {
             title: "Tipo",
-            endpoint: "",
+            options: [
+              { label: "Entrada", value: "in" },
+              { label: "Tranferência", value: "transfer" },
+              { label: "Saida", value: "out" },
+            ],
             name: "type",
           },
         ]}

@@ -31,6 +31,7 @@ const LocationMaterialPage: React.FC = () => {
           {
             title: "Material",
             endpoint: "/material/list",
+            searchBar: true,
             name: "material_id",
           },
           { title: "Local", endpoint: "/location/list", name: "location_id" },

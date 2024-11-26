@@ -25,7 +25,7 @@ const UnitForm: React.FC<IProps> = () => {
     },
   });
 
-  console.log(data);
+  //console.log(data);
 
   return (
     <div className="flex flex-col gap-4 mb-2">

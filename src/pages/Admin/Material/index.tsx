@@ -68,7 +68,7 @@ const MaterialPage: React.FC = () => {
       });
     },
     onSuccess: () => {
-      console.log("Material posted");
+      //console.log("Material posted");
       queryClient.invalidateQueries({ queryKey });
     },
     onError: (err) => {
@@ -140,7 +140,6 @@ const MaterialPage: React.FC = () => {
           canManage && [
             <Dialog
               triggerElement={<Button icon={<Ruler />} className="p-2" />}
-              submitAction={() => {}}
               title="Cadastrar unidade de medida"
               cancelText="Cancelar"
               submitText="Salvar"
@@ -149,7 +148,6 @@ const MaterialPage: React.FC = () => {
             </Dialog>,
             <Dialog
               triggerElement={<Button icon={<Tags />} className="p-2" />}
-              submitAction={() => {}}
               title="Cadastrar categoria"
               cancelText="Cancelar"
               submitText="Salvar"
@@ -165,7 +163,6 @@ const MaterialPage: React.FC = () => {
                   text="Cadastrar"
                 />
               }
-              submitAction={handleRegister}
               title="Cadastrar material"
               cancelText="Cancelar"
               submitText="Salvar"
@@ -187,12 +184,14 @@ const MaterialPage: React.FC = () => {
           },
           {
             title: "Categoria",
-            endpoint: "/material/list",
+            endpoint: "/category/list",
             name: "category.name",
+            placeholder: "Pesquise o nome da categoria",
           },
           {
             title: "Unidade de Medida",
-            endpoint: "/material/list",
+            endpoint: "/unit/list",
+            placeholder: "Pesquise o nome da unidade de medida",
             name: "unit.name",
           },
         ]}

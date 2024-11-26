@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from "react";
+import React, { useRef, useCallback, useState } from "react";
 import Button from "../Button";
 import {
   Dialog as DialogUI,
@@ -16,7 +16,6 @@ interface IProps {
   triggerElement: React.ReactNode;
   title?: string;
   description?: string;
-  submitAction?: (params: any) => void;
   cancelText?: string;
   submitText?: string;
   children?: React.ReactNode;
@@ -29,7 +28,6 @@ const Dialog: React.FC<IProps> = ({
   title,
   description,
   cancelText,
-  submitAction,
   submitText,
   children,
   fit,
@@ -41,11 +39,24 @@ const Dialog: React.FC<IProps> = ({
     if (closeBtn.current) closeBtn.current.click();
   }, []);
 
-  const handleSubmit = () => {
-    if (!submitAction) return;
+  const [submitAction, setSubmitAction] = useState<Function | null>(null);
 
+  const handleSubmit = () => {
+    console.log("submit");
+    if (!submitAction) return;
     submitAction(handleClose);
   };
+
+  const form = () =>
+    React.cloneElement(children ?? ((<></>) as any), {
+      setSubmitAction: (params: any) => {
+        if (!params) return;
+        setSubmitAction(params);
+        console.log(params);
+      },
+    });
+
+  //console.log(submitAction);
 
   return (
     <DialogUI>
@@ -75,7 +86,7 @@ const Dialog: React.FC<IProps> = ({
             )}
           </DialogHeader>
         )}
-        {children}
+        {form()}
         {(cancelText || submitAction) && (
           <DialogFooter>
             <div className="w-full">

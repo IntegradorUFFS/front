@@ -58,7 +58,6 @@ const TableRow: React.FC<IProps> = ({
                     <BoltIcon size={18} />
                   </button>
                 }
-                submitAction={(callback) => onEdit(data, callback)}
                 title={title}
                 cancelText="Cancelar"
                 submitText="Salvar"
