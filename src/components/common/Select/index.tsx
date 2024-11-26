@@ -11,8 +11,10 @@ interface IProps {
     value: string | number | undefined;
   }[];
   control: Control<any>;
+  error?: string;
 }
-const Select: React.FC<IProps> = ({ label, options, control }) => {
+
+const Select: React.FC<IProps> = ({ label, options, control, error }) => {
   const [active, setActive] = useState<boolean>(false);
   const popupRef = useRef<HTMLMenuElement>(null);
 
@@ -54,7 +56,10 @@ const Select: React.FC<IProps> = ({ label, options, control }) => {
                 <span className="font-semibold w-full">{label}</span>
                 <button
                   onClick={() => setActive((prev) => !prev)}
-                  className="flex items-center w-full disabled:opacity-70 bg-zinc-200 rounded-md p-3 px-5 z-10"
+                  className={twMerge(
+                    "flex items-center w-full disabled:opacity-70 bg-zinc-200 rounded-md p-3 px-5 z-10",
+                    error && "border border-red-600"
+                  )}
                 >
                   <div className="w-full text-start">{getLabel(value)} </div>
                   <span className="text-zinc-700 ">
@@ -66,6 +71,9 @@ const Select: React.FC<IProps> = ({ label, options, control }) => {
                     />
                   </span>
                 </button>
+                {error && (
+                  <span className="text-sm text-red-600 ml-2">{error}</span>
+                )}
                 {active && (
                   <menu
                     className="w-full py-3 px-2 bg-zinc-50 top-[5rem] absolute rounded-xl shadow-md animate-menu-in z-10"

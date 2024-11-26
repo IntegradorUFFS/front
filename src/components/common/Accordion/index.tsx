@@ -9,6 +9,7 @@ import {
 interface Field {
   title: string;
   content: React.ReactNode;
+  
 }
 
 interface AccordionProps {

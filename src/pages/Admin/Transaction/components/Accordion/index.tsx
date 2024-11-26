@@ -1,11 +1,14 @@
 import Accordion from "@/components/common/Accordion";
 import Select from "@/components/common/Select";
-import React from "react";
+import React, { useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Input from "@/components/common/Input";
 import Button from "@/components/common/Button";
+import { useAppSelector } from "@/hooks";
+import { useQuery } from "@tanstack/react-query";
+import Actions from "@/helpers/Actions";
 
 interface IProps {}
 
@@ -17,9 +20,28 @@ const schema = z.object({
 });
 
 const Form: React.FC<IProps> = ({}) => {
-  const { control } = useForm({
+  const materialEndpoint = "/material/list";
+  const queryKey = useMemo(
+    () => ["search", materialEndpoint],
+    [materialEndpoint]
+  );
+  const oauth = useAppSelector((state) => state.auth.oauth);
+  const { control, getValues } = useForm({
     resolver: zodResolver(schema),
   });
+
+  // const { data, isLoading } = useQuery({
+  //   queryKey,
+  //   queryFn: async () => {
+  //     if (!oauth) throw new Error("OAuth not found");
+  //     const search = getValues("search");
+  //     const res = await new Actions(materialEndpoint, oauth).fetch({
+  //       filters: { name: search },
+  //     });
+  //     return res.data;
+  //   },
+  // });
+
   return (
     <div className="flex flex-col gap-4 mb-2">
       <Accordion
@@ -29,7 +51,9 @@ const Form: React.FC<IProps> = ({}) => {
             content: (
               <div className="flex flex-col gap-4">
                 <div className="h-0.5 bg-zinc-200 col-span-2"></div>
+
                 <Select control={control} label="Material" options={[]} />
+
                 <Select control={control} label="Local" options={[]} />
                 <Input
                   label="Quantidade"

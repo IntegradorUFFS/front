@@ -198,7 +198,7 @@ const MaterialPage: React.FC = () => {
       />
       <Table
         fields={fields}
-        onEdit={canManage} // &&HandleEdit
+        onEdit={canManage}
         onDelete={canManage && handleDelete}
         queryKey={queryKey}
         endpoint="/material/list"

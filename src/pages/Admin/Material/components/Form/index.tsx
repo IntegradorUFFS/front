@@ -7,7 +7,7 @@ import { z } from "zod";
 import Button from "@/components/common/Button";
 import Actions from "@/helpers/Actions";
 import { useAppSelector } from "@/hooks";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "@/hooks/use-toast";
 
 interface IProps {
   edit?: {
@@ -38,7 +38,7 @@ const schema = z.object({
 });
 
 const Form: React.FC<IProps> = ({ edit, handleClose }) => {
-  const { toast } = useToast();
+  const oauth = useAppSelector((state) => state.auth.oauth);
   const {
     control,
     register,
@@ -52,8 +52,6 @@ const Form: React.FC<IProps> = ({ edit, handleClose }) => {
       unit_id: edit?.unit?.id,
     },
   });
-
-  const oauth = useAppSelector((state) => state.auth.oauth);
 
   const submit = useCallback(
     async (data?: any) => {
@@ -70,15 +68,15 @@ const Form: React.FC<IProps> = ({ edit, handleClose }) => {
       } catch (error) {
         toast({
           title: "Erro",
-          description: "Não foi possível cadastrar o material",
+          description: `Não foi possivel ${
+            edit ? "atualizar" : "cadastrar"
+          } o material`,
           variant: "destructive",
         });
       }
     },
     [handleClose]
   );
-
- // console.log(edit.id);
 
   return (
     <div className="flex flex-col gap-4">
@@ -116,6 +114,7 @@ const Form: React.FC<IProps> = ({ edit, handleClose }) => {
           variant="filled"
         />
       </div>
+      
     </div>
   );
 };
