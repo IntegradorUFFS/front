@@ -83,7 +83,12 @@ const CategoryForm: React.FC<IProps> = ({ handleClose }) => {
             content: (
               <div className="max-h-40 overflow-y-auto flex flex-col gap-1">
                 {data?.map((item: Record<string, any>, i: number) => (
-                  <TableLine name={item.name} type="category" id={item.id} key={i} />
+                  <TableLine
+                    name={item.name}
+                    type="category"
+                    id={item.id}
+                    key={i}
+                  />
                 ))}
               </div>
             ),

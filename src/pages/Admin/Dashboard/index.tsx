@@ -61,9 +61,16 @@ const DashboardPage: React.FC = () => {
         />
       </div>
       {isLoading ? (
-        <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full border-4 border-t-4 border-zinc-200 h-16 w-16"></div>
-        </div>
+        <>
+          <div className="grid grid-cols-5 gap-8 m-4">
+            <div className="h-100 bg-zinc-200 rounded-md animate-pulse col-span-3 my-4 opacity-40"></div>
+            <div className="h-100 bg-zinc-200 rounded-md animate-pulse col-span-2 my-4 opacity-40"></div>
+          </div>
+          <div className="flex flex-col gap-2">
+            <div className="h-64 bg-zinc-200 rounded-md animate-pulse my-4 opacity-40"></div>
+            <div className="h-64 bg-zinc-200 rounded-md animate-pulse my-4 opacity-40"></div>
+          </div>
+        </>
       ) : (
         <>
           <div className="grid grid-cols-5 gap-8">
@@ -96,7 +103,7 @@ const DashboardPage: React.FC = () => {
                           {item.material.name}
                         </span>
                         <span className="text-base col-span-1 text-center">
-                          {item.material.quantity}
+                          {item.quantity}
                         </span>
                         <span className="text-base col-span-2 text-center">
                           {item.origin.name}
@@ -132,7 +139,7 @@ const DashboardPage: React.FC = () => {
                           {item.material.name}
                         </span>
                         <span className="text-base col-span-1 text-center">
-                          {item.material.quantity}
+                          {item.quantity}
                         </span>
                         <span className="text-base col-span-1 text-center">
                           {item.destiny.name}
@@ -162,7 +169,7 @@ const DashboardPage: React.FC = () => {
                           {item.material.name}
                         </span>
                         <span className="text-base col-span-1 text-center">
-                          {item.material.quantity}
+                          {item.quantity}
                         </span>
                         <span className="text-base col-span-1 text-center">
                           {item.origin.name}

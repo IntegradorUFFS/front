@@ -141,6 +141,7 @@ const Autocomplete: React.FC<IProps> = ({
                   {...register("search")}
                   autoComplete="off"
                   error={error?.message}
+                  disabled={disabled}
                 />
               ) : (
                 <div
@@ -152,6 +153,7 @@ const Autocomplete: React.FC<IProps> = ({
                     {selected}
                     <button
                       type="button"
+                      disabled={disabled}
                       className="h-full flex items-center justify-center"
                       onClick={() => {
                         setValue("search", "");

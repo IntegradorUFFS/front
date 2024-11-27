@@ -1,6 +1,7 @@
 import React, { forwardRef } from "react";
 import Text from "./Text";
 import Password from "./Password";
+import { twMerge } from "tailwind-merge";
 
 interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -47,7 +48,10 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement | null, IProps> = (
         <div className="w-full bg-zinc-200 rounded-md grid grid-cols-3">
           <input
             type="number"
-            className="w-full bg-zinc-200 rounded-md text-sm py-3 px-5 placeholder:text-zinc-500 bg-transparent aria-invalid:border-red-600 font-normal col-span-2"
+            className={twMerge(
+              "w-full bg-zinc-200 rounded-md text-sm py-3 px-5 placeholder:text-zinc-500 bg-transparent aria-invalid:border-red-600 font-normal col-span-2",
+              error && "border border-red-600 focus:outline-red-500"
+            )}
             {...props}
             ref={ref}
             min={0}

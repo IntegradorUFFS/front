@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, ReactElement } from "react";
+import React, { useRef, useCallback, ReactElement, useState } from "react";
 import Button from "../Button";
 import {
   Dialog as DialogUI,
@@ -34,9 +34,10 @@ const Dialog: React.FC<IProps> = ({
   titleOff,
 }) => {
   const closeBtn = useRef<HTMLButtonElement | null>(null);
-
+  //const [query, setQuery] = useState("");
   const handleClose = useCallback(() => {
     if (closeBtn.current) closeBtn.current.click();
+    // setQuery("");
   }, []);
 
   const renderChildrenWithProps = () => {
