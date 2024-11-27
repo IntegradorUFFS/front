@@ -114,7 +114,6 @@ const Form: React.FC<IProps> = ({ edit, handleClose }) => {
           variant="filled"
         />
       </div>
-      
     </div>
   );
 };

@@ -9,38 +9,32 @@ import Button from "@/components/common/Button";
 import { useAppSelector } from "@/hooks";
 import { useQuery } from "@tanstack/react-query";
 import Actions from "@/helpers/Actions";
+import Autocomplete from "@/components/common/Autocomplete";
+import In from "../In";
+import Out from "../Out";
 
 interface IProps {}
 
 const schema = z.object({
   material_id: z.string(),
-  material_quantity_id: z.string(),
+  quantity: z.number().min(0.001),
   origin_id: z.string(),
   destiny_id: z.string(),
 });
 
 const Form: React.FC<IProps> = ({}) => {
-  const materialEndpoint = "/material/list";
-  const queryKey = useMemo(
-    () => ["search", materialEndpoint],
-    [materialEndpoint]
-  );
+  // const materialEndpoint = "/material/list";
+  // const queryKey = useMemo(
+  //   () => ["search", materialEndpoint],
+  //   [materialEndpoint]
+  // );
   const oauth = useAppSelector((state) => state.auth.oauth);
-  const { control, getValues } = useForm({
+  const { control, handleSubmit, watch } = useForm({
     resolver: zodResolver(schema),
   });
 
-  // const { data, isLoading } = useQuery({
-  //   queryKey,
-  //   queryFn: async () => {
-  //     if (!oauth) throw new Error("OAuth not found");
-  //     const search = getValues("search");
-  //     const res = await new Actions(materialEndpoint, oauth).fetch({
-  //       filters: { name: search },
-  //     });
-  //     return res.data;
-  //   },
-  // });
+  const material_id = watch("material_id");
+  const location_id = watch("location_id");
 
   return (
     <div className="flex flex-col gap-4 mb-2">
@@ -48,42 +42,28 @@ const Form: React.FC<IProps> = ({}) => {
         fields={[
           {
             title: "Entrada de insumos",
-            content: (
-              <div className="flex flex-col gap-4">
-                <div className="h-0.5 bg-zinc-200 col-span-2"></div>
-
-                <Select control={control} label="Material" options={[]} />
-
-                <Select control={control} label="Local" options={[]} />
-                <Input
-                  label="Quantidade"
-                  placeholder="Quantidade"
-                  type="quantity"
-                  qtd={1}
-                />
-                <div className="flex flex-row justify-center">
-                  <Button
-                    type="submit"
-                    onClick={() => {}}
-                    text="Registrar"
-                    className="w-fit py-2 px-4 text-sm ring-2 ring-orange-600 disabled:ring-zinc-400"
-                    variant="filled"
-                  />
-                </div>
-                <div className="h-0.5 bg-zinc-200 col-span-2"></div>
-              </div>
-            ),
+            content: <In />,
           },
           {
             title: "Transferência de insumos entre locais",
             content: (
               <div className="flex flex-col gap-4">
                 <div className="h-0.5 bg-zinc-200 col-span-2"></div>
-                <Select control={control} label="Material" options={[]} />
-                <Select
+                <Autocomplete
+                  label="Material"
+                  endpoint="/material"
                   control={control}
+                  queryKey={["material-autocomplete"]}
+                  name="material_id"
+                  getOptionLabel={(option) => option.name}
+                />
+                <Autocomplete
                   label="Local de origem"
-                  options={[]}
+                  endpoint="/location"
+                  control={control}
+                  queryKey={["location-autocomplete"]}
+                  name="location_id"
+                  getOptionLabel={(option) => option.name}
                 />
                 <Input
                   label="Quantidade"
@@ -111,28 +91,7 @@ const Form: React.FC<IProps> = ({}) => {
           },
           {
             title: "Saída de insumos",
-            content: (
-              <div className="flex flex-col gap-4">
-                <div className="h-0.5 bg-zinc-200 col-span-2"></div>
-                <Select control={control} label="Material" options={[]} />
-                <Select control={control} label="Local" options={[]} />
-                <Input
-                  label="Quantidade"
-                  placeholder="Quantidade"
-                  type="quantity"
-                  qtd={1}
-                />
-                <div className="flex flex-row justify-center">
-                  <Button
-                    type="submit"
-                    onClick={() => {}}
-                    text="Registrar"
-                    className="w-fit py-2 px-4 text-sm ring-2 ring-orange-600 disabled:ring-zinc-400"
-                    variant="filled"
-                  />
-                </div>
-              </div>
-            ),
+            content: <Out />,
           },
         ]}
       />

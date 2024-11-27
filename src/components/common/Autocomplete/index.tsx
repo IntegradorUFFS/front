@@ -23,6 +23,7 @@ interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
   control: Control<any>;
   name: string;
   disabled?: boolean;
+  extraFilter?: Record<string, any>;
 }
 
 const Autocomplete: React.FC<IProps> = ({
@@ -35,6 +36,7 @@ const Autocomplete: React.FC<IProps> = ({
   name,
   control,
   disabled,
+  extraFilter,
 }) => {
   const [active, setActive] = useState<boolean>(false);
   const popupRef = useRef<HTMLMenuElement>(null);
@@ -55,7 +57,12 @@ const Autocomplete: React.FC<IProps> = ({
     queryFn: async () => {
       if (!oauth) throw new Error("OAuth not found");
       const search = getValues("search");
-      const res = await new Actions(endpoint, oauth).autocomplete(search);
+      const res = await new Actions(endpoint, oauth).autocomplete(
+        search,
+        undefined,
+        true,
+        extraFilter
+      );
       return res.data;
     },
   });
