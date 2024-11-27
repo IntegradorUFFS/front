@@ -8,11 +8,7 @@ import React, {
 import { X, Scan, Plus } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
-import Button from "@/components/common/Button";
 import FilterButton from "@/components/common/FilterButton";
-import Searchable from "@/components/common/Radio/Searchable";
-import ItemList from "@/components/common/Input/Search";
-import Radio from "@/components/common/Radio";
 
 interface IProps {
   queryKey: string[];
@@ -102,24 +98,6 @@ const FiltersLine: React.FC<IProps> = ({ queryKey, filters }) => {
     return res;
   }, [searchParams]);
 
-  const renderField = (filter: any) => {
-    if (filter.options) {
-      return <Radio items={filter.options} name={filter.name} />;
-    }
-
-    if (filter.searchBar) {
-      return <ItemList placeholder={filter.placeholder} name={filter.name} />;
-    }
-
-    return (
-      <Searchable
-        endpoint={filter.endpoint}
-        name={filter.name}
-        placeholder={filter.placeholder}
-      />
-    );
-  };
-
   const titles = useMemo(
     () => filters?.map((filter) => filter.title),
     [filters]
@@ -204,31 +182,16 @@ const FiltersLine: React.FC<IProps> = ({ queryKey, filters }) => {
                 {filters && filters.length > 0 ? (
                   filters.map((filter, index) => (
                     <FilterButton
-                      key={index}
-                      search={filter.searchBar ? true : false}
-                      title={filter.title}
+                      queryKey={queryKey}
                       toggle={handleActiveCollapse}
                       active={activeCollapse === filter.title}
-                      content={renderField(filter)}
+                      filter={filter}
+                      key={index}
                     />
                   ))
                 ) : (
                   <></>
                 )}
-              </div>
-              <div className="pt-2 flex justify-center flex-row gap-6">
-                <Button
-                  text={filters?.length == 0 ? "Limpar" : "Limpar tudo"}
-                  className="w-fit py-2 px-4 text-sm"
-                  type="button"
-                  variant="outline"
-                />
-                <Button
-                  text="Pesquisar"
-                  type="submit"
-                  className="w-fit py-2 px-4 text-sm ring-2 ring-orange-600 disabled:ring-zinc-400"
-                  variant="filled"
-                />
               </div>
             </div>
           </menu>

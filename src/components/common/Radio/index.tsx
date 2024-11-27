@@ -21,6 +21,4 @@ const Radio: React.ForwardRefRenderFunction<HTMLInputElement | null, IProps> = (
   );
 };
 
-// const FowaredRadio = forwardRef(Radio);
-
 export default forwardRef(Radio);

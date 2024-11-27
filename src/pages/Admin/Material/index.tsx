@@ -12,15 +12,8 @@ import Actions from "@/helpers/Actions";
 import { useToast } from "@/hooks/use-toast";
 import Dialog from "@/components/common/Dialog";
 import Form from "./components/Form";
-import Api from "@/api/admin";
 import CategoryForm from "./components/Category";
 import UnitForm from "./components/Unit";
-
-interface PostMaterialParams {
-  name: string;
-  category_id: string;
-  unit_id: string;
-}
 
 const fields = [
   {
@@ -53,34 +46,6 @@ const MaterialPage: React.FC = () => {
   const canManage = permissions?.includes("material.management");
   const { toast } = useToast();
   const queryClient = useQueryClient();
-
-  const { mutateAsync: postMaterial } = useMutation<
-    void,
-    unknown,
-    PostMaterialParams
-  >({
-    mutationFn: async ({ name, category_id, unit_id }) => {
-      if (!oauth) throw new Error("OAuth not found");
-      await Api.oauth(oauth).post("/material", {
-        name,
-        category_id,
-        unit_id,
-      });
-    },
-    onSuccess: () => {
-      //console.log("Material posted");
-      queryClient.invalidateQueries({ queryKey });
-    },
-    onError: (err) => {
-      const { field, error } = extractErrors(err);
-      if (field) return;
-      toast({
-        title: "Erro",
-        description: helpMessages(error) || "Algo deu errado",
-        variant: "destructive",
-      });
-    },
-  });
 
   const { mutateAsync: deleteMaterial } = useMutation({
     mutationFn: async ({
@@ -115,21 +80,6 @@ const MaterialPage: React.FC = () => {
       await deleteMaterial({ id: item.id, callback });
     },
     [deleteMaterial]
-  );
-
-  const handleRegister = useCallback(
-    async (data: Record<string, any>) => {
-      try {
-        await postMaterial({
-          name: data?.name,
-          category_id: data?.category_id,
-          unit_id: data?.unit_id,
-        });
-      } catch (error) {
-        console.error("Error posting material:", error);
-      }
-    },
-    [postMaterial]
   );
 
   return (

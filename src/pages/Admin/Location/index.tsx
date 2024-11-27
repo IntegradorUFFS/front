@@ -96,7 +96,7 @@ const LocationPage: React.FC = () => {
             placeholder: "Pesquise o local",
             searchBar: true,
             endpoint: "/location/list",
-            name: "location_id",
+            name: "name",
           },
         ]}
         queryKey={["location"]}
