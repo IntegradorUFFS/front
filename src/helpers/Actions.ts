@@ -7,6 +7,7 @@ interface IFetchProps {
   sort_direction?: string;
   sort_column?: string;
   filters?: Record<string, any>;
+  extra_params?: Record<string, any>;
 }
 
 class Actions {
@@ -28,7 +29,14 @@ class Actions {
   }
 
   async fetch(
-    { page, per_page, sort_direction, sort_column, filters }: IFetchProps = {},
+    {
+      page,
+      per_page,
+      sort_direction,
+      sort_column,
+      filters,
+      extra_params,
+    }: IFetchProps = {},
     payload = {}
   ) {
     const params: Record<string, string | string[]> = {};
@@ -37,6 +45,12 @@ class Actions {
       Object.keys(filters).forEach((key) => {
         if (filters[key])
           params[`filter[${key}]`] = encodeURIComponent(filters[key]);
+      });
+
+    if (extra_params)
+      Object.keys(extra_params).forEach((key) => {
+        if (extra_params[key])
+          params[key] = encodeURIComponent(extra_params[key]);
       });
 
     const query = queryString.stringify({
@@ -87,7 +101,7 @@ class Actions {
       response = await api.oauth(this.oauth).post(`${this.endpoint}`, data);
     }
 
-    return { id, data: response.data};
+    return { id, data: response.data };
   }
 
   async autocomplete(

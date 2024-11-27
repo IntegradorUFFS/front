@@ -1,18 +1,13 @@
-import Accordion from "@/components/common/Accordion";
-import Select from "@/components/common/Select";
-import React, { useMemo } from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Input from "@/components/common/Input";
 import Button from "@/components/common/Button";
 import { useAppSelector } from "@/hooks";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Actions from "@/helpers/Actions";
 import Autocomplete from "@/components/common/Autocomplete";
-import In from "../In";
-
-interface IProps {}
 
 const schema = z.object({
   material_id: z.string(),
@@ -20,20 +15,38 @@ const schema = z.object({
   origin_id: z.string(),
   destiny_id: z.string(),
 });
-
-const Form: React.FC<IProps> = ({}) => {
-  const materialEndpoint = "/";
-  const queryKey = useMemo(
-    () => ["search", materialEndpoint],
-    [materialEndpoint]
-  );
+const queryKey = ["out", "quantity"];
+const Form: React.FC = () => {
+  const queryClient = useQueryClient();
   const oauth = useAppSelector((state) => state.auth.oauth);
-  const { control, handleSubmit, watch } = useForm({
+  const { control, watch } = useForm({
     resolver: zodResolver(schema),
   });
-
   const material_id = watch("material_id");
   const location_id = watch("location_id");
+
+  const { data, isFetching } = useQuery({
+    queryKey,
+    queryFn: async () => {
+      if (!oauth) throw new Error("OAuth not found");
+      if (!material_id || !location_id)
+        throw new Error("Material or location not found");
+      const res = await new Actions("/location-material/relation", oauth).fetch(
+        {
+          extra_params: { location_id, material_id },
+        }
+      );
+      return res.data;
+    },
+  });
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      queryClient.invalidateQueries({ queryKey });
+    }, 300);
+    return () => clearTimeout(timeout);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [material_id, location_id, queryClient, queryKey]);
 
   return (
     <div className="flex flex-col gap-4">
@@ -60,7 +73,11 @@ const Form: React.FC<IProps> = ({}) => {
         label="Quantidade"
         placeholder="Quantidade"
         type="quantity"
-        qtd={location_id ? : 0}
+        qtd={
+          location_id && material_id && data && !isFetching
+            ? data?.quantity
+            : "-"
+        }
         disabled={!location_id}
       />
       <div className="flex flex-row justify-center">

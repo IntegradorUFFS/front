@@ -50,6 +50,8 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement | null, IProps> = (
             className="w-full bg-zinc-200 rounded-md text-sm py-3 px-5 placeholder:text-zinc-500 bg-transparent aria-invalid:border-red-600 font-normal col-span-2"
             {...props}
             ref={ref}
+            min={0}
+            max={qtd}
           ></input>
 
           <span className="bg-zinc-300 rounded-md py-3 w-full text-sm font-normal text-center ">
