@@ -92,17 +92,19 @@ const TransactionPage: React.FC = () => {
           {
             title: "Material",
             endpoint: "/material/list",
-            searchBar: true,
+            placeholder: "Pesquise o material",
             name: "material_id",
           },
           {
             title: "Local de origem",
             endpoint: "/location/list",
+            placeholder: "Pesquise o local de origem",
             name: "origin_id",
           },
           {
             title: "Local de destino",
             endpoint: "/location/list",
+            placeholder: "Pesquise o local de destino",
             name: "destiny_id",
           },
           {

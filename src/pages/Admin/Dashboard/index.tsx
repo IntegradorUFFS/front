@@ -11,10 +11,7 @@ const DashboardPage: React.FC = () => {
 
   const [selectedButton, setSelectedButton] = useState<number>(20);
 
-  const queryKey = useMemo(
-    () => ["search", selectedButton],
-    [selectedButton]
-  );
+  const queryKey = useMemo(() => ["search", selectedButton], [selectedButton]);
   const oauth = useAppSelector((state) => state.auth.oauth);
 
   const { data, isLoading } = useQuery({
@@ -92,13 +89,16 @@ const DashboardPage: React.FC = () => {
                 <span className="col-span-2 text-center">Destino</span>
               </div>
               <div className="flex flex-col gap-2 p-2 max-h-fit overflow-y-auto">
-                <div className="grid grid-cols-7 gap-2">
+                <>
                   {data
                     ?.filter(
                       (item: Record<string, any>) => item.type == "transfer"
                     )
-                    .map((item: Record<string, any>) => (
-                      <>
+                    .map((item: Record<string, any>, index: number) => (
+                      <div
+                        className="grid grid-cols-7 my-1"
+                        key={`transfer-${index}`}
+                      >
                         <span className="text-base col-span-2">
                           {item.material.name}
                         </span>
@@ -111,9 +111,9 @@ const DashboardPage: React.FC = () => {
                         <span className="text-base col-span-2 text-center">
                           {item.destiny.name}
                         </span>
-                      </>
+                      </div>
                     ))}
-                </div>
+                </>
               </div>
             </div>
           </div>
@@ -130,11 +130,14 @@ const DashboardPage: React.FC = () => {
                 <span className="col-span-1 text-center">Local</span>
               </div>
               <div className="flex flex-col gap-2 p-2 max-h-fit overflow-y-auto">
-                <div className="grid grid-cols-4 gap-2">
+                <>
                   {data
                     ?.filter((item: Record<string, any>) => item.type == "in")
-                    .map((item: Record<string, any>) => (
-                      <>
+                    .map((item: Record<string, any>, index: number) => (
+                      <div
+                        className="grid grid-cols-4 my-1"
+                        key={`in-${index}`}
+                      >
                         <span className="text-base col-span-2">
                           {item.material.name}
                         </span>
@@ -144,9 +147,9 @@ const DashboardPage: React.FC = () => {
                         <span className="text-base col-span-1 text-center">
                           {item.destiny.name}
                         </span>
-                      </>
+                      </div>
                     ))}
-                </div>
+                </>
               </div>
             </div>
 
@@ -160,11 +163,14 @@ const DashboardPage: React.FC = () => {
                 <span className="col-span-1 text-center">Local</span>
               </div>
               <div className="flex flex-col gap-2 p-2 max-h-fit overflow-y-auto">
-                <div className="grid grid-cols-4 gap-2">
+                <>
                   {data
                     ?.filter((item: Record<string, any>) => item.type == "out")
-                    .map((item: Record<string, any>) => (
-                      <>
+                    .map((item: Record<string, any>, index: number) => (
+                      <div
+                        className="grid grid-cols-4 my-1"
+                        key={`out-${index}`}
+                      >
                         <span className="text-base col-span-2">
                           {item.material.name}
                         </span>
@@ -174,9 +180,9 @@ const DashboardPage: React.FC = () => {
                         <span className="text-base col-span-1 text-center">
                           {item.origin.name}
                         </span>
-                      </>
+                      </div>
                     ))}
-                </div>
+                </>
               </div>
             </div>
           </div>

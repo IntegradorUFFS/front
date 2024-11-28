@@ -31,10 +31,15 @@ const LocationMaterialPage: React.FC = () => {
           {
             title: "Material",
             endpoint: "/material/list",
-            searchBar: true,
+            placeholder: "Pesquise o material",
             name: "material_id",
           },
-          { title: "Local", endpoint: "/location/list", name: "location_id" },
+          {
+            title: "Local",
+            endpoint: "/location/list",
+            name: "location_id",
+            placeholder: "Pesquise o local",
+          },
         ]}
       />
       <Table

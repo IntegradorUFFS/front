@@ -53,11 +53,6 @@ const FilterButton: React.FC<IProps> = ({
   }, [register]);
 
   const renderField = (filter: any) => {
-    //console.log(filter);
-    // return (
-    //   <Input {...register("filter_key")} placeholder={filter.placeholder} />
-    // );
-
     if (filter.options) {
       return (
         <Radio
@@ -99,7 +94,11 @@ const FilterButton: React.FC<IProps> = ({
 
   const handleFilter = useCallback(
     (data: any) => {
-      if (data?.filter_text)
+      //console.log(data);
+      if (!data || data.filter_key == "" || data.filter_key == undefined)
+        return;
+
+      if (data?.filter_text) {
         searchParams.set(
           `filter[${filter.name}]`,
 
@@ -108,10 +107,9 @@ const FilterButton: React.FC<IProps> = ({
             text: data.filter_text,
           })
         );
-      else searchParams.set(`filter[${filter.name}]`, data.filter_key);
+      } else searchParams.set(`filter[${filter.name}]`, data.filter_key);
       setSearchParams(searchParams);
       toggle(filter.title);
-      //console.log(searchParams.values());
       setTimeout(() => {
         queryClient.invalidateQueries({ queryKey });
       }, 150);

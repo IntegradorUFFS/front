@@ -85,7 +85,7 @@ const MaterialPage: React.FC = () => {
             title: "Material",
             endpoint: "/material/list",
             name: "name",
-            placeholder: "Pesquise o nome da categoria",
+            placeholder: "Pesquise o nome do material",
             searchBar: true,
           },
           {
@@ -97,7 +97,7 @@ const MaterialPage: React.FC = () => {
           {
             title: "Unidade de Medida",
             endpoint: "/unit/list",
-            placeholder: "Pesquise o nome da unidade de medida",
+            placeholder: "Pesquise o nome da medida",
             name: "unit_id",
           },
         ]}

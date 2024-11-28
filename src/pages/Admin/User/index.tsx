@@ -118,11 +118,18 @@ const UserPage: React.FC = () => {
         queryKey={["user"]}
         filters={[
           {
-            title: "Nome de Usuário",
+            title: "Nome do usuário",
             endpoint: "/user/list",
             searchBar: true,
-            name: "user_id",
-            placeholder: "Pesquise o nome de Usuário",
+            name: "first_name",
+            placeholder: "Pesquise o nome",
+          },
+          {
+            title: "Sobrenome do usuário",
+            endpoint: "/user/list",
+            searchBar: true,
+            name: "last_name",
+            placeholder: "Pesquise o sobrenome",
           },
           {
             title: "Permissão",
@@ -131,7 +138,7 @@ const UserPage: React.FC = () => {
               { label: "Gerente", value: "manager" },
               { label: "Adiministrador", value: "admin" },
             ],
-            name: "user_role",
+            name: "role",
           },
         ]}
       />
