@@ -31,6 +31,7 @@ const Radio: React.ForwardRefRenderFunction<HTMLInputElement | null, IProps> = (
                 value={value}
                 id={value}
                 {...props}
+                aria-label={label}
                 className="col-start-1 row-start-1
         appearance-none shrink-0
         w-[1.11rem] h-[1.1rem] border-2 border-zinc-400 rounded-full peer focus:ring-1 focus:ring-orange-300 checked:border-orange-600 checked:bg-orange-600 "

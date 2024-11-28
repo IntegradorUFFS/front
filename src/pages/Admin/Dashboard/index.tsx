@@ -13,7 +13,7 @@ const DashboardPage: React.FC = () => {
 
   const queryKey = useMemo(
     () => ["search", selectedButton],
-    [endpoint, selectedButton]
+    [selectedButton]
   );
   const oauth = useAppSelector((state) => state.auth.oauth);
 

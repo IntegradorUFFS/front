@@ -43,8 +43,12 @@ class Actions {
 
     if (filters)
       Object.keys(filters).forEach((key) => {
-        if (filters[key])
-          params[`filter[${key}]`] = encodeURIComponent(filters[key]);
+        if (filters[key]) {
+          if (typeof filters[key] === "string")
+            params[`filter[${key}]`] = encodeURIComponent(filters[key]);
+          else
+            params[`filter[${key}]`] = encodeURIComponent(filters[key].value);
+        }
       });
 
     if (extra_params)

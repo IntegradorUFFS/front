@@ -25,7 +25,6 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement | null, IProps> = (
     qtd,
     realNum,
     onChange,
-    name,
     ...props
   },
   ref

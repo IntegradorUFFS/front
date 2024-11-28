@@ -91,7 +91,7 @@ const Form: React.ForwardRefRenderFunction<HTMLDivElement | null, IProps> = (
           description: "Perfil atualizado com sucesso",
         });
         if (handleClose) handleClose();
-      } catch (error) {
+      } catch {
         toast({
           title: "Erro",
           description: "Erro ao atualizar perfil",
@@ -99,7 +99,7 @@ const Form: React.ForwardRefRenderFunction<HTMLDivElement | null, IProps> = (
         });
       }
     },
-    [handleClose]
+    [handleClose, oauth, user.id]
   );
 
   return (

@@ -59,7 +59,7 @@ const UnitForm: React.FC<IProps> = ({ handleClose }) => {
           description: "Unidade de medida cadastrada com sucesso",
         });
         if (handleClose) handleClose();
-      } catch (error) {
+      } catch {
         toast({
           title: "Erro",
           description: "Não foi possível cadastrar a unidade de medida",
@@ -67,7 +67,7 @@ const UnitForm: React.FC<IProps> = ({ handleClose }) => {
         });
       }
     },
-    [handleClose]
+    [handleClose, oauth]
   );
 
   return (

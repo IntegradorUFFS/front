@@ -60,7 +60,7 @@ const Form: React.FC<IProps> = ({ edit, handleClose }) => {
         });
       }
     },
-    [handleClose]
+    [edit, handleClose, oauth]
   );
 
   return (

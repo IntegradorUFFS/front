@@ -65,7 +65,7 @@ const Form: React.FC<IProps> = ({ edit, handleClose }) => {
           } com sucesso`,
         });
         if (handleClose) handleClose();
-      } catch (error) {
+      } catch {
         toast({
           title: "Erro",
           description: `Não foi possivel ${
@@ -75,7 +75,7 @@ const Form: React.FC<IProps> = ({ edit, handleClose }) => {
         });
       }
     },
-    [handleClose]
+    [edit, handleClose, oauth]
   );
 
   return (

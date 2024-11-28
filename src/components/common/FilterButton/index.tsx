@@ -1,5 +1,5 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import Button from "../Button";
 import Searchable from "../Radio/Searchable";
 import Radio from "../Radio";
@@ -9,7 +9,6 @@ import { useQueryClient } from "@tanstack/react-query";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Input from "../Input";
 
 interface IProps {
   toggle: (tab: string) => void;
@@ -28,6 +27,7 @@ interface IProps {
 
 const schema = z.object({
   filter_key: z.string().optional(),
+  filter_text: z.string().optional().nullable(),
 });
 
 const FilterButton: React.FC<IProps> = ({
@@ -40,17 +40,17 @@ const FilterButton: React.FC<IProps> = ({
   const [searchParams, setSearchParams] = useSearchParams();
   const queryClient = useQueryClient();
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: { errors },
-  } = useForm({
+  const { register, handleSubmit, setValue } = useForm({
     resolver: zodResolver(schema),
     defaultValues: {
       filter_key: searchParams.get(`filter[${filter.name}]`) || "",
+      filter_text: searchParams.get(`filter[${filter.name}]`) || "",
     },
   });
+
+  useEffect(() => {
+    register("filter_text");
+  }, [register]);
 
   const renderField = (filter: any) => {
     //console.log(filter);
@@ -65,6 +65,8 @@ const FilterButton: React.FC<IProps> = ({
           {...register("filter_key")}
           onChange={(e) => {
             setValue("filter_key", e.target.value);
+            if (e.target?.ariaLabel)
+              setValue("filter_text", e.target?.ariaLabel);
           }}
         />
       );
@@ -89,6 +91,7 @@ const FilterButton: React.FC<IProps> = ({
         placeholder={filter.placeholder}
         onChange={(e) => {
           setValue("filter_key", e.target.value);
+          if (e.target?.ariaLabel) setValue("filter_text", e.target?.ariaLabel);
         }}
       />
     );
@@ -96,7 +99,16 @@ const FilterButton: React.FC<IProps> = ({
 
   const handleFilter = useCallback(
     (data: any) => {
-      searchParams.set(`filter[${filter.name}]`, data.filter_key);
+      if (data?.filter_text)
+        searchParams.set(
+          `filter[${filter.name}]`,
+
+          JSON.stringify({
+            value: data.filter_key,
+            text: data.filter_text,
+          })
+        );
+      else searchParams.set(`filter[${filter.name}]`, data.filter_key);
       setSearchParams(searchParams);
       toggle(filter.title);
       //console.log(searchParams.values());

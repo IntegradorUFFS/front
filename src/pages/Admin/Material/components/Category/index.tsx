@@ -56,7 +56,7 @@ const CategoryForm: React.FC<IProps> = ({ handleClose }) => {
           description: "Categoria cadastrada com sucesso",
         });
         if (handleClose) handleClose();
-      } catch (error) {
+      } catch  {
         toast({
           title: "Erro",
           description: "Não foi possível cadastrar a categoria",
@@ -64,7 +64,7 @@ const CategoryForm: React.FC<IProps> = ({ handleClose }) => {
         });
       }
     },
-    [handleClose]
+    [handleClose, oauth]
   );
 
   return (

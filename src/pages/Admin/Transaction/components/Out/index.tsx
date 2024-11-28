@@ -71,24 +71,27 @@ const Form: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [material_id, location_id, queryClient, queryKey]);
 
-  const submit = useCallback(async (data?: any) => {
-    if (!data) return;
-    console.log(data);
-    try {
-      await new Actions("/transaction", oauth).save(data);
-      toast({
-        title: "Sucesso",
-        description: "Entrada de material cadastrada com sucesso",
-      });
-      reset();
-    } catch (error) {
-      toast({
-        title: "Erro",
-        description: "Erro ao cadastrar entrada de material",
-        variant: "destructive",
-      });
-    }
-  }, []);
+  const submit = useCallback(
+    async (data?: any) => {
+      if (!data) return;
+      console.log(data);
+      try {
+        await new Actions("/transaction", oauth).save(data);
+        toast({
+          title: "Sucesso",
+          description: "Entrada de material cadastrada com sucesso",
+        });
+        reset();
+      } catch {
+        toast({
+          title: "Erro",
+          description: "Erro ao cadastrar entrada de material",
+          variant: "destructive",
+        });
+      }
+    },
+    [oauth, reset]
+  );
 
   return (
     <div className="flex flex-col gap-4">

@@ -75,7 +75,7 @@ const Form: React.FC = () => {
       queryClient.invalidateQueries({ queryKey });
     }, 300);
     return () => clearTimeout(timeout);
-  }, [material_id, location_id, queryClient, queryKey]);
+  }, [material_id, location_id, queryClient]);
 
   const submit = useCallback(async (data?: any) => {
     if (!data) return;
@@ -87,14 +87,14 @@ const Form: React.FC = () => {
         description: "Transferencia do material cadastrada com sucesso",
       });
       reset();
-    } catch (error) {
+    } catch {
       toast({
         title: "Erro",
         description: "Erro ao cadastrar transferencia do material",
         variant: "destructive",
       });
     }
-  }, []);
+  }, [oauth, reset]);
 
   return (
     <div className="flex flex-col gap-4">
