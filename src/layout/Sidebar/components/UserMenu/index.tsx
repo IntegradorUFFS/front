@@ -8,7 +8,7 @@ import toTitleCase from "@/helpers/toTitleCase";
 interface IProps {
   user:
     | {
-        id: number;
+        id: string;
         first_name: string;
         last_name: string;
         email: string;
@@ -101,7 +101,6 @@ const UserMenu: React.FC<IProps> = ({ user }) => {
                     <span className="text-sm">Editar perfil</span>
                   </button>
                 }
-                submitAction={() => {}}
                 cancelText="Cancelar"
                 submitText="Salvar"
               >

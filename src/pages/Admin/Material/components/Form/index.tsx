@@ -81,6 +81,7 @@ const Form: React.FC<IProps> = ({ edit, handleClose }) => {
   return (
     <div className="flex flex-col gap-4">
       <Input
+        key={"input_name"}
         {...register("name")}
         label="Nome"
         placeholder="Nome do material"
@@ -88,6 +89,7 @@ const Form: React.FC<IProps> = ({ edit, handleClose }) => {
         error={errors.name?.message}
       />
       <Autocomplete
+        key={"autocomplete_category"}
         name="category_id"
         control={control}
         label="Categoria"
@@ -97,6 +99,7 @@ const Form: React.FC<IProps> = ({ edit, handleClose }) => {
         getOptionLabel={(option) => option.name}
       />
       <Autocomplete
+        key={"autocomplete_unit"}
         name="unit_id"
         control={control}
         label="Unidade"

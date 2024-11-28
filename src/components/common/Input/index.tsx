@@ -12,6 +12,7 @@ interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
   toggleOpacity?: boolean;
   onChange?: React.ChangeEventHandler<HTMLInputElement> | undefined;
   qtd?: number;
+  realNum?: boolean;
 }
 
 const Input: React.ForwardRefRenderFunction<HTMLInputElement | null, IProps> = (
@@ -22,6 +23,7 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement | null, IProps> = (
     type = "text",
     disabled,
     qtd,
+    realNum,
     onChange,
     ...props
   },
@@ -43,6 +45,7 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement | null, IProps> = (
           ref={ref}
           invalid={!!error}
           onChange={onChange}
+          autoComplete="off"
         />
       ) : type === "quantity" ? (
         <div className="w-full bg-zinc-200 rounded-md grid grid-cols-3">
@@ -56,6 +59,7 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement | null, IProps> = (
             ref={ref}
             min={0}
             max={qtd}
+            autoComplete="off"
           ></input>
 
           <span className="bg-zinc-300 rounded-md py-3 w-full text-sm font-normal text-center ">
@@ -69,8 +73,10 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement | null, IProps> = (
           disabled={disabled}
           {...props}
           ref={ref}
+          realNum={realNum}
           invalid={!!error}
           onChange={onChange}
+          autoComplete="off"
         />
       )}
       {error && <span className="text-sm text-red-600 ml-2">{error}</span>}

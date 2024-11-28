@@ -8,10 +8,19 @@ interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
   disabled?: boolean;
   toggleOpacity?: boolean;
   invalid?: boolean;
+  realNum?: boolean;
 }
 
 const Input: React.ForwardRefRenderFunction<HTMLInputElement | null, IProps> = (
-  { placeholder, type, disabled, toggleOpacity = true, invalid, ...props },
+  {
+    placeholder,
+    type,
+    disabled,
+    toggleOpacity = true,
+    realNum,
+    invalid,
+    ...props
+  },
   ref
 ) => {
   return (
@@ -26,6 +35,7 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement | null, IProps> = (
       disabled={disabled}
       {...props}
       ref={ref}
+      min={realNum ? 0 : undefined}
     />
   );
 };

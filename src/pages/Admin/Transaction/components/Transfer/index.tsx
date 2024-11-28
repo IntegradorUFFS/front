@@ -46,7 +46,7 @@ const Form: React.FC = () => {
     resolver: zodResolver(schema),
     defaultValues: {
       material_id: undefined,
-      quantity: undefined,
+      quantity: null,
       origin_id: undefined,
       destiny_id: undefined,
     },

@@ -1,9 +1,15 @@
-import React, { useState, useCallback, useEffect, useRef } from "react";
+import React, {
+  useState,
+  useCallback,
+  useEffect,
+  useRef,
+  forwardRef,
+} from "react";
 import { Controller, Control } from "react-hook-form";
 import { ChevronDown, Check } from "lucide-react";
 import { twMerge } from "tailwind-merge";
 
-interface IProps {
+interface IProps extends React.InputHTMLAttributes<HTMLButtonElement> {
   label?: string;
   placeholder?: string;
   options: {
@@ -14,7 +20,10 @@ interface IProps {
   error?: string;
 }
 
-const Select: React.FC<IProps> = ({ label, options, control, error }) => {
+const Select: React.ForwardRefRenderFunction<
+  HTMLButtonElement | null,
+  IProps
+> = ({ label, options, control, error }, ref) => {
   const [active, setActive] = useState<boolean>(false);
   const popupRef = useRef<HTMLMenuElement>(null);
 
@@ -35,7 +44,6 @@ const Select: React.FC<IProps> = ({ label, options, control, error }) => {
     }
   }, []);
 
-  //descer e subir no scroll
   useEffect(() => {
     document.addEventListener("mousedown", handleClose);
     return () => {
@@ -55,6 +63,7 @@ const Select: React.FC<IProps> = ({ label, options, control, error }) => {
               <div className="flex flex-col gap-2 text-sm justify-center items-center font-sans w-full">
                 <span className="font-semibold w-full">{label}</span>
                 <button
+                  ref={ref}
                   onClick={() => setActive((prev) => !prev)}
                   className={twMerge(
                     "flex items-center w-full disabled:opacity-70 bg-zinc-200 rounded-md p-3 px-5 z-10",
@@ -80,8 +89,8 @@ const Select: React.FC<IProps> = ({ label, options, control, error }) => {
                     ref={popupRef}
                   >
                     <div className="flex flex-col gap-1 animate-menu-in-content overflow-y-auto max-h-32 ">
-                      {options?.map((option) => (
-                        <div>
+                      {options?.map((option, index) => (
+                        <div key={index}>
                           <button
                             key={option.value}
                             value={option.value}
@@ -114,4 +123,4 @@ const Select: React.FC<IProps> = ({ label, options, control, error }) => {
   );
 };
 
-export default Select;
+export default forwardRef(Select);

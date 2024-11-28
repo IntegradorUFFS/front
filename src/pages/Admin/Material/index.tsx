@@ -117,7 +117,7 @@ const MaterialPage: React.FC = () => {
               cancelText="Cancelar"
               submitText="Salvar"
             >
-              <Form />
+              <Form key="create_material" />
             </Dialog>,
           ]
         }
@@ -153,7 +153,7 @@ const MaterialPage: React.FC = () => {
         queryKey={queryKey}
         endpoint="/material/list"
         titleEdit="Editar Material"
-        formEdit={<Form />}
+        formEdit={<Form key="edit_material" />}
       />
     </div>
   );

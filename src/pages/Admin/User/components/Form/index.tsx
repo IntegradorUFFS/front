@@ -8,6 +8,7 @@ import Button from "@/components/common/Button";
 import Actions from "@/helpers/Actions";
 import { toast } from "@/hooks/use-toast";
 import { useAppSelector } from "@/hooks";
+
 interface IProps {
   edit?: {
     id: string;
@@ -149,6 +150,7 @@ const Form: React.FC<IProps> = ({ edit, handleClose }) => {
     <div className="flex flex-col gap-4 mb-2">
       <Input
         {...register("email")}
+        key="email"
         label="Email"
         placeholder="Email do usuário"
         type="text"
@@ -156,6 +158,7 @@ const Form: React.FC<IProps> = ({ edit, handleClose }) => {
       />
       <Input
         {...register("first_name")}
+        key="first_name"
         label="Nome"
         placeholder="Nome do usuário"
         type="text"
@@ -163,6 +166,7 @@ const Form: React.FC<IProps> = ({ edit, handleClose }) => {
       />
       <Input
         {...register("last_name")}
+        key="last_name"
         label="Sobrenome"
         placeholder="Sobrenome do usuário"
         type="text"
@@ -170,6 +174,7 @@ const Form: React.FC<IProps> = ({ edit, handleClose }) => {
       />
       <Select
         control={control}
+        key="role"
         label="Permissão"
         options={[
           { value: "viewer", label: "Visualizador" },
@@ -181,6 +186,7 @@ const Form: React.FC<IProps> = ({ edit, handleClose }) => {
 
       <Input
         label="Senha"
+        key="password"
         placeholder="Senha do usuário"
         type="password"
         {...register("password")}
@@ -188,6 +194,7 @@ const Form: React.FC<IProps> = ({ edit, handleClose }) => {
       />
       <Input
         label="Confirmar senha"
+        key="confirm_password"
         placeholder="Confirme a senha"
         type="password"
         {...register("confirm_password")}

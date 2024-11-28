@@ -39,7 +39,7 @@ const In: React.FC = () => {
     resolver: zodResolver(schema),
     defaultValues: {
       material_id: undefined,
-      quantity: undefined,
+      quantity: null,
       destiny_id: undefined,
     },
   });
@@ -88,6 +88,7 @@ const In: React.FC = () => {
           label="Quantidade"
           placeholder="Digite a quantidade"
           type="number"
+          realNum={true}
           {...register("quantity")}
           error={errors.quantity?.message as string}
         />

@@ -109,7 +109,7 @@ const UserPage: React.FC = () => {
               cancelText="Cancelar"
               submitText="Salvar"
             >
-              <Form />
+              <Form key={"create"} />
             </Dialog>,
           ]
         }
@@ -145,7 +145,7 @@ const UserPage: React.FC = () => {
         queryKey={["user"]}
         endpoint="/user/list"
         titleEdit="Editar Usuário"
-        formEdit={<Form />}
+        formEdit={<Form key={"edit"} />}
         rowValidation={(item) => item?.role !== role}
       />
     </div>

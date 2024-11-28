@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, ReactElement, useState } from "react";
+import React, { useRef, useCallback, ReactElement } from "react";
 import Button from "../Button";
 import {
   Dialog as DialogUI,
@@ -10,6 +10,8 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import { twMerge } from "tailwind-merge";
+// import { get } from "http";
+// import { useQueryClient } from "@tanstack/react-query";
 
 interface IProps {
   triggerElement: React.ReactNode;
@@ -34,10 +36,12 @@ const Dialog: React.FC<IProps> = ({
   titleOff,
 }) => {
   const closeBtn = useRef<HTMLButtonElement | null>(null);
-  //const [query, setQuery] = useState("");
   const handleClose = useCallback(() => {
     if (closeBtn.current) closeBtn.current.click();
-    // setQuery("");
+    // const queryClient = useQueryClient();
+    // const queryKey = getQuery();
+
+    // queryClient.invalidateQueries(queryKey);
   }, []);
 
   const renderChildrenWithProps = () => {
@@ -47,6 +51,9 @@ const Dialog: React.FC<IProps> = ({
     });
   };
 
+  const dialogTitleId = title ? "dialog-title" : undefined;
+  const dialogDescriptionId = description ? "dialog-description" : undefined;
+
   return (
     <DialogUI>
       <DialogTrigger asChild>{triggerElement}</DialogTrigger>
@@ -55,26 +62,28 @@ const Dialog: React.FC<IProps> = ({
           "sm:max-w-[425px] ",
           fit && "max-w-fit sm:max-w-fit min-w-fit"
         )}
+        aria-labelledby={dialogTitleId}
+        aria-describedby={dialogDescriptionId}
       >
-        {(title || description) && (
-          <DialogHeader>
-            {title && !titleOff && (
-              <>
-                {" "}
-                <DialogTitle className="py-2">{title}</DialogTitle>{" "}
-                <div className="h-0.5 bg-zinc-200 col-span-2"></div>
-              </>
-            )}
-            {titleOff && (
-              <div className="w-full h-0.5 bg-zinc-900 opacity-20"></div>
-            )}
-            {description && (
-              <DialogDescription className="py-2">
-                {description}
-              </DialogDescription>
-            )}
-          </DialogHeader>
-        )}
+        {/* tem q ter se n da erro no console */}
+        <DialogTitle className="hidden" />
+        {/* isso aqui em cima  */}
+        <DialogHeader>
+          {title && !titleOff && (
+            <>
+              <DialogTitle className="py-2" id={dialogTitleId}>
+                {title}
+              </DialogTitle>
+              <div className="h-0.5 bg-zinc-200 col-span-2"></div>
+            </>
+          )}
+          {description && (
+            <DialogDescription className="py-2">
+              {description}
+            </DialogDescription>
+          )}
+        </DialogHeader>
+
         {renderChildrenWithProps()}
         {(cancelText || submitable) && (
           <div className="absolute left-6 bottom-6">
