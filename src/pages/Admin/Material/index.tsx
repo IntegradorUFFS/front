@@ -135,21 +135,20 @@ const MaterialPage: React.FC = () => {
           {
             title: "Categoria",
             endpoint: "/category/list",
-            name: "category.name",
+            name: "category_id",
             placeholder: "Pesquise o nome da categoria",
           },
           {
             title: "Unidade de Medida",
             endpoint: "/unit/list",
             placeholder: "Pesquise o nome da unidade de medida",
-            name: "unit.name",
+            name: "unit_id",
           },
         ]}
       />
       <Table
         fields={fields}
         onEdit={canManage}
-        onDelete={canManage && handleDelete}
         queryKey={queryKey}
         endpoint="/material/list"
         titleEdit="Editar Material"

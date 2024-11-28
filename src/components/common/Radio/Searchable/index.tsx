@@ -20,7 +20,7 @@ const schema = z.object({
 });
 
 const Radio: React.ForwardRefRenderFunction<HTMLInputElement | null, IProps> = (
-  { name, placeholder, endpoint },
+  { name, placeholder, endpoint, ...props },
   ref
 ) => {
   const queryKey = useMemo(() => ["search", endpoint], [endpoint]);
@@ -78,6 +78,7 @@ const Radio: React.ForwardRefRenderFunction<HTMLInputElement | null, IProps> = (
           }))}
           name={name}
           ref={ref}
+          {...props}
         />
       </div>
     </div>

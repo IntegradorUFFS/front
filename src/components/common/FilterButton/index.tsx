@@ -3,7 +3,7 @@ import React, { useCallback, useRef } from "react";
 import Button from "../Button";
 import Searchable from "../Radio/Searchable";
 import Radio from "../Radio";
-import ItemList from "@/components/common/Input/Search";
+import Search from "@/components/common/Input/Search";
 import { useSearchParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import { z } from "zod";
@@ -59,14 +59,25 @@ const FilterButton: React.FC<IProps> = ({
     // );
 
     if (filter.options) {
-      return <Radio items={filter.options} {...register("filter_key")} />;
+      return (
+        <Radio
+          items={filter.options}
+          {...register("filter_key")}
+          onChange={(e) => {
+            setValue("filter_key", e.target.value);
+          }}
+        />
+      );
     }
 
     if (filter.searchBar) {
       return (
-        <ItemList
+        <Search
           placeholder={filter.placeholder}
           {...register("filter_key")}
+          onChange={(e) => {
+            setValue("filter_key", e.target.value);
+          }}
         />
       );
     }
@@ -76,23 +87,33 @@ const FilterButton: React.FC<IProps> = ({
         endpoint={filter.endpoint}
         {...register("filter_key")}
         placeholder={filter.placeholder}
+        onChange={(e) => {
+          setValue("filter_key", e.target.value);
+        }}
       />
     );
   };
 
   const handleFilter = useCallback(
     (data: any) => {
-      console.log(data);
-      if (!data.filter_key) return;
       searchParams.set(`filter[${filter.name}]`, data.filter_key);
       setSearchParams(searchParams);
+      toggle(filter.title);
       //console.log(searchParams.values());
-      queryClient.invalidateQueries({ queryKey });
+      setTimeout(() => {
+        queryClient.invalidateQueries({ queryKey });
+      }, 150);
     },
-    [setSearchParams, searchParams, queryKey, queryClient]
+    [
+      searchParams,
+      filter.name,
+      filter.title,
+      setSearchParams,
+      toggle,
+      queryClient,
+      queryKey,
+    ]
   );
-
-  console.log(errors);
 
   return (
     <>
@@ -136,7 +157,9 @@ const FilterButton: React.FC<IProps> = ({
                 setValue("filter_key", "");
                 searchParams.delete(`filter[${filter.name}]`);
                 setSearchParams(searchParams);
-                queryClient.invalidateQueries({ queryKey });
+                setTimeout(() => {
+                  queryClient.invalidateQueries({ queryKey });
+                }, 150);
               }}
               text="Limpar"
               className="w-fit py-2 px-4 text-sm"

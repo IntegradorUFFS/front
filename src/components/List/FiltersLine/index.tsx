@@ -71,8 +71,10 @@ const FiltersLine: React.FC<IProps> = ({ queryKey, filters }) => {
           const prev = { ...Object.fromEntries(searchParams) };
           delete prev[filter];
           setSearchParams(prev);
-          queryClient.invalidateQueries({ queryKey });
-        }, 300);
+          setTimeout(() => {
+            queryClient.invalidateQueries({ queryKey });
+          }, 150);
+        }, 200);
       }
     },
     [activeList, searchParams, setSearchParams, queryClient, queryKey]
@@ -84,7 +86,7 @@ const FiltersLine: React.FC<IProps> = ({ queryKey, filters }) => {
       value: string | null | { text: string; value: string };
     }[] = [];
 
-    for (const key of searchParams.keys()) {
+    for (const [key] of searchParams.entries()) {
       if (key.startsWith("filter")) {
         let value = decodeURI(searchParams.get(key) ?? "");
         try {
@@ -119,28 +121,6 @@ const FiltersLine: React.FC<IProps> = ({ queryKey, filters }) => {
       className="flex gap-2 items-center flex-1 flex-wrap pt-1 pb-3"
       ref={activeList}
     >
-      {activeFilters?.length > 0 &&
-        activeFilters?.map((appliedFilter, i) => (
-          <li
-            className="list-none flex rounded-lg overflow-hidden animate-width-fit px-3 bg-zinc-100"
-            key={appliedFilter.key}
-          >
-            <button
-              className="py-2 font-base flex overflow-hidden gap-2 items-center w-fit max-w-full"
-              onClick={() => removeFilter(appliedFilter.key, i)}
-            >
-              {typeof appliedFilter.value === "object" &&
-              appliedFilter.value !== null
-                ? appliedFilter.value.text
-                : appliedFilter.value}
-              <X size={14} opacity={0.4} strokeWidth={3} />
-            </button>
-          </li>
-        ))}
-
-      {activeFilters?.length > 0 && (
-        <hr className="w-4 border-zinc-300 rotate-90" />
-      )}
       <div className="relative flex">
         <button
           className="py-2 font-base flex overflow-hidden gap-2 items-center w-fit max-w-full bg-zinc-200 rounded-lg px-3 justify-center"
@@ -179,7 +159,8 @@ const FiltersLine: React.FC<IProps> = ({ queryKey, filters }) => {
               <div className="h-0.5 bg-zinc-200" />
 
               <div>
-                {filters && filters.length > 0 ? (
+                {filters &&
+                  filters.length > 0 &&
                   filters.map((filter, index) => (
                     <FilterButton
                       queryKey={queryKey}
@@ -188,15 +169,33 @@ const FiltersLine: React.FC<IProps> = ({ queryKey, filters }) => {
                       filter={filter}
                       key={index}
                     />
-                  ))
-                ) : (
-                  <></>
-                )}
+                  ))}
               </div>
             </div>
           </menu>
         )}
       </div>
+      {activeFilters?.length > 0 && (
+        <hr className="w-4 border-zinc-300 rotate-90" />
+      )}
+      {activeFilters?.length > 0 &&
+        activeFilters?.map((appliedFilter, i) => (
+          <li
+            className="list-none flex rounded-lg overflow-hidden animate-width-fit px-3 bg-zinc-100"
+            key={appliedFilter.key}
+          >
+            <button
+              className="py-2 font-base flex overflow-hidden gap-2 items-center w-fit max-w-full"
+              onClick={() => removeFilter(appliedFilter.key, i)}
+            >
+              {typeof appliedFilter.value === "object" &&
+              appliedFilter.value !== null
+                ? appliedFilter.value.text
+                : appliedFilter.value}
+              <X size={14} opacity={0.4} strokeWidth={3} />
+            </button>
+          </li>
+        ))}
     </ul>
   );
 };

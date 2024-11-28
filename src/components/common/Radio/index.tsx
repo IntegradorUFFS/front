@@ -11,12 +11,12 @@ interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
 }
 
 const Radio: React.ForwardRefRenderFunction<HTMLInputElement | null, IProps> = (
-  { items, name, label },
+  { items, name, label, ...props },
   ref
 ) => {
   return (
     <div className="flex flex-col gap-1">
-      <RadioBase items={items} name={name} ref={ref} label={label} />
+      <RadioBase items={items} name={name} ref={ref} label={label} {...props} />
     </div>
   );
 };

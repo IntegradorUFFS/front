@@ -3,14 +3,13 @@ import Input from "..";
 import { forwardRef } from "react";
 
 interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  name: string;
   placeholder: string;
 }
 
 const Search: React.ForwardRefRenderFunction<
   HTMLInputElement | null,
   IProps
-> = ({ placeholder, name }, ref) => {
+> = ({ placeholder, ...props }, ref) => {
   return (
     <div className="flex flex-col gap-1">
       <div className="py-2 flex flex-row border border-zinc-300 rounded-md">
@@ -23,7 +22,7 @@ const Search: React.ForwardRefRenderFunction<
           className="flex items-center w-full text-m focus:outline-none bg-transparent"
           placeholder={placeholder}
           ref={ref}
-          name={name}
+          {...props}
         />
       </div>
     </div>

@@ -93,7 +93,7 @@ const Table: React.FC<IProps> = ({
 
       const filters: Record<string, any> = {};
 
-      for (const key of searchParams.keys()) {
+      for (const [key] of searchParams.entries()) {
         if (key.startsWith("filter")) {
           const name = key.replace("]", "").split("[")[1];
 
