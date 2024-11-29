@@ -77,24 +77,26 @@ const Form: React.FC = () => {
     return () => clearTimeout(timeout);
   }, [material_id, location_id, queryClient]);
 
-  const submit = useCallback(async (data?: any) => {
-    if (!data) return;
-    console.log(data);
-    try {
-      await new Actions("/transaction", oauth).save(data);
-      toast({
-        title: "Sucesso",
-        description: "Transferencia do material cadastrada com sucesso",
-      });
-      reset();
-    } catch {
-      toast({
-        title: "Erro",
-        description: "Erro ao cadastrar transferencia do material",
-        variant: "destructive",
-      });
-    }
-  }, [oauth, reset]);
+  const submit = useCallback(
+    async (data?: any) => {
+      if (!data) return;
+      try {
+        await new Actions("/transaction", oauth).save(data);
+        toast({
+          title: "Sucesso",
+          description: "Transferencia do material cadastrada com sucesso",
+        });
+        reset();
+      } catch {
+        toast({
+          title: "Erro",
+          description: "Erro ao cadastrar transferencia do material",
+          variant: "destructive",
+        });
+      }
+    },
+    [oauth, reset]
+  );
 
   return (
     <div className="flex flex-col gap-4">

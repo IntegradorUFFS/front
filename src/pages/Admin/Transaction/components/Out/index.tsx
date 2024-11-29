@@ -74,7 +74,6 @@ const Form: React.FC = () => {
   const submit = useCallback(
     async (data?: any) => {
       if (!data) return;
-      console.log(data);
       try {
         await new Actions("/transaction", oauth).save(data);
         toast({

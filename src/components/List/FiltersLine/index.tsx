@@ -38,7 +38,6 @@ const FiltersLine: React.FC<IProps> = ({ queryKey, filters }) => {
         !formRef?.current?.contains(e?.target as Node)) ||
         exception)
     ) {
-      //console.log(popupRef.current.classList);
       popupRef.current.classList.replace(
         "animate-filter-in",
         "animate-filter-out"
@@ -65,7 +64,7 @@ const FiltersLine: React.FC<IProps> = ({ queryKey, filters }) => {
       if (activeList?.current) {
         activeList.current.children[index].classList.replace(
           "animate-width-fit",
-          "animate-width-0"
+          "animate-width-zero"
         );
         setTimeout(() => {
           const prev = { ...Object.fromEntries(searchParams) };
@@ -74,7 +73,7 @@ const FiltersLine: React.FC<IProps> = ({ queryKey, filters }) => {
           setTimeout(() => {
             queryClient.invalidateQueries({ queryKey });
           }, 150);
-        }, 200);
+        }, 300);
       }
     },
     [activeList, searchParams, setSearchParams, queryClient, queryKey]
@@ -185,8 +184,8 @@ const FiltersLine: React.FC<IProps> = ({ queryKey, filters }) => {
             key={appliedFilter.key}
           >
             <button
-              className="py-2 font-base flex overflow-hidden gap-2 items-center w-fit max-w-full"
-              onClick={() => removeFilter(appliedFilter.key, i)}
+              className="py-2 font-base flex overflow-hidden gap-2 items-center w-fit max-w-full text-ellipsis text-nowrap"
+              onClick={() => removeFilter(appliedFilter.key, i + 2)}
             >
               {typeof appliedFilter.value === "object" &&
               appliedFilter.value !== null

@@ -94,7 +94,6 @@ const FilterButton: React.FC<IProps> = ({
 
   const handleFilter = useCallback(
     (data: any) => {
-      //console.log(data);
       if (!data || data.filter_key == "" || data.filter_key == undefined)
         return;
 

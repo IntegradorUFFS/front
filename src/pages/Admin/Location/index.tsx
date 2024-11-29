@@ -103,7 +103,7 @@ const LocationPage: React.FC = () => {
       />
       <Table
         fields={fields}
-        onEdit={console.log}
+        onEdit={canManage}
         onDelete={canManage && handleDelete}
         queryKey={["location"]}
         endpoint="/location/list"

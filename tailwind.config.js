@@ -21,7 +21,7 @@ export default {
         "menu-out": "menu-out 0.7s ease-in-out",
         "menu-out-content": "menu-out-content 0.85s ease-in-out",
         "width-fit": "width-fit 0.4s ease-in-out",
-        "width-0": "width-0 0.35s ease-in-out",
+        "width-zero": "width-zero 0.35s ease-in-out",
         ripple: "ripple 600ms linear",
       },
       keyframes: {
@@ -159,24 +159,20 @@ export default {
         },
         "width-fit": {
           "0%": {
-            maxwidth: "0",
-            "max-height": "118px",
+            "max-width": "0",
+            "max-height": "40px",
             overflow: "hidden",
             padding: "0",
-            content: "none",
-          },
-          "50%": {
-            maxWidth: "10rem",
-            overflow: "hidden",
           },
           "100%": {
             maxWidth: "18rem",
             overflow: "hidden",
           },
         },
-        "width-0": {
+        "width-zero": {
           "100%": {
-            maxWidth: "0",
+            "max-width": "0",
+            "max-height": "40px",
             overflow: "hidden",
             padding: "0",
           },

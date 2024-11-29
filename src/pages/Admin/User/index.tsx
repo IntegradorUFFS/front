@@ -145,9 +145,7 @@ const UserPage: React.FC = () => {
 
       <Table
         fields={fields}
-        onEdit={() => {
-          console.log();
-        }}
+        onEdit={canManage}
         onDelete={canManage && handleDelete}
         queryKey={["user"]}
         endpoint="/user/list"
