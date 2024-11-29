@@ -28,7 +28,16 @@ const router = ({ permissions }: IProps) =>
         </Route>
         <Route
           path="*"
-          element={<Navigate to={routes[0].path} replace={true} />}
+          element={
+            <Navigate
+              to={
+                routes.filter(
+                  ({ scope }) => permissions && permissions.includes(scope)
+                )[0].path
+              }
+              replace={true}
+            />
+          }
         />
       </>
     )
