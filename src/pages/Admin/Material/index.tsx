@@ -90,13 +90,13 @@ const MaterialPage: React.FC = () => {
           },
           {
             title: "Categoria",
-            endpoint: "/category/list",
+            endpoint: "/category/autocomplete",
             name: "category_id",
             placeholder: "Pesquise o nome da categoria",
           },
           {
             title: "Unidade de Medida",
-            endpoint: "/unit/list",
+            endpoint: "/unit/autocomplete",
             placeholder: "Pesquise o nome da medida",
             name: "unit_id",
           },

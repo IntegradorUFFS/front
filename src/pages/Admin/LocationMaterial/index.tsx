@@ -30,13 +30,13 @@ const LocationMaterialPage: React.FC = () => {
         filters={[
           {
             title: "Material",
-            endpoint: "/material/list",
+            endpoint: "/material/autocomplete",
             placeholder: "Pesquise o material",
             name: "material_id",
           },
           {
             title: "Local",
-            endpoint: "/location/list",
+            endpoint: "/location/autocomplete",
             name: "location_id",
             placeholder: "Pesquise o local",
           },

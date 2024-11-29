@@ -91,19 +91,19 @@ const TransactionPage: React.FC = () => {
         filters={[
           {
             title: "Material",
-            endpoint: "/material/list",
+            endpoint: "/material/autocomplete",
             placeholder: "Pesquise o material",
             name: "material_id",
           },
           {
             title: "Local de origem",
-            endpoint: "/location/list",
+            endpoint: "/location/autocomplete",
             placeholder: "Pesquise o local de origem",
             name: "origin_id",
           },
           {
             title: "Local de destino",
-            endpoint: "/location/list",
+            endpoint: "/location/autocomplete",
             placeholder: "Pesquise o local de destino",
             name: "destiny_id",
           },

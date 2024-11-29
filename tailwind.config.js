@@ -50,7 +50,7 @@ export default {
             "max-height": "0",
           },
           "100%": {
-            "max-height": "118px",
+            "max-height": "8rem",
             overflow: "hidden",
             zindex: "10",
           },
@@ -58,7 +58,7 @@ export default {
         "filter-out": {
           "0%": {
             overflow: "hidden",
-            maxHeight: "6rem",
+            "max-height": "8rem",
             zIndex: "10",
           },
           "40%": {
@@ -159,12 +159,18 @@ export default {
         },
         "width-fit": {
           "0%": {
-            maxWidth: "0",
+            maxwidth: "0",
+            "max-height": "118px",
             overflow: "hidden",
             padding: "0",
+            content: "none",
+          },
+          "50%": {
+            maxWidth: "10rem",
+            overflow: "hidden",
           },
           "100%": {
-            maxWidth: "10rem",
+            maxWidth: "18rem",
             overflow: "hidden",
           },
         },

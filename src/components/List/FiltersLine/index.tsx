@@ -181,7 +181,7 @@ const FiltersLine: React.FC<IProps> = ({ queryKey, filters }) => {
       {activeFilters?.length > 0 &&
         activeFilters?.map((appliedFilter, i) => (
           <li
-            className="list-none flex rounded-lg overflow-hidden animate-width-fit px-3 bg-zinc-200 bg-opacity-65 items-center gap-2 max-h-[118px]:"
+            className="list-none flex rounded-lg overflow-hidden animate-width-fit px-3 bg-zinc-200 bg-opacity-65 items-center gap-2"
             key={appliedFilter.key}
           >
             <button

@@ -191,9 +191,9 @@ const Table: React.FC<IProps> = ({
   return (
     <div className="flex-1">
       <DynamicGrid
-        buttons={buttons}
+        $buttons={buttons}
         className="bg-zinc-200 rounded-xl grid py-2 px-3 text-base font-montserrat"
-        length={fields.length}
+        $length={fields.length}
       >
         {fields?.map(({ title, keys, isSortable }) =>
           isSortable ? (

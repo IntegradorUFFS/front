@@ -103,8 +103,8 @@ const Form: React.ForwardRefRenderFunction<HTMLDivElement | null, IProps> = (
   );
 
   return (
-    <>
-      <div className="flex flex-col gap-4 mb-2 w-[50vw]" ref={ref}>
+    <div ref={ref}>
+      <div className="flex flex-col gap-4 mb-2 w-[50vw]">
         <div className="absolute left-10 mt-6 h-10 w-10 font-semibold border border-zinc-200 bg-indigo-400 rounded-full text-center text-zinc-50 items-center justify-center flex text-base">
           {user.first_name?.[0]?.toUpperCase()}
           {user.last_name?.[0]?.toUpperCase()}
@@ -174,7 +174,7 @@ const Form: React.ForwardRefRenderFunction<HTMLDivElement | null, IProps> = (
           variant="filled"
         />
       </div>
-    </>
+    </div>
   );
 };
 

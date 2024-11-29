@@ -38,8 +38,8 @@ const TableRow: React.FC<IProps> = ({
     <div className="w-full">
       <DynamicGrid
         className="rounded-xl grid py-2 px-3 text-base font-montserrat"
-        length={fields.length}
-        buttons={buttons}
+        $length={fields.length}
+        $buttons={buttons}
       >
         {fields?.map(({ title, transform, keys }) => (
           <div key={title}>
