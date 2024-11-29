@@ -50,7 +50,7 @@ export default {
             "max-height": "0",
           },
           "100%": {
-            "max-height": "6rem",
+            "max-height": "118px",
             overflow: "hidden",
             zindex: "10",
           },

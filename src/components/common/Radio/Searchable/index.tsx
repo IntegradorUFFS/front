@@ -35,7 +35,7 @@ const Radio: React.ForwardRefRenderFunction<HTMLInputElement | null, IProps> = (
     resolver: zodResolver(schema),
   });
 
-  const { data } = useQuery({
+  const { data, isFetching } = useQuery({
     queryKey,
     queryFn: async () => {
       if (!oauth) throw new Error("OAuth not found");
@@ -71,20 +71,27 @@ const Radio: React.ForwardRefRenderFunction<HTMLInputElement | null, IProps> = (
         />
       </div>
       <div className="max-h-40 overflow-y-auto flex flex-col gap-2">
-        <RadioBase
-          items={data?.map(({ name, id }: { name: string; id: string }) => ({
-            label: name,
-            value: id,
-          }))}
-          name={name}
-          ref={ref}
-          {...props}
-        />
+        {isFetching && (
+          <div className="flex items-center justify-center">
+            <span className="loading loading-spinner text-zinc-400 animate-pulse">
+              Buscando...
+            </span>
+          </div>
+        )}
+        {!isFetching && (
+          <RadioBase
+            items={data?.map(({ name, id }: { name: string; id: string }) => ({
+              label: name,
+              value: id,
+            }))}
+            name={name}
+            ref={ref}
+            {...props}
+          />
+        )}
       </div>
     </div>
   );
 };
-
-// const FowaredRadio = forwardRef(Radio);
 
 export default forwardRef(Radio);

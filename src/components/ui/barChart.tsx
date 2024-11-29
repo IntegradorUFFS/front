@@ -48,11 +48,11 @@ const BarLineChart: React.FC<ChartDataProps> = ({ data }) => {
       }
 
       if (item.type === "in") {
-        acc[formattedDate].in.push(item.quantity);
+        acc[formattedDate].in.push(1);
       } else if (item.type === "out") {
-        acc[formattedDate].out.push(item.quantity);
+        acc[formattedDate].out.push(1);
       } else if (item.type === "transfer") {
-        acc[formattedDate].transfer.push(item.quantity);
+        acc[formattedDate].transfer.push(1);
       }
 
       return acc;

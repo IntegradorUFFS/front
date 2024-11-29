@@ -29,7 +29,7 @@ const initialState: IStore = {
 };
 
 const permissionsByRoles = {
-  viewer: ["material.view", "locationMaterial.view", "dashboard.view"],
+  viewer: ["material.view", "locationMaterial.view"],
   manager: [
     "material.view",
     "material.management",
