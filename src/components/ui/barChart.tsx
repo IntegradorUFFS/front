@@ -139,7 +139,7 @@ const BarLineChart: React.FC<ChartDataProps> = ({ data }) => {
   };
 
   return (
-    <div className="w-full h-96 flex justify-center">
+    <div className="w-full h-80 flex justify-center">
       <Chart type="bar" data={chartData} options={options} />{" "}
     </div>
   );

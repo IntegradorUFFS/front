@@ -38,6 +38,7 @@ const MaterialPage: React.FC = () => {
   const permissions = useAppSelector((state) => state.auth.permissions);
   const canManage = permissions?.includes("material.management");
 
+
   return (
     <div className="flex-1 p-6">
       <TitleLine

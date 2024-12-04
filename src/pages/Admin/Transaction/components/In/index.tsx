@@ -8,6 +8,7 @@ import { useAppSelector } from "@/hooks";
 import Actions from "@/helpers/Actions";
 import Autocomplete from "@/components/common/Autocomplete";
 import { toast } from "@/hooks/use-toast";
+import { useQueryClient } from "@tanstack/react-query";
 
 const schema = z.object({
   material_id: z.string({
@@ -29,6 +30,7 @@ const schema = z.object({
 
 const In: React.FC = () => {
   const oauth = useAppSelector((state) => state.auth.oauth);
+  const queryClient = useQueryClient();
   const {
     control,
     register,
@@ -52,6 +54,7 @@ const In: React.FC = () => {
         title: "Sucesso",
         description: "Entrada de material cadastrada com sucesso",
       });
+      queryClient.invalidateQueries({queryKey: ["transaction"]});
       reset();
     } catch {
       toast({
@@ -61,6 +64,7 @@ const In: React.FC = () => {
       });
     }
   }, [oauth, reset]);
+
 
   return (
     <div className="flex flex-col gap-4 mb-2">

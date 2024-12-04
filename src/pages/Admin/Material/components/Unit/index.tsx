@@ -6,7 +6,7 @@ import Actions from "@/helpers/Actions";
 import { useAppSelector } from "@/hooks";
 import { toast } from "@/hooks/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useCallback, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -28,6 +28,7 @@ const UnitForm: React.FC<IProps> = ({ handleClose }) => {
   const endpoint = "/unit/list";
   const queryKey = useMemo(() => ["search", endpoint], [endpoint]);
   const oauth = useAppSelector((state) => state.auth.oauth);
+  const queryClient = useQueryClient();
 
   const {
     handleSubmit,
@@ -58,6 +59,7 @@ const UnitForm: React.FC<IProps> = ({ handleClose }) => {
           title: "Sucesso",
           description: "Unidade de medida cadastrada com sucesso",
         });
+        queryClient.invalidateQueries( {queryKey } );
         if (handleClose) handleClose();
       } catch {
         toast({

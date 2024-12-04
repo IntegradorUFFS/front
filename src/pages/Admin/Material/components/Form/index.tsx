@@ -8,6 +8,7 @@ import Button from "@/components/common/Button";
 import Actions from "@/helpers/Actions";
 import { useAppSelector } from "@/hooks";
 import { toast } from "@/hooks/use-toast";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface IProps {
   edit?: {
@@ -39,6 +40,7 @@ const schema = z.object({
 
 const Form: React.FC<IProps> = ({ edit, handleClose }) => {
   const oauth = useAppSelector((state) => state.auth.oauth);
+  const queryClient = useQueryClient();
   const {
     control,
     register,
@@ -64,6 +66,7 @@ const Form: React.FC<IProps> = ({ edit, handleClose }) => {
             edit ? "atualizado" : "cadastrado"
           } com sucesso`,
         });
+        queryClient.invalidateQueries( { queryKey: ["material"] } );
         if (handleClose) handleClose();
       } catch {
         toast({

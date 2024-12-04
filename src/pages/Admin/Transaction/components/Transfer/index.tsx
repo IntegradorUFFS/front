@@ -86,6 +86,7 @@ const Form: React.FC = () => {
           title: "Sucesso",
           description: "Transferencia do material cadastrada com sucesso",
         });
+        queryClient.invalidateQueries({ queryKey: ["transaction"] });
         reset();
       } catch {
         toast({

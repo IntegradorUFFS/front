@@ -58,7 +58,7 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement | null, IProps> = (
             {...props}
             ref={ref}
             min={0}
-            max={qtd}
+            max={qtd as number}
             autoComplete="off"
           ></input>
 

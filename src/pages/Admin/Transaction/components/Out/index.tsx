@@ -16,11 +16,12 @@ const schema = z.object({
     invalid_type_error: "Material invalido",
   }),
   quantity: z
-    .number({
+    .string({
       required_error: "Quantidade obrigatória",
-      invalid_type_error: "Quantidade inválida",
+      invalid_type_error: "Quantidade inválida y",
     })
-    .min(0.0000000001, "Quantidade inválida"),
+    .min(0.0000000001, "Quantidade inválida")
+    .transform((value) => Number(value)),
   origin_id: z.string({
     required_error: "Local de origem obrigatória",
     invalid_type_error: "Local de origem inválida",
@@ -78,13 +79,14 @@ const Form: React.FC = () => {
         await new Actions("/transaction", oauth).save(data);
         toast({
           title: "Sucesso",
-          description: "Entrada de material cadastrada com sucesso",
+          description: "Saida de material cadastrada com sucesso",
         });
+        queryClient.invalidateQueries({queryKey: ["transaction"]});
         reset();
       } catch {
         toast({
           title: "Erro",
-          description: "Erro ao cadastrar entrada de material",
+          description: "Erro ao cadastrar saida de material",
           variant: "destructive",
         });
       }

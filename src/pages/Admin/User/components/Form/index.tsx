@@ -96,6 +96,7 @@ const schema = z
 
 const Form: React.FC<IProps> = ({ edit, handleClose }) => {
   const oauth = useAppSelector((state) => state.auth.oauth);
+  const role = useAppSelector((state) => state.auth.role);
   const {
     register,
     control,
@@ -176,10 +177,10 @@ const Form: React.FC<IProps> = ({ edit, handleClose }) => {
         control={control}
         key="role"
         label="Permissão"
-        options={[
+        options={role==="admin"?[
           { value: "viewer", label: "Visualizador" },
           { value: "manager", label: "Gerente" },
-        ]}
+        ] : [{ value: "viewer", label: "Visualizador" }]}
         error={errors.role?.message}
         {...register("role")}
       />

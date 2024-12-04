@@ -70,16 +70,16 @@ const DashboardPage: React.FC = () => {
         </>
       ) : (
         <>
-          <div className="grid grid-cols-5 gap-8">
+          <div className="flex row gap-8">
             {/* GRAFICO */}
 
-            <div className="h-fit w-full border-2 border-zinc-200 rounded-lg my-4 flex justify-center p-2 col-span-3">
+            <div className="h-fit w-fit  border-2 border-zinc-200 rounded-lg my-4 flex justify-center p-2 ">
               {data && data?.length > 0 && <BarLineChart data={data} />}
             </div>
 
             {/* Tansferencias */}
 
-            <div className="h-100 w-full border-2 border-zinc-200 rounded-lg my-4 p-4 flex flex-col col-span-2">
+            <div className="h-100 w-full border-2 border-zinc-200 rounded-lg my-4 p-4 flex flex-col ">
               <span className="text-xl font-semibold py-1">Transferencias</span>
 
               <div className="grid grid-cols-7 py-1 px-2 bg-zinc-200 rounded-md">
@@ -121,7 +121,7 @@ const DashboardPage: React.FC = () => {
           {/* Entrada */}
 
           <div className="flex flex-row gap-8">
-            <div className="h-64 w-full border-2 border-zinc-200 rounded-lg my-4 p-4 flex flex-col">
+            <div className="max-h-56 w-full border-2 border-zinc-200 rounded-lg my-4 p-4 flex flex-col">
               <span className="text-xl font-semibold py-1">Entrada</span>
 
               <div className="grid grid-cols-4 py-1 px-2 bg-zinc-200 rounded-md">
@@ -155,7 +155,7 @@ const DashboardPage: React.FC = () => {
 
             {/* SAIDA */}
 
-            <div className="h-64 w-full border-2 border-zinc-200 rounded-lg my-4 p-4 flex flex-col">
+            <div className="max-h-56 w-full border-2 border-zinc-200 rounded-lg my-4 p-4 flex flex-col">
               <span className="text-xl font-semibold py-1">Saída</span>
               <div className="grid grid-cols-4 py-1 px-2 bg-zinc-200 rounded-md">
                 <span className="col-span-2">Material</span>
@@ -188,7 +188,6 @@ const DashboardPage: React.FC = () => {
           </div>
         </>
       )}
-      ;
     </div>
   );
 };
