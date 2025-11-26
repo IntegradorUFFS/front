@@ -13,19 +13,19 @@ interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
 const InputPassword: React.ForwardRefRenderFunction<
   HTMLInputElement | null,
   IProps
-> = ({ placeholder, disabled, value, invalid, ...props }, ref) => {
+> = ({ placeholder, disabled, invalid, ...props }, ref) => {
   const [inputType, setInputType] = useState<string>("password");
   return (
     <div
       className={twMerge(
-        "w-full bg-zinc-200 rounded-md overflow-hidden flex items-center justify-center outline-blue-700 focus-within:outline focus-within:outline-2",
+        "w-full text-sm bg-transparent border rounded-md overflow-hidden flex items-center justify-center outline-blue-700 focus-within:outline focus-within:outline-2",
         disabled && "opacity-70",
         invalid &&
           "border border-red-600 outline-red-500 focus-within:outline-1"
       )}
     >
       <Input
-        className="flex-1 py-3 px-5 bg-transparent outline-none"
+        className="flex-1 h-10 px-3 bg-transparent outline-none"
         placeholder={placeholder}
         type={inputType}
         disabled={disabled}
@@ -35,7 +35,7 @@ const InputPassword: React.ForwardRefRenderFunction<
       />
 
       <button
-        className="px-5 py-3 h-full"
+        className="px-3 h-full"
         type="button"
         onClick={() =>
           setInputType((prev) => (prev === "password" ? "text" : "password"))

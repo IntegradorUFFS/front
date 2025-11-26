@@ -5,9 +5,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['"Lato"', "sans-serif"],
-        roboto: ['"Roboto"', "sans-serif"],
-        montserrat: ['"Montserrat"', "sans-serif"],
+        aileron: ["Aileron", "sans-serif"],
       },
       backgroundImage: {
         artemis: "url('/images/artemis.jpg')",
@@ -237,6 +235,50 @@ export default {
           3: "hsl(var(--chart-3))",
           4: "hsl(var(--chart-4))",
           5: "hsl(var(--chart-5))",
+        },
+        primary: {
+          bg: "#021641",
+          border: "#105dfb",
+          fg: "#f0f6ff",
+        },
+        secondary: {
+          fg: "#ecfdf5",
+          bg: "#10b981",
+        },
+        text: {
+          primary: "#0f1419",
+          secondary: "#6b7585",
+        },
+        border: {
+          DEFAULT: "#d9dde4",
+        },
+        surface: {
+          elevated: "#ffffff",
+          default: "#fafbfc",
+        },
+        neutral: {
+          1: "#f9f9fa",
+          2: "#f0f2f4",
+          3: "#dcdfe5",
+          4: "#b8bdc7",
+          5: "#8f96a3",
+          6: "#67707e",
+          7: "#484f5b",
+          8: "#303641",
+          9: "#1f242d",
+          10: "#101318",
+        },
+        blueRibbon: {
+          1: "#f0f5ff",
+          2: "#d7e4fe",
+          3: "#a5c2fd",
+          4: "#73a0fd",
+          5: "#407efc",
+          6: "#0e5cfb",
+          7: "#0447d3",
+          8: "#0336a1",
+          9: "#02256e",
+          10: "#01143c",
         },
       },
     },

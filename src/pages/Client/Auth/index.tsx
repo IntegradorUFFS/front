@@ -66,54 +66,82 @@ const Auth: React.FC = () => {
   const { data: apiErrors } = extractErrors(error);
 
   return (
-    <div className="flex overflow-hidden">
-      <div className="h-screen overflow-hidden w-6/12 max-w-[650px] relative md:flex hidden bg-artemis bg-cover bg-center bg-no-repeat">
-        <div className="absolute h-full w-6 bg-white rounded-l-xl top-0 right-0 border-solid border-l-2 border-zinc-200 drop-shadow-md" />
+    <div className="relative flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10 bg-gradient-to-br from-background via-muted/30 to-background">
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute left-1/4 top-1/4 h-96 w-96 rounded-full bg-primary/10 blur-3xl" />
+        <div className="absolute right-1/4 bottom-1/4 h-96 w-96 rounded-full bg-primary/5 blur-3xl" />
       </div>
-      <main className="flex-1 w-6/12">
-        <div className="flex flex-col items-center mt-9 mr-11 ml-11 md:ml-5">
-          <img className="h-12" src="/images/logo_text.png" alt="" />
-          <div className="w-full mt-24 mb-12">
-            <h2 className="text-xl font-montserrat font-light tracking-wide text-zinc-600">
-              Bem-vindo de volta!
-            </h2>
-            <h1 className="text-3xl font-semibold mt-3 font-roboto text-zinc-800 tracking-wider">
-              Entre em sua conta
-            </h1>
+
+      <div className="flex w-full max-w-sm flex-col gap-6">
+        <div className="flex items-center gap-2.5 self-center font-display text-lg tracking-tight hover:opacity-90 transition-opacity">
+          <img
+            src="/logo_text.png"
+            alt="Multazero logo"
+            width={131}
+            height={0}
+            className="h-auto"
+          />
+        </div>
+        <div className="flex flex-col gap-6">
+          <div className="border rounded-xl bg-card shadow-xs">
+            <div className="p-6 text-center border-b">
+              <h2 className="text-2xl tracking-tight">Bem-vindo de volta</h2>
+            </div>
+
+            <div className="p-6">
+              <form className="space-y-6">
+                <div className="flex flex-col gap-2">
+                  <Input
+                    label="E-mail"
+                    placeholder="Digite o seu e-mail"
+                    {...register("email")}
+                    name="email"
+                    error={
+                      errors.email?.message || helpMessages(apiErrors?.email)
+                    }
+                    required
+                  />
+                </div>
+
+                <div className="flex flex-col gap-2">
+                  <Input
+                    label="Senha"
+                    placeholder="Digite sua senha"
+                    type="password"
+                    {...register("password")}
+                    name="password"
+                    error={
+                      errors.password?.message ||
+                      helpMessages(apiErrors?.password)
+                    }
+                    required
+                  />
+                </div>
+
+                <div className="flex flex-col gap-3">
+                  <Button
+                    variant="filled"
+                    text="Entrar"
+                    onClick={handleSubmit(onSubmit)}
+                  />
+                </div>
+              </form>
+            </div>
           </div>
 
-          <form className="flex flex-col w-full gap-6">
-            <div>
-              <Input
-                label="E-mail"
-                placeholder="Digite o seu e-mail"
-                {...register("email")}
-                name="email"
-                error={errors.email?.message || helpMessages(apiErrors?.email)}
-              />
-            </div>
-            <div>
-              <Input
-                label="Senha"
-                placeholder="Digite sua senha"
-                type="password"
-                {...register("password")}
-                name="password"
-                error={
-                  errors.password?.message || helpMessages(apiErrors?.password)
-                }
-              />
-            </div>
-            <div>
-              <Button
-                variant="filled"
-                text="Entrar"
-                onClick={handleSubmit(onSubmit)}
-              />
-            </div>
-          </form>
+          <p className="px-6 text-center text-sm text-muted-foreground">
+            Ao continuar, você concorda com nossos{" "}
+            <a href="#" className="font-medium hover:underline">
+              Termos de Serviço
+            </a>{" "}
+            e{" "}
+            <a href="#" className="font-medium hover:underline">
+              Política de Privacidade
+            </a>
+            .
+          </p>
         </div>
-      </main>
+      </div>
     </div>
   );
 };

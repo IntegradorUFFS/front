@@ -1,65 +1,151 @@
 import DashboardPage from "@/pages/Admin/Dashboard";
-import LocationPage from "@/pages/Admin/Location";
-import LocationMaterialPage from "@/pages/Admin/LocationMaterial";
-import MaterialPage from "@/pages/Admin/Material";
-import TransactionPage from "@/pages/Admin/Transaction";
-import UserPage from "@/pages/Admin/User";
+import PesquisaIAPage from "@/pages/Admin/Modules/Analise/PesquisaIA";
+import RelatoriosPage from "@/pages/Admin/Modules/Analise/Relatorios";
+import CondutoresPage from "@/pages/Admin/Modules/Gestao/Condutores";
+import FrotasPage from "@/pages/Admin/Modules/Gestao/Frotas";
+import MultasPage from "@/pages/Admin/Modules/Infracoes/Multas";
+import PipelinePage from "@/pages/Admin/Modules/Infracoes/Pipeline";
+import RecursosPage from "@/pages/Admin/Modules/Infracoes/Recursos";
+import PlanoPage from "@/pages/Admin/Modules/MinhaConta/Plano";
+import PagamentoPage from "@/pages/Admin/Modules/MinhaConta/Pagamento";
+
 import {
-  Archive,
-  BrickWall,
-  ClipboardList,
-  LayoutDashboard,
-  MapPinHouse,
+  Inbox,
+  House,
+  Funnel,
+  Clipboard,
+  Truck,
   Users,
+  ChartLine,
+  CreditCard,
+  Gift,
 } from "lucide-react";
 
-export default [
+export interface IDirect {
+  type: "direct";
+  icon: React.ReactElement;
+  href: string;
+  text: string;
+  className?: string;
+  element: React.ReactNode;
+  disabled?: boolean;
+}
+
+interface IGroup {
+  type: "group";
+  text: string;
+  baseUrl: string;
+  items: IDirect[];
+  disabled?: boolean;
+}
+
+export type IData = IDirect | IGroup;
+
+const itemsData: IData[] = [
   {
-    name: "Dashboard",
-    path: "/admin/dashboard",
-    icon: <LayoutDashboard />,
+    icon: <House />,
+    href: "/dashboard",
+    text: "Visão Geral",
+    type: "direct",
     element: <DashboardPage />,
-    scope: "dashboard.view",
-    children: [{ path: "", element: "" }],
   },
   {
-    name: "Material",
-    path: "/admin/material",
-    icon: <BrickWall />,
-    element: <MaterialPage />,
-    scope: "material.view",
-    children: [{ path: "", element: "" }],
+    type: "group",
+    text: "infrações",
+    baseUrl: "/infracoes",
+    items: [
+      {
+        icon: <Funnel />,
+        href: "/pipeline",
+        text: "Pipeline",
+        type: "direct",
+        element: <PipelinePage />,
+      },
+      {
+        icon: <Inbox />,
+        href: "/multas",
+        text: "Multas",
+        type: "direct",
+        element: <MultasPage />,
+      },
+      {
+        icon: <Clipboard />,
+        href: "/recursos",
+        text: "Recursos",
+        type: "direct",
+        element: <RecursosPage />,
+      },
+    ],
   },
   {
-    name: "Locais",
-    path: "/admin/location",
-    icon: <MapPinHouse />,
-    element: <LocationPage />,
-    scope: "location.view",
-    children: [{ path: "", element: "" }],
+    type: "group",
+    text: "gestão",
+    baseUrl: "/gestao",
+    items: [
+      {
+        icon: <Truck />,
+        href: "/frotas",
+        text: "Frotas",
+        type: "direct",
+        element: <FrotasPage />,
+      },
+      {
+        icon: <Users />,
+        href: "/condutores",
+        text: "Condutores",
+        type: "direct",
+        element: <CondutoresPage />,
+      },
+    ],
   },
   {
-    name: "Estoque",
-    path: "/admin/location-material",
-    icon: <Archive />,
-    element: <LocationMaterialPage />,
-    scope: "locationMaterial.view",
-    children: [{ path: "", element: "" }],
+    type: "group",
+    text: "Análise",
+    baseUrl: "/analise",
+    items: [
+      {
+        icon: <ChartLine />,
+        href: "/relatorios",
+        text: "Relatórios",
+        type: "direct",
+        element: <RelatoriosPage />,
+        disabled: true,
+      },
+      {
+        icon: (
+          <img src="/assets/ix_ai.svg" alt="AI icon" width={24} height={24} />
+        ),
+        href: "/pesquisa-ia",
+        text: "Pesquisa com AI",
+        type: "direct",
+        element: <PesquisaIAPage />,
+        className:
+          "text-transparent bg-clip-text bg-gradient-to-tr from-blue-800 to-purple-950",
+      },
+    ],
   },
   {
-    name: "Usuários",
-    path: "/admin/user",
-    icon: <Users />,
-    element: <UserPage />,
-    scope: "user.view",
-    children: [{ path: "", element: "" }],
-  },
-  {
-    name: "Transações",
-    path: "/admin/transaction",
-    icon: <ClipboardList />,
-    element: <TransactionPage />,
-    scope: "transaction.view",
-    children: [{ path: "", element: "" }],
+    type: "group",
+    text: "minha conta",
+    baseUrl: "/minha-conta",
+    disabled: true,
+    items: [
+      {
+        icon: <CreditCard />,
+        href: "/pagamento",
+        text: "Dados de Pagamento",
+        type: "direct",
+        element: <PagamentoPage />,
+      },
+      {
+        icon: <Gift />,
+        href: "/plano",
+        text: "Meu Plano",
+        type: "direct",
+        element: <PlanoPage />,
+      },
+    ],
   },
 ];
+
+export default itemsData;

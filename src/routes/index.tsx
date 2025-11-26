@@ -9,7 +9,6 @@ import { useToast } from "@/hooks/use-toast";
 
 const Routes: React.FC = () => {
   const { toast } = useToast();
-  const permissions = useAppSelector(({ auth }) => auth.permissions);
   const logged = useAppSelector(({ auth }) => auth.logged);
   const oauth = useAppSelector(({ auth }) => auth.oauth);
   const dispatch = useAppDispatch();
@@ -36,11 +35,7 @@ const Routes: React.FC = () => {
     }
   }, [isError, dispatch, toast]);
 
-  return (
-    <RouterProvider
-      router={logged ? adminRoutes({ permissions }) : clientRoutes}
-    />
-  );
+  return <RouterProvider router={!logged ? clientRoutes : clientRoutes} />;
 };
 
 export default Routes;

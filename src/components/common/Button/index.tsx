@@ -14,7 +14,7 @@ const classes = {
   outline:
     "bg-transparent ring-2 ring-zinc-200 hover:ring-zinc-300 disabled:opacity-60 disabled:ring-zinc-300",
   filled:
-    "bg-orange-600 text-white hover:opacity-90 disabled:bg-zinc-400 disabled:opacity-80",
+    "bg-blueRibbon-9  text-neutral-1 hover:opacity-90 disabled:bg-zinc-400 disabled:opacity-80",
 };
 
 const Button: React.ForwardRefRenderFunction<
@@ -37,7 +37,7 @@ const Button: React.ForwardRefRenderFunction<
     <button
       ref={ref}
       className={twMerge(
-        "transition rounded-md gap-2 flex items-center justify-center font-semibold font-montserrat tracking-wide",
+        "transition rounded-lg gap-2 flex items-center justify-center h-10 text-sm",
         classes[variant],
         icon && !text ? "p-3" : " w-full py-3 px-4",
         className

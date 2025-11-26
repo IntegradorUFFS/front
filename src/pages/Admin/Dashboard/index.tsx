@@ -1,194 +1,66 @@
-import React, { useMemo, useState } from "react";
-import TitleLine from "@/components/TitleLine";
-import Button from "@/components/common/Button";
-import { useAppSelector } from "@/hooks";
-import { useQuery } from "@tanstack/react-query";
-import Actions from "@/helpers/Actions";
-import BarLineChart from "@/components/ui/barChart";
+import { CalendarRange } from "lucide-react";
+import { useAppDispatch } from "@/hooks";
 
-const DashboardPage: React.FC = () => {
-  const endpoint = "/transaction/list";
+import Filter from "@/components/List/components/Filter";
+import Notifications from "@/components/List/components/Notifications";
+import Sort from "@/components/List/components/Sort";
+import { useEffect } from "react";
 
-  const [selectedButton, setSelectedButton] = useState<number>(20);
+export default function Landing() {
+  const dispatch = useAppDispatch();
 
-  const queryKey = useMemo(() => ["search", selectedButton], [selectedButton]);
-  const oauth = useAppSelector((state) => state.auth.oauth);
-
-  const { data, isLoading } = useQuery({
-    queryKey,
-    queryFn: async () => {
-      if (!oauth) throw new Error("OAuth not found");
-      const res = await new Actions(endpoint, oauth).fetch({
-        per_page: selectedButton,
-      });
-      return res.data;
-    },
-  });
-
-  const handleButtonClick = (value: number) => {
-    setSelectedButton(value);
-  };
-
+  useEffect(() => {
+    dispatch({ type: "layout/setBreadcrumb", payload: "Visão Geral" });
+  }, [dispatch]);
   return (
-    <div className="flex-1 p-6">
-      <div className="mb-4">
-        <TitleLine title="Dashboard" />
+    <>
+      <div className="max-h-screen overflow-y-auto">
+        <div className="px-6 pb-8 min-w-fit">
+          {/* <PageHeader title="Visão Geral" /> */}
+          <div className="mb-8 flex items-center justify-between w-full gap-6">
+            <div className="rounded-2xl border border-neutral-4 px-3 py-2 shadow-xs max-w-[540px] min-w-[300px] w-full flex items-center justify-start gap-3">
+              <img
+                src="/assets/ix_ai.svg"
+                alt="AI icon"
+                width={24}
+                height={24}
+              />
+              <input
+                type="text"
+                className="bg-transparent min-w-60 w-full text-neutral-9 placeholder:text-neutral-6 outline-hidden ring-0 shadow-none
+                  focus:outline-hidden focus:ring-0 focus:shadow-none"
+                placeholder="Buscar com Inteligência Artificial"
+              />
+            </div>
+            <div className="flex items-center justify-center gap-4">
+              <div className="flex items-center justify-center gap-2">
+                <button className="rounded-lg border border-neutral-3 hover:border-neutral-4 focus:ring-1  gap-2 px-2 py-2 text-neutral-7 flex items-center justify-start text-sm whitespace-nowrap">
+                  <div className="text-blueRibbon-5">
+                    <CalendarRange width={22} strokeWidth={1.4} />
+                  </div>
+                  Últimos 7 dias
+                </button>
+                <Sort></Sort>
+                <Filter></Filter>
+              </div>
+              <Notifications></Notifications>
+            </div>
+          </div>
+          <div className="flex flex-col gap-8">
+            <div className="grid grid-cols-2 h-full gap-8 ">
+              <div className="w-full h-full gap-8 flex flex-col">
+                <div className="w-full h-60 bg-white rounded-2xl"></div>
+                <div className="w-full h-60 bg-white rounded-2xl"></div>
+              </div>
+              <div className="w-full h-full gap-8 flex flex-col">
+                <div className="w-full h-60 bg-white rounded-2xl"></div>
+                <div className="w-full h-60 bg-white rounded-2xl"></div>
+              </div>
+            </div>
+            <div className="w-full h-60 bg-white rounded-2xl"></div>
+          </div>
+        </div>
       </div>
-      <div className="flex flex-row gap-2 w-fit bg-zinc-200 p-1.5 rounded-lg">
-        <Button
-          text="20"
-          className={`h-8 px-6 rounded-lg ${
-            selectedButton === 20 ? "bg-white" : "bg-zinc-200"
-          }`}
-          onClick={() => handleButtonClick(20)}
-        />
-        <Button
-          text="50"
-          className={`h-8 px-6 rounded-lg ${
-            selectedButton === 50 ? "bg-white" : "bg-zinc-200"
-          }`}
-          onClick={() => handleButtonClick(50)}
-        />
-        <Button
-          text="100"
-          className={`h-8 px-6 rounded-lg ${
-            selectedButton === 100 ? "bg-white" : "bg-zinc-200"
-          }`}
-          onClick={() => handleButtonClick(100)}
-        />
-      </div>
-      {isLoading ? (
-        <>
-          <div className="grid grid-cols-5 gap-8 m-4">
-            <div className="h-100 bg-zinc-200 rounded-md animate-pulse col-span-3 my-4 opacity-40"></div>
-            <div className="h-100 bg-zinc-200 rounded-md animate-pulse col-span-2 my-4 opacity-40"></div>
-          </div>
-          <div className="flex flex-col gap-2">
-            <div className="h-64 bg-zinc-200 rounded-md animate-pulse my-4 opacity-40"></div>
-            <div className="h-64 bg-zinc-200 rounded-md animate-pulse my-4 opacity-40"></div>
-          </div>
-        </>
-      ) : (
-        <>
-          <div className="flex row gap-8">
-            {/* GRAFICO */}
-
-            <div className="h-fit w-fit  border-2 border-zinc-200 rounded-lg my-4 flex justify-center p-2 ">
-              {data && data?.length > 0 && <BarLineChart data={data} />}
-            </div>
-
-            {/* Tansferencias */}
-
-            <div className="h-100 w-full border-2 border-zinc-200 rounded-lg my-4 p-4 flex flex-col ">
-              <span className="text-xl font-semibold py-1">Transferencias</span>
-
-              <div className="grid grid-cols-7 py-1 px-2 bg-zinc-200 rounded-md">
-                <span className="col-span-2">Material</span>
-                <span className="col-span-1 text-center">Quantidade</span>
-                <span className="col-span-2 text-center">Origem</span>
-                <span className="col-span-2 text-center">Destino</span>
-              </div>
-              <div className="flex flex-col gap-2 p-2 max-h-fit overflow-y-auto">
-                <>
-                  {data
-                    ?.filter(
-                      (item: Record<string, any>) => item.type == "transfer"
-                    )
-                    .map((item: Record<string, any>, index: number) => (
-                      <div
-                        className="grid grid-cols-7 my-1"
-                        key={`transfer-${index}`}
-                      >
-                        <span className="text-base col-span-2">
-                          {item.material.name}
-                        </span>
-                        <span className="text-base col-span-1 text-center">
-                          {item.quantity}
-                        </span>
-                        <span className="text-base col-span-2 text-center">
-                          {item.origin.name}
-                        </span>
-                        <span className="text-base col-span-2 text-center">
-                          {item.destiny.name}
-                        </span>
-                      </div>
-                    ))}
-                </>
-              </div>
-            </div>
-          </div>
-
-          {/* Entrada */}
-
-          <div className="flex flex-row gap-8">
-            <div className="max-h-56 w-full border-2 border-zinc-200 rounded-lg my-4 p-4 flex flex-col">
-              <span className="text-xl font-semibold py-1">Entrada</span>
-
-              <div className="grid grid-cols-4 py-1 px-2 bg-zinc-200 rounded-md">
-                <span className="col-span-2">Material</span>
-                <span className="col-span-1 text-center">Quantidade</span>
-                <span className="col-span-1 text-center">Local</span>
-              </div>
-              <div className="flex flex-col gap-2 p-2 max-h-fit overflow-y-auto">
-                <>
-                  {data
-                    ?.filter((item: Record<string, any>) => item.type == "in")
-                    .map((item: Record<string, any>, index: number) => (
-                      <div
-                        className="grid grid-cols-4 my-1"
-                        key={`in-${index}`}
-                      >
-                        <span className="text-base col-span-2">
-                          {item.material.name}
-                        </span>
-                        <span className="text-base col-span-1 text-center">
-                          {item.quantity}
-                        </span>
-                        <span className="text-base col-span-1 text-center">
-                          {item.destiny.name}
-                        </span>
-                      </div>
-                    ))}
-                </>
-              </div>
-            </div>
-
-            {/* SAIDA */}
-
-            <div className="max-h-56 w-full border-2 border-zinc-200 rounded-lg my-4 p-4 flex flex-col">
-              <span className="text-xl font-semibold py-1">Saída</span>
-              <div className="grid grid-cols-4 py-1 px-2 bg-zinc-200 rounded-md">
-                <span className="col-span-2">Material</span>
-                <span className="col-span-1 text-center">Quantidade</span>
-                <span className="col-span-1 text-center">Local</span>
-              </div>
-              <div className="flex flex-col gap-2 p-2 max-h-fit overflow-y-auto">
-                <>
-                  {data
-                    ?.filter((item: Record<string, any>) => item.type == "out")
-                    .map((item: Record<string, any>, index: number) => (
-                      <div
-                        className="grid grid-cols-4 my-1"
-                        key={`out-${index}`}
-                      >
-                        <span className="text-base col-span-2">
-                          {item.material.name}
-                        </span>
-                        <span className="text-base col-span-1 text-center">
-                          {item.quantity}
-                        </span>
-                        <span className="text-base col-span-1 text-center">
-                          {item.origin.name}
-                        </span>
-                      </div>
-                    ))}
-                </>
-              </div>
-            </div>
-          </div>
-        </>
-      )}
-    </div>
+    </>
   );
-};
-export default DashboardPage;
+}

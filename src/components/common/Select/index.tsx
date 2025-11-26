@@ -52,7 +52,7 @@ const Select: React.ForwardRefRenderFunction<
   }, [handleClose]);
 
   return (
-    <div className="flex flex-col gap-2 text-sm font-sans relative items-center w-full ">
+    <div className="flex flex-col gap-2 text-sm  relative items-center w-full ">
       <div className="w-full flex flex-1 justify-center z-[5]">
         <Controller
           name="role"
@@ -60,7 +60,7 @@ const Select: React.ForwardRefRenderFunction<
           render={({ field: { onChange, value } }) => {
             if (!value) onChange(options?.[0]?.value);
             return (
-              <div className="flex flex-col gap-2 text-sm justify-center items-center font-sans w-full">
+              <div className="flex flex-col gap-2 text-sm justify-center items-center  w-full">
                 <span className="font-semibold w-full">{label}</span>
                 <button
                   ref={ref}

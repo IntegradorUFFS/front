@@ -12,12 +12,12 @@ if (process.env.NODE_ENV === "development") {
 }
 
 const persistConfig = {
-  key: "@habitafort-root",
+  key: "@multazero-root",
   storage,
   whitelist: ["auth"],
   transforms: [
     encryptTransform({
-      secretKey: process.env.REACT_APP_REDUX_SECRET_KEY ?? "",
+      secretKey: process.env.REACT_APP_REDUX_SECRET_KEY!,
     }),
   ],
 };

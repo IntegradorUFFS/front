@@ -131,7 +131,7 @@ const Autocomplete: React.FC<IProps> = ({
       disabled={disabled}
       render={({ field: { onChange, value }, fieldState: { error } }) => {
         return (
-          <div className="flex flex-col gap-2 text-sm font-sans relative items-center w-full">
+          <div className="flex flex-col gap-2 text-sm  relative items-center w-full">
             <div className="w-full flex flex-1 justify-start z-[5]">
               {!value ? (
                 <Input
@@ -145,7 +145,7 @@ const Autocomplete: React.FC<IProps> = ({
                 />
               ) : (
                 <div
-                  className="flex flex-col gap-2 text-sm font-sans w-full"
+                  className="flex flex-col gap-2 text-sm  w-full"
                   {...getRecord(value, onChange)}
                 >
                   {label && <span className="font-semibold">{label}</span>}

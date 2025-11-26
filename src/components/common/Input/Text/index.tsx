@@ -26,8 +26,8 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement | null, IProps> = (
   return (
     <input
       className={twMerge(
-        "w-full bg-zinc-200 rounded-md text-sm py-3 px-5 placeholder:text-zinc-500 bg-transparent aria-invalid:border-red-600 font-normal",
-        toggleOpacity && "disabled:opacity-70 bg-zinc-200",
+        "h-10 px-3 rounded-md border w-full text-sm placeholder:text-zinc-500 bg-transparent aria-invalid:border-red-600 font-normal",
+        toggleOpacity && "disabled:opacity-70",
         invalid && "border border-red-600 focus:outline-red-500"
       )}
       placeholder={placeholder}
