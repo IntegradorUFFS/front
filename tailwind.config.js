@@ -21,8 +21,15 @@ export default {
         "width-fit": "width-fit 0.4s ease-in-out",
         "width-zero": "width-zero 0.35s ease-in-out",
         ripple: "ripple 600ms linear",
+        bounce: "bounce 0.6s ease-in-out infinite",
       },
       keyframes: {
+        bounce: {
+          "0%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-2px)" },
+          "100%": { transform: "translateY(0)" },
+        },
+
         "filter-in": {
           "0%": {
             opacity: "0",

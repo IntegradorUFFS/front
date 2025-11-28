@@ -2,6 +2,7 @@ import React from "react";
 import { twMerge } from "tailwind-merge";
 import Sidebar from "./components/Siderbar";
 import { useAppSelector } from "@/hooks";
+import UserMenu from "./components/UserMenu";
 
 interface IProps {
   children?: React.ReactNode;
@@ -27,13 +28,11 @@ const ContentFrame: React.FC<IProps> = ({ children, className }) => {
         )}
       >
         {breadcrumb && (
-          <header
-            className="flex px-6 items-center justify-between w-full h-24
-        "
-          >
+          <header className="flex px-6 items-center justify-between w-full h-24">
             <h1 className="text-3xl text-slate-800 gap-2 flex items-center justify-start">
               {breadcrumb}
             </h1>
+            <UserMenu />
           </header>
         )}
         <main

@@ -10,7 +10,7 @@ import Layout from "@/layout";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path="/" element={<Layout />}>
+      <Route element={<Layout />}>
         {routes
           .reduce((acc, item) => {
             if (item.type === "direct") return [...acc, item];

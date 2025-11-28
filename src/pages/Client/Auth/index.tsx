@@ -39,7 +39,11 @@ const Auth: React.FC = () => {
   });
 
   const { mutateAsync, error } = useMutation({
-    mutationFn: async (data: AuthSchema) => await clientApi.post("/auth", data),
+    mutationFn: async (data: AuthSchema) =>
+      await clientApi.post("/auth/login", {
+        email: data.email,
+        senha: data.password,
+      }),
     onSuccess: (res) => {
       dispatch({ type: "auth/signIn", payload: res?.data });
     },

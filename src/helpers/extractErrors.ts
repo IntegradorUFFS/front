@@ -10,7 +10,11 @@ export default (err: any): IRes => {
   const { data } = err.response;
   const { field, message, error } = data;
 
-  const mappedData = { [field]: message ?? error };
+  const mappedData: Record<string, string> = {};
+
+  field.forEach((f: string) => {
+    mappedData[f] = message ?? error;
+  });
 
   return { field, message, error, data: mappedData };
 };
